@@ -29,7 +29,7 @@ TBD
 2. Open `cmd.exe` as administrator
 3. Run `usbipd list` and take note of your `BUSID` for your connected phone
 
-  ![cmd_2023-03-03_17-57-59](https://user-images.githubusercontent.com/116389520/222875921-a0b1c84c-7e86-4c9b-b929-626cdf4b5a1f.jpg)
+   ![cmd_2023-03-03_17-57-59](https://user-images.githubusercontent.com/116389520/222875921-a0b1c84c-7e86-4c9b-b929-626cdf4b5a1f.jpg)
 
 4. Expose your USB connected phone to your WSL2 by running `wsl attach --busid <BUSID>`
 5. Start `wsl`
