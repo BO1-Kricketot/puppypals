@@ -1,0 +1,27 @@
+{
+  "name": "puppypals",
+  "version": "0.0.1",
+  "description": "A mobile application meant to provide a platform for dog owners to meet, chat, host events, and arrange play dates.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "contributors": [
+    "Aimee Kang",
+    "Arpan Shrestha",
+    "Bolton Lin",
+    "Jacob Fink",
+    "Terrence Koo",
+    "Thomas Spitz",
+    "Wooseok Jang"
+  ],
+  "devDependencies": {
+    "eslint": "^8.19.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jest": "^27.2.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.4.1"
+  },
+  "license": "ISC"
+}
