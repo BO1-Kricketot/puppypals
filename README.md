@@ -1,8 +1,8 @@
-# puppypals
+# 🐶 puppypals
 
 A social networking mobile application designed to allow local dog owners to meet, host events, chat, and organize play dates with each other.
 
-## Getting Started
+## 🚀 Getting Started
 
 No matter the environment, first run `npm install` for all 3 packages (root, client, server).
 
