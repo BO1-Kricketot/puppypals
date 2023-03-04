@@ -31,7 +31,8 @@ TBD
 
    ![cmd_2023-03-03_17-57-59](https://user-images.githubusercontent.com/116389520/222875921-a0b1c84c-7e86-4c9b-b929-626cdf4b5a1f.jpg)
 
-4. Expose your USB connected phone to your WSL2 by running `wsl attach --busid <BUSID>`
+4. Expose your USB connected phone to your WSL2 by running `usbipd wsl attach --busid <busid>`
+    1. You’d have to run `usbipd wsl detach --busid <busid>` to detach the USB
 5. Start `wsl`
 6. Run `sh [startAndroid.sh](http://startAndroid.sh)` (from above) and verify your device is attached
 
