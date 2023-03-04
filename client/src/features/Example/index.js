@@ -1,13 +1,14 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import api from '../../api';
+import Config from 'react-native-config';
 
 export default function Example() {
   return (
     <View>
       <Text>Test Log</Text>
       <Button
-        onPress={() => console.log('Test successful!')}
+        onPress={() => console.log(`Test successful! ${Config.API_URL}`)}
         title="TEST"
         color="#841584"
         accessibilityLabel="Learn more about this purple button"
