@@ -8,7 +8,11 @@ No matter the environment, first run `npm install` for all 3 packages (root, cli
 
 ### macOS Environment for Android devices
 
+TBD
+
 ### macOS Environment for iOS devices
+
+TBD
 
 ### WSL2 Environment for Android devices
 
