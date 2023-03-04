@@ -29,13 +29,13 @@ TBD
 2. Open `cmd.exe` as administrator
 3. Run `usbipd list` and take note of your `BUSID` for your connected phone
 
-   ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b3342df2-a465-40a0-bbeb-62f6a2a11c4a/Untitled.png)
+  ![cmd_2023-03-03_17-57-59](https://user-images.githubusercontent.com/116389520/222875921-a0b1c84c-7e86-4c9b-b929-626cdf4b5a1f.jpg)
 
 4. Expose your USB connected phone to your WSL2 by running `wsl attach --busid <BUSID>`
 5. Start `wsl`
 6. Run `sh [startAndroid.sh](http://startAndroid.sh)` (from above) and verify your device is attached
 
-   ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4194be6a-3b31-4f9f-8450-dc4db398f2ff/Untitled.png)
+   ![WindowsTerminal_2023-03-03_18-03-10](https://user-images.githubusercontent.com/116389520/222875925-43b84df7-cf61-4f4b-b708-c2d0ed70bd7c.jpg)
 
 7. You’re ready to start running the client + server!
 
