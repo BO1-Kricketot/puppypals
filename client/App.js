@@ -5,12 +5,13 @@ import Profile from './features/Profile';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Example />
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-      <Profile />
-    </View>
+    <Profile />
+    // <View style={styles.container}>
+    //   <Example />
+    //   <Text>Open up App.js to start working on your app!</Text>
+    //   <StatusBar style="auto" />
+    //   <Profile />
+    // </View>
   );
 }
 
