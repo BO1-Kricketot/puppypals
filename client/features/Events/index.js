@@ -12,17 +12,17 @@ import Constants from 'expo-constants';
 import InvitedList from './Invited/InvitedList.js';
 import AttendingList from './Attending/AttendingList.js';
 
-export default function Events() {
+export default function Events({ dog }) {
   const [invited, setInvited] = useState(true);
+  const [invitedEvents, setInvitedEvents] = useState([]);
+  const [attendingEvents, setAttendingEvents] = useState([]);
 
   const handleInvited = () => {
     setInvited(true);
-    console.log('invited');
   };
 
   const handleAttending = () => {
     setInvited(false);
-    console.log('attending');
   };
 
   const handleCreateEvent = () => {
@@ -42,7 +42,11 @@ export default function Events() {
           <Text style={styles.addEventText}>+</Text>
         </TouchableOpacity>
       </View>
-      {invited ? <InvitedList /> : <AttendingList />}
+      {invited ? (
+        <InvitedList invitedEvents={invitedEvents} />
+      ) : (
+        <AttendingList attendingEvents={attendingEvents} />
+      )}
     </SafeAreaView>
   );
 }
