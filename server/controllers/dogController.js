@@ -22,7 +22,7 @@ module.exports = {
 
   /**
    * Returns a list of Dogs that a given user has yet to interact with within a
-   * 50mi radius
+   * 50mi radius, sorted by distance descending
    *
    * @param {location} - the location of the user
    *
