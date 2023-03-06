@@ -1,5 +1,7 @@
-const Example = require('./ExampleController');
+const example = require('./exampleController');
+const dog = require('./dogController');
 
 module.exports = {
-  Example,
+  example,
+  dog,
 };

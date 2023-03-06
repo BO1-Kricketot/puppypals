@@ -8,7 +8,7 @@ module.exports = {
    * TODO: Implement
    */
   registerDog(req, res) {
-    throw new Error('not implemented yet!');
+    throw new Error('registerDog not implemented yet!');
   },
 
   /**
@@ -17,16 +17,19 @@ module.exports = {
    * TODO: Implement
    */
   getDogById(req, res) {
-    throw new Error('not implemented yet!');
+    throw new Error('getDogById not implemented yet!');
   },
 
   /**
-   * Returns a list of Dogs that a given user has yet to interact with
+   * Returns a list of Dogs that a given user has yet to interact with within a
+   * 50mi radius
+   *
+   * @param {location} - the location of the user
    *
    * TODO: Implement
    */
   getNearbyDogs(req, res) {
-    throw new Error('not implemented yet!');
+    throw new Error('getNearbyDogs not implemented yet!');
   },
 
   /**
@@ -37,7 +40,7 @@ module.exports = {
    * TODO: Implement
    */
   getDogsWithFilter(req, res) {
-    throw new Error('not implemented yet!');
+    throw new Error('getDogsWithFilter not implemented yet!');
   },
 
   /**
@@ -46,7 +49,7 @@ module.exports = {
    * TODO: Implement
    */
   updateDogById(req, res) {
-    throw new Error('not implemented yet!');
+    throw new Error('updateDogById not implemented yet!');
   },
 
   /**
@@ -55,6 +58,6 @@ module.exports = {
    * TODO: Implement
    */
   deleteDogById(req, res) {
-    throw new Error('not implemented yet!');
+    throw new Error('deleteDogById not implemented yet!');
   },
 };
