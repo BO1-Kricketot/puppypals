@@ -5,6 +5,8 @@ module.exports = {
   /**
    * Creates a new Dog document
    *
+   * Expects: body containing Dog information
+   *
    * TODO: Implement
    */
   registerDog(req, res) {
@@ -13,6 +15,8 @@ module.exports = {
 
   /**
    * Returns one Dog by _id
+   *
+   * Route: /dogs/123
    *
    * TODO: Implement
    */
@@ -24,7 +28,7 @@ module.exports = {
    * Returns a list of Dogs that a given user has yet to interact with within a
    * 50mi radius, sorted by distance descending
    *
-   * @param {_id} - the location of the user
+   * Route: /dogs?lat=40.7418&long=-73.9893
    *
    * TODO: Implement
    */
@@ -37,6 +41,8 @@ module.exports = {
    * filtered by either: distance (< default 50 mi), size, dog friendliness, and
    * human friendliness
    *
+   * Route: /dogs/id=123&dist=25 OR /dogs/id=123&size=small
+   *
    * TODO: Implement
    */
   getDogsWithFilter(req, res) {
@@ -45,6 +51,8 @@ module.exports = {
 
   /**
    * Updates a single Dog by _id with new information
+   *
+   * Expects: body containing updated/new dog information
    *
    * TODO: Implement
    */

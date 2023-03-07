@@ -6,6 +6,8 @@ module.exports = {
   /**
    * Creates a new Friend_Invite document
    *
+   * Expects: body containing senderId and recipientId
+   *
    * TODO: Implement
    */
   sendFriendInvite(req, res) {
@@ -15,6 +17,8 @@ module.exports = {
   /**
    * Returns all Friend_Invites where _id is recipientId, return the results
    * sorted by date descending
+   *
+   * Route: /finvites/123
    *
    * TODO: Implement
    */
