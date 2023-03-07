@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   TextInput,
   useWindowDimensions,
+  Alert,
 } from 'react-native';
 import React, { useState } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -20,19 +21,27 @@ const CreateAccount = () => {
   const [showDatePick, setShowDatePick] = useState(false);
 
   const pressCreateAccount = () => {
-    console.log('create account');
-    // if (password === password2 && dob makes user over 18)
+    // shows amout of time since 1/1/1970
+    const age_dt = new Date(Date.now() - dob.getTime());
+    if (email === '' || password === '' || password2 === '') {
+      Alert.alert('Please fill all fields to continue');
+    } else if (password !== password2) {
+      Alert.alert('Passwords do not match!');
+    } else if (age_dt.getFullYear() < 1988) {
+      Alert.alert('Users must be over the age of 18!');
+    } else {
+      //submit info
+      console.log('successful');
+    }
   };
 
-  // may display wrong date because of time zone offset
   const changeDate = (e, selectedDate) => {
-    // console.log(selectedDate);
     setDob(selectedDate);
     setShowDatePick(false);
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.root}>
       <Text>Create an Account</Text>
       <TextInput
         value={email}

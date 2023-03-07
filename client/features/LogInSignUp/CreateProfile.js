@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import { Picker } from '@react-native-picker/picker';
+import * as ImagePicker from 'expo-image-picker';
 
 const CreateProfile = () => {
   const { height } = useWindowDimensions();
@@ -23,9 +24,21 @@ const CreateProfile = () => {
   const [ownerName, setOwnerName] = useState('');
   const [ownerPic, setOwnerPic] = useState({});
 
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [3, 4],
+      quality: 1,
+      base64: true,
+    });
+
+    console.log(result);
+  };
+
   return (
     <ScrollView>
-      <SafeAreaView>
+      <SafeAreaView style={styles.root}>
         <TextInput
           value={dogName}
           onChangeText={setDogName}
@@ -54,14 +67,14 @@ const CreateProfile = () => {
         <Picker
           selectedValue={dogFriendliness}
           onValueChange={(e) => setDogFriendliness(e)}>
-          <Picker.Item label="Not Friendly" value="not friendly" />
-          <Picker.Item label="Friendly" value="friendly" />
+          <Picker.Item label="Not Friendly" value={false} />
+          <Picker.Item label="Friendly" value={true} />
         </Picker>
         <Picker
           selectedValue={humanFriendliness}
           onValueChange={(e) => setHumanFriendliness(e)}>
-          <Picker.Item label="Not Friendly" value="not friendly" />
-          <Picker.Item label="Friendly" value="friendly" />
+          <Picker.Item label="Not Friendly" value={false} />
+          <Picker.Item label="Friendly" value={true} />
         </Picker>
         <TextInput
           value={bio}
@@ -75,7 +88,7 @@ const CreateProfile = () => {
           placeholder="Enter Your Name"
           style={styles.inputs}
         />
-        {/* insert owner pic upload here */}
+        <Button title="Pick an image from camera roll" onPress={pickImage} />
       </SafeAreaView>
     </ScrollView>
   );
@@ -97,7 +110,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 3,
     marginVertical: 3,
-    paddingHorizontal: 10,
   },
   button: {
     borderWidth: 1,

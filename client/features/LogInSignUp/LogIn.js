@@ -18,7 +18,7 @@ const LogIn = () => {
   const { height } = useWindowDimensions();
 
   const signInPress = () => {
-    console.log('oh god why');
+    console.log('send login info');
   };
 
   return (
@@ -32,7 +32,7 @@ const LogIn = () => {
       <TextInput
         value={email}
         onChangeText={setEmail}
-        placeholder="Enter email"
+        placeholder="Email"
         inputMode="email"
         keyboardType="email-address"
         style={styles.inputs}
@@ -40,7 +40,7 @@ const LogIn = () => {
       <TextInput
         value={password}
         onChangeText={setPassword}
-        placeholder="Enter password"
+        placeholder="Password"
         secureTextEntry={true}
         style={styles.inputs}
       />
