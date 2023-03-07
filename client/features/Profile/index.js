@@ -14,6 +14,8 @@ const { width, height } = Dimensions.get('window');
 //pass in a dog object
 
 export default function Profile() {
+  const isAndroid = Platform.OS === 'android';
+
   const dummyPics = [
     {
       default: true,
@@ -48,86 +50,177 @@ export default function Profile() {
     peopleFriendly: true,
     dogFriendly: true,
     dogBio:
-      'Billie is a sweety little snookums that loves to sniff butts and stuff. Yay!',
+      "Billie is a sweety little snookums that loves to sniff butts and stuff. Yay! Billie is a poodle and likes long walks on the beach. Or the treadmill. Billie is a silly billie, lulz. Do you like Billie's bio? Billie likes your bio, too!",
     ownerPic:
-      'https://akns-images.eonline.com/eol_images/Entire_Site/2020013/rs_1024x759-200113121440-1024-Steve-Harvey-Watch.jpg?fit=inside%7C900:auto&output-quality=90',
+      'https://www.essence.com/wp-content/uploads/2014/01/images/2013/11/11/steve-harvey-show.jpg',
     ownerName: 'Peppy',
   };
 
+  let dummyNav = [0, 0, 0, 0, 0];
+  dummyNav = dummyNav.fill('https://reactnative.dev/img/tiny_logo.png', 0);
+
   const mainPhoto = renderPics(dummyPics, true);
   const otherPhotos = renderPics(dummyPics, false);
-  const { mainPicContainer, morePicsContainer } = profileStyles;
+  const {
+    mainPicContainer,
+    morePicsAndNavContainer,
+    userInfoContainer,
+    userPicContainer,
+  } = profileStyles;
 
   return (
-    <SafeAreaView style={profileStyles.container}>
-      <View style={mainPicContainer}>{mainPhoto}</View>
-      <View style={morePicsContainer}>{otherPhotos}</View>
-      <View style={profileStyles.dogInfoContainer}>
-        <Text>{dummyInfo.dogName}</Text>
-        <Text>{dummyInfo.dogBreed}</Text>
-        <Text>{dummyInfo.location}</Text>
-        {dummyInfo.peopleFriendly && <Text>I'm people friendly!</Text>}
-        {dummyInfo.dogFriendly && <Text>I'm dog friendly!</Text>}
-      </View>
-      <View style={profileStyles.userInfoContainer} />
-      <View style={profileStyles.phNavContainer} />
-    </SafeAreaView>
+    <>
+      <SafeAreaView style={profileStyles.container}>
+        <View style={userInfoContainer}>
+          <Text style={{ marginLeft: 10 }}>{dummyInfo.ownerName}</Text>
+          <View style={{ width: 50, height: 50, marginLeft: 20 }}>
+            <Image
+              style={userPicContainer}
+              source={{ uri: dummyInfo.ownerPic }}
+            />
+          </View>
+          <View style={{ width: 50, height: 50, marginLeft: 'auto', marginRight: 10 }}>
+          <Image
+              style={userPicContainer}
+              source={{ uri: 'http://cdn.onlinewebfonts.com/svg/img_397968.png'}}
+            />
+          </View>
+        </View>
+        <View style={mainPicContainer}>{mainPhoto}</View>
+        <View style={morePicsAndNavContainer}>{otherPhotos}</View>
+        <View style={profileStyles.dogInfoContainer}>
+          <Text>
+            {dummyInfo.dogName}
+            <Text>{dummyInfo.dogBreed}</Text>
+          </Text>
+          <Text>{dummyInfo.location}</Text>
+          {dummyInfo.peopleFriendly || dummyInfo.dogFriendly ? (
+            <View style={profileStyles.friendlyContainer}>
+              {dummyInfo.peopleFriendly && (
+                <Text style={profileStyles.friendlyItem}>
+                  I'm people friendly!
+                </Text>
+              )}
+              {dummyInfo.dogFriendly && (
+                <Text style={profileStyles.friendlyItem}>
+                  I'm dog friendly!
+                </Text>
+              )}
+            </View>
+          ) : null}
+          <Text>{dummyInfo.dogBio}</Text>
+        </View>
+        {isAndroid && (
+          <View style={profileStyles.morePicsAndNavContainer}>
+            {renderNav(dummyNav)}
+          </View>
+        )}
+      </SafeAreaView>
+      {!isAndroid && ( //conditionally render navbar to be at the bottom for android/ios
+        <View style={profileStyles.morePicsAndNavContainer}>
+          {renderNav(dummyNav)}
+        </View>
+      )}
+    </>
   );
 }
 
-function phNav() {}
-
 const profileStyles = StyleSheet.create({
+  // holds everything else, flex val 1 fills avail space
   container: {
     backgroundColor: 'yellow',
     flex: 1,
     paddingTop: Platform.OS === 'android' && StatusBar.currentHeight,
   },
+  // flex val 4 equates to 'fill 4 something-ths of the available space in (main) container'
   mainPicContainer: {
     backgroundColor: 'darkblue',
     flex: 4,
   },
+  // 'fill the whole container' (which in this case is mainPicContainer)
   mainPic: {
     flex: 1,
     margin: '2%',
+    borderRadius: 10,
   },
-  morePicsContainer: {
+  // 'fill 1 something-ths of the available space in (main) container'
+  morePicsAndNavContainer: {
     backgroundColor: 'dodgerblue',
     flex: 1,
     flexDirection: 'row',
   },
-  morePics: {
+  // 'fill the whole container' (which in this case is morePicsContainer)
+  morePicsAndNav: {
     flex: 1,
     justifyContent: 'space-evenly',
     alignItems: 'center',
     margin: '2%',
+    borderRadius: 10,
   },
+  // 'fill 2 something-th of the available space in (main) container'
   dogInfoContainer: {
     backgroundColor: 'lightslategray',
     flex: 2,
+    marginLeft: '2%',
+    marginRight: '2%',
   },
+  // 'fill 1 something-ths of the available space in (main) container'
   userInfoContainer: {
-    backgroundColor: 'darkslategray',
-    flex: 1,
+    backgroundColor: 'lightgray',
+    flex: 0.6,
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: '20%',
+  },
+  userPicContainer: {
+    width: '100%',
+    height: '100%',
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 75,
+  },
+  // 'fill 1 something-ths of the available space in (main) container'
+  // --> except I'm NOT RENDERING it right now so it's NOT counted re: line 126-127
+  friendlyContainer: {
+    // padding: 2,
+    margin: 6,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  friendlyItem: {
+    padding: 4,
+    width: '40%',
+    textAlign: 'center',
+    backgroundColor: 'white',
+    borderRadius: 8,
   },
   phNavContainer: {
     backgroundColor: 'violet',
     flex: 1,
+    flexDirection: 'row',
   },
+  // currently, in the main container, there are I think 8 'something-ths'
+  // e.g. mainPicContainer will fill 4/8ths of the container
 });
 
 const renderPics = (picList, isDefault) => {
-  const { mainPic, morePics } = profileStyles;
+  const { mainPic, morePicsAndNav } = profileStyles;
   return picList
     .filter((pic) => pic.default === isDefault)
     .map((pic, i) => {
       return (
         <Image
           key={i}
-          style={isDefault ? mainPic : morePics}
+          style={isDefault ? mainPic : morePicsAndNav}
           default={pic.default}
           src={pic.url}
         />
       );
     });
+};
+
+const renderNav = (icons) => {
+  const { morePicsAndNav } = profileStyles;
+  return icons.map((icon, i) => <Image key={i} src={icon} style={morePicsAndNav} />);
 };
