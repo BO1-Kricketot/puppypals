@@ -17,9 +17,11 @@
     "expo": "~48.0.5",
     "expo-status-bar": "~1.4.4",
     "react": "18.2.0",
+    "react-hook-form": "^7.43.5",
     "react-native": "0.71.3",
     "react-native-config": "^1.5.0",
     "react-native-tab-view": "^2.16.0",
+    "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.10"
   },
   "devDependencies": {

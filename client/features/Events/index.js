@@ -11,11 +11,13 @@ import api from '../../api';
 import Constants from 'expo-constants';
 import InvitedList from './Invited/InvitedList.js';
 import AttendingList from './Attending/AttendingList.js';
+import CreateEvent from './CreateEvent/CreateEvent.js';
 
 export default function Events({ dog }) {
   const [invited, setInvited] = useState(true);
   const [invitedEvents, setInvitedEvents] = useState([]);
   const [attendingEvents, setAttendingEvents] = useState([]);
+  const [modal, setModal] = useState(false);
 
   const handleInvited = () => {
     setInvited(true);
@@ -25,8 +27,8 @@ export default function Events({ dog }) {
     setInvited(false);
   };
 
-  const handleCreateEvent = () => {
-    console.log('create event');
+  const toggleModal = () => {
+    setModal(!modal);
   };
 
   return (
@@ -38,10 +40,11 @@ export default function Events({ dog }) {
         <TouchableOpacity onPress={handleAttending}>
           <Text style={styles.text}>Attending</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleCreateEvent}>
+        <TouchableOpacity onPress={toggleModal}>
           <Text style={styles.addEventText}>+</Text>
         </TouchableOpacity>
       </View>
+      {modal && <CreateEvent modal={modal} toggleModal={toggleModal} />}
       {invited ? (
         <InvitedList invitedEvents={invitedEvents} />
       ) : (
