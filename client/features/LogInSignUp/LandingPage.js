@@ -13,6 +13,7 @@ import DummyLogo from '../../assets/icon.png';
 import Constants from 'expo-constants';
 
 const LandingPage = () => {
+  const { height } = useWindowDimensions();
   const goToLogIn = () => {
     console.log('go to log in');
   };

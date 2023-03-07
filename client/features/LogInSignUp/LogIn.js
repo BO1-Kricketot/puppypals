@@ -3,14 +3,14 @@ import {
   Button,
   StyleSheet,
   Text,
-  View,
+  // View,
   Image,
   SafeAreaView,
   TextInput,
   useWindowDimensions,
 } from 'react-native';
 import DummyLogo from '../../assets/icon.png';
-import Constants from 'expo-constants';
+// import Constants from 'expo-constants';
 
 const LogIn = () => {
   const [email, setEmail] = useState('');

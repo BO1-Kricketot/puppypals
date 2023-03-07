@@ -5,10 +5,12 @@ import {
   SafeAreaView,
   TextInput,
   ScrollView,
+  useWindowDimensions,
 } from 'react-native';
 import React, { useState } from 'react';
 
 const CreateProfile = () => {
+  const { height } = useWindowDimensions();
   const [dogName, setDogName] = useState('');
   const [dogBreed, setDogBreed] = useState('');
   const [dogPics, setDogPics] = useState([]);

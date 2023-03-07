@@ -4,19 +4,31 @@ import {
   Text,
   SafeAreaView,
   TextInput,
+  useWindowDimensions,
 } from 'react-native';
 import React, { useState } from 'react';
+import DateTimePicker from '@react-native-community/datetimepicker';
 // import api from '../../api';
 // import Constants from 'expo-constants';
 
 const CreateAccount = () => {
+  const { height } = useWindowDimensions();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
-  const [dob, setDob] = useState('');
+  const [dob, setDob] = useState(new Date());
+  const [showDatePick, setShowDatePick] = useState(false);
 
   const pressCreateAccount = () => {
     console.log('create account');
+    // if (password === password2 && dob makes user over 18)
+  };
+
+  // may display wrong date because of time zone offset
+  const changeDate = (e, selectedDate) => {
+    // console.log(selectedDate);
+    setDob(selectedDate);
+    setShowDatePick(false);
   };
 
   return (
@@ -44,13 +56,21 @@ const CreateAccount = () => {
         secureTextEntry={true}
         style={styles.inputs}
       />
-      {/* Find way to enter date */}
-      <TextInput
-        value={dob}
-        onChangeText={setDob}
-        placeholder="Enter your date of birth"
-        style={styles.inputs}
-      />
+      {showDatePick ? (
+        <DateTimePicker
+          mode="date"
+          value={dob}
+          display="spinner"
+          onChange={changeDate}
+        />
+      ) : (
+        <Button
+          onPress={() => setShowDatePick(true)}
+          title="Set Date of Birth"
+          color="#7371FC"
+          style={styles.button}
+        />
+      )}
       <Button
         onPress={pressCreateAccount}
         style={styles.button}
@@ -84,6 +104,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     padding: 3,
+    marginVertical: 10,
   },
 });
 

@@ -3,7 +3,7 @@ import { StyleSheet, Text, SafeAreaView } from 'react-native';
 import React from 'react';
 // import Example from './features/Example';
 import LogIn from './features/LogInSignUp/LogIn.js';
-import CreateAccount from './features/LogInSignUp/CreateAccount.js'
+import CreateAccount from './features/LogInSignUp/CreateAccount.js';
 
 export default function App() {
   return (
