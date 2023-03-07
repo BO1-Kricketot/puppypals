@@ -14,10 +14,33 @@ module.exports = {
   },
 
   /**
+   * Returns a list of Dogs that a given user has yet to interact with within a
+   * 50mi radius, sorted by distance descending. Get the list of dogs that user
+   * has interacted with and the user's coordinates to filter out dogs that the
+   * user has interacted with and dogs outside 50mi radius.
+   *
+   * Optionally has query params to add one additional filter (size, dfriendly,
+   * hfriendly), or reduce the distance radius. 404 if more than one filter is
+   * requested.
+   *
+   * Query: _id - Dog (user) _id
+   *        dist - max distance from user
+   *        size - small | medium | large
+   *        dfriendly - true | false
+   *        hfriendly - true | false
+   * Example: /dogs/123?dist=25 | /dogs/123?size=small
+   *
+   * TODO: Implement
+   */
+  getDogs(req, res) {
+    throw new Error('getDogs not implemented yet!');
+  },
+
+  /**
    * Returns one Dog by _id
    *
-   * Route: /dogs/:_id
-   * Example: /dogs/123
+   * Route: /dogs/:_id/one
+   * Example: /dogs/123/one
    *
    * TODO: Implement
    */
@@ -26,41 +49,9 @@ module.exports = {
   },
 
   /**
-   * Returns a list of Dogs that a given user has yet to interact with within a
-   * 50mi radius, sorted by distance descending
-   *
-   * Example: /dogs?lat=40.7418&long=-73.9893
-   *
-   * TODO: Implement
-   */
-  getNearbyDogs(req, res) {
-    throw new Error('getNearbyDogs not implemented yet!');
-  },
-
-  /**
-   * Returns a list of Dogs that a given user has yet to interract with AND is
-   * filtered by either: distance (< default 50 mi), size, dog friendliness, and
-   * human friendliness. 404 if more than one filter.
-   *
-   * Query: _id - Dog (user) _id
-   *        dist - max distance from user
-   *        size - small | medium | large
-   *        dfriendly - true | false
-   *        hfriendly - true | false
-   * Example: /dogs/_id=123&dist=25 | /dogs/_id=123&size=small
-   *
-   * TODO: Implement
-   */
-  getDogsWithFilter(req, res) {
-    throw new Error('getDogsWithFilter not implemented yet!');
-  },
-
-  /**
    * Updates a single Dog by _id with new information
    *
-   * Query: _id - Dog _id
    * Expects: body containing updated dog information
-   * Example: /dogs?_id=123
    *
    * TODO: Implement
    */
@@ -70,9 +61,6 @@ module.exports = {
 
   /**
    * Deletes a single Dog by _id
-   *
-   * Query: _id - Dog _id
-   * Example: /dogs?_id=123
    *
    * TODO: Implement
    */
