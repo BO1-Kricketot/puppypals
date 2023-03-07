@@ -92,7 +92,7 @@ const CreateProfile = () => {
           <Picker.Item label="Medium" value="medium" />
           <Picker.Item label="High" value="high" />
         </Picker>
-        <Picker selectedValue={size} onValueChange={(e) => setSize(e)}>
+        <Picker selectedValue={size} onValueChange={(s) => setSize(s)}>
           <Picker.Item label="Small" value="small" />
           <Picker.Item label="Medium" value="medium" />
           <Picker.Item label="Large" value="large" />
