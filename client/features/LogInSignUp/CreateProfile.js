@@ -8,6 +8,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import React, { useState } from 'react';
+import { Picker } from '@react-native-picker/picker';
 
 const CreateProfile = () => {
   const { height } = useWindowDimensions();
@@ -15,7 +16,7 @@ const CreateProfile = () => {
   const [dogBreed, setDogBreed] = useState('');
   const [dogPics, setDogPics] = useState([]);
   const [energyLvl, setEnergyLvl] = useState();
-  const [size, dogSize] = useState();
+  const [size, setSize] = useState();
   const [dogFriendliness, setDogFriendliness] = useState();
   const [humanFriendliness, setHumanFriendliness] = useState();
   const [bio, setBio] = useState('');
@@ -29,34 +30,49 @@ const CreateProfile = () => {
           value={dogName}
           onChangeText={setDogName}
           placeholder="Enter Dog Name"
-          inputMode="default"
-          keyboardType="default"
           style={styles.inputs}
         />
         <TextInput
           value={dogBreed}
           onChangeText={setDogBreed}
           placeholder="Enter Dog Breed"
-          inputMode="default"
-          keyboardType="default"
           style={styles.inputs}
         />
         {/* insert pic upload here after finding out how */}
-        {/* insert dropdown menus after finding out how */}
+        <Picker
+          selectedValue={energyLvl}
+          onValueChange={(e) => setEnergyLvl(e)}>
+          <Picker.Item label="Low" value="low" />
+          <Picker.Item label="Medium" value="medium" />
+          <Picker.Item label="High" value="high" />
+        </Picker>
+        <Picker selectedValue={size} onValueChange={(e) => setSize(e)}>
+          <Picker.Item label="Small" value="small" />
+          <Picker.Item label="Medium" value="medium" />
+          <Picker.Item label="Large" value="large" />
+        </Picker>
+        <Picker
+          selectedValue={dogFriendliness}
+          onValueChange={(e) => setDogFriendliness(e)}>
+          <Picker.Item label="Not Friendly" value="not friendly" />
+          <Picker.Item label="Friendly" value="friendly" />
+        </Picker>
+        <Picker
+          selectedValue={humanFriendliness}
+          onValueChange={(e) => setHumanFriendliness(e)}>
+          <Picker.Item label="Not Friendly" value="not friendly" />
+          <Picker.Item label="Friendly" value="friendly" />
+        </Picker>
         <TextInput
           value={bio}
           onChangeText={setBio}
           placeholder="Enter Dog Bio"
-          inputMode="default"
-          keyboardType="default"
           style={styles.inputs}
         />
         <TextInput
           value={ownerName}
           onChangeText={setOwnerName}
           placeholder="Enter Your Name"
-          inputMode="default"
-          keyboardType="default"
           style={styles.inputs}
         />
         {/* insert owner pic upload here */}
