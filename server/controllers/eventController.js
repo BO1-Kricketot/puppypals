@@ -18,7 +18,7 @@ module.exports = {
    * Returns one Event by (Event)_id
    *
    * Query: _id - Event _id
-   * Example: /events?_id=222
+   * Example: /events/222
    *
    * TODO: Implement
    */
@@ -27,11 +27,12 @@ module.exports = {
   },
 
   /**
-   * Returns Events by (Dog)_id and query (invited | attending)
+   * Returns Events by (Dog)_id and query (invited | attending). 404 if no query
+   * is provided. Find dogId $in filter.
    *
    * Query: filter - invited | attending
-   * Route: /events/:dogId?query=value
-   * Example: /events/123?filter=invited
+   * Route: /events/dog/:dogId?query=value
+   * Example: /events/dog/123?filter=invited
    *
    * TODO: Implement
    */
@@ -42,9 +43,7 @@ module.exports = {
   /**
    * Updates one Event by (Event)_id with new information
    *
-   * Query: _id - Event _id
    * Expects: body containing new Event information
-   * Example: /events?_id=222
    *
    * TODO: Implement
    */
@@ -54,9 +53,6 @@ module.exports = {
 
   /**
    * Deletes one Event by (Event)_id
-   *
-   * Query: _id - Event _id
-   * Example: /events?_id=222
    *
    * TODO: Implement
    */
