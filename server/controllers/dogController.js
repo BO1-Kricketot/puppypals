@@ -4,6 +4,7 @@ const debug = require('../utils/debug');
 module.exports = {
   /**
    * Creates a new Dog document
+   * return a Dog _id
    *
    * Expects: body containing Dog information
    *
@@ -33,6 +34,11 @@ module.exports = {
    * TODO: Implement
    */
   getDogs(req, res) {
+    // :_id
+    // get pendingDogs rejectedDogs from that _id (user)
+    // get location (user)
+    // DogModel .find all dogs
+    // filter out pending dogs rejected dogs and dogs outside radius
     throw new Error('getDogs not implemented yet!');
   },
 

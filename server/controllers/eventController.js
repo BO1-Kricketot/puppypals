@@ -37,6 +37,10 @@ module.exports = {
    * TODO: Implement
    */
   getEventsByDogId(req, res) {
+    // query for dog
+    // get their pendingEvents OR attendingEvents array
+    // query for those events
+    // return those events
     throw new Error('getEventsByDogId not implemented yet!');
   },
 

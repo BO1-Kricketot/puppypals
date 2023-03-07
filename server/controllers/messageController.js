@@ -5,6 +5,7 @@ const debug = require('../utils/debug');
 module.exports = {
   /**
    * Creates a new Message_Log document given two Dog _ids
+   * returns the _id of the message log
    *
    * Expects: body contains [_id, _id] where _id are Dog _ids
    *

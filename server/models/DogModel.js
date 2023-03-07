@@ -9,14 +9,14 @@ const dogSchema = new mongoose.Schema({
   imageUrls: [String],
   energy: String, // low, medium, high
   size: String, // small, medium, large
-  isDogFriendly: String,
-  isHumanFriendly: String,
+  isDogFriendly: Boolean,
+  isHumanFriendly: Boolean,
   bio: String,
-  friendsList: [String],
-  pendingDogs: [String],
-  rejectedDogs: [String],
-  eventsAttending: [String],
-  eventsPending: [String],
+  friendsList: [Number], // Dog ids
+  pendingDogs: [Number], // Dog ids
+  rejectedDogs: [Number], // Dog ids
+  eventsAttending: [Number], // Event ids
+  eventsPending: [Number], // Event ids
   location: locationSchema,
   owner: {
     name: String,
