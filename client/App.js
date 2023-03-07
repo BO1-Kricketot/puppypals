@@ -3,13 +3,13 @@ import { StyleSheet, Text, SafeAreaView } from 'react-native';
 import React from 'react';
 // import Example from './features/Example';
 import LogIn from './features/LogInSignUp/LogIn.js';
+import CreateAccount from './features/LogInSignUp/CreateAccount.js'
 
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <LogIn />
-      <Text>Open up App.js to start working on your app!</Text>
       <StatusBar style="auto" />
+      <CreateAccount />
     </SafeAreaView>
   );
 }

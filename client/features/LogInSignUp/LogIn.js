@@ -23,6 +23,7 @@ const LogIn = () => {
 
   return (
     <SafeAreaView style={styles.root}>
+      <Text>Log In</Text>
       <Image
         Source={DummyLogo}
         alt="Dog Logo Here"
@@ -31,7 +32,7 @@ const LogIn = () => {
       <TextInput
         value={email}
         onChangeText={setEmail}
-        placeholder="Enter email here"
+        placeholder="Enter email"
         inputMode="email"
         keyboardType="email-address"
         style={styles.inputs}
@@ -39,7 +40,7 @@ const LogIn = () => {
       <TextInput
         value={password}
         onChangeText={setPassword}
-        placeholder="Enter password here"
+        placeholder="Enter password"
         secureTextEntry={true}
         style={styles.inputs}
       />
