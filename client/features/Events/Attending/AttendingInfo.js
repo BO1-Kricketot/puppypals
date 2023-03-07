@@ -5,7 +5,7 @@ import Constants from 'expo-constants';
 
 export default function AttendingInfo({ modal, toggleModal, event }) {
   return (
-    <Modal>
+    <Modal animationType="slide">
       <View style={styles.modalContainer}>
         <Text>{event.title}</Text>
         <Text>{event.description}</Text>
