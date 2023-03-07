@@ -96,4 +96,10 @@ const eventsData = [
   },
 ];
 
-export { attendingEventsList, eventsData };
+const hostMeta = {
+  _id: 1,
+  name: 'Kiwi',
+  mainImgPath: 'this is just a test',
+};
+
+export { attendingEventsList, eventsData, hostMeta };
