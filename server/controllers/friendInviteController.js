@@ -25,4 +25,17 @@ module.exports = {
   getFriendInvitesById(req, res) {
     throw new Error('getFriendInvitesById not implemented yet!');
   },
+
+  /**
+   * Updates a Friend_Invite by _id reflecting new status
+   *
+   * Route: /finvites?_id=111
+   * Expects: body containing new status
+   *
+   * TODO: Implement
+   * TODO: Implement route
+   */
+  updateFriendInviteById(req, res) {
+    throw new Error('updateFriendInviteById not implemented yet!');
+  },
 };
