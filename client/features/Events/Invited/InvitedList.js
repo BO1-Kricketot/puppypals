@@ -8,30 +8,38 @@ const eventsData = [
   {
     _id: 1,
     status: 'pending',
+    timestamp: 'May 6, 2023',
   },
   {
     _id: 2,
     status: 'pending',
+    timestamp: 'May 6, 2023',
   },
   {
     _id: 3,
-    status: 'accepted',
+    status: 'pending',
+    timestamp: 'May 6, 2023',
   },
   {
     _id: 4,
     status: 'accepted',
+    timestamp: 'May 6, 2023',
   },
 ];
+
+const hostMeta = {
+  _id: 1,
+  name: 'Kiwi',
+  mainImgPath: 'this is just a test',
+};
 
 export default function InvitedList({ invitedEvents }) {
   const [filteredEvents, setFilteredEvents] = useState([]);
 
-  console.log('eventsData', eventsData);
   const filterEvents = () => {
     const filtered = eventsData.filter(
       (invitedEvent) => invitedEvent.status === 'pending',
     );
-    // console.log('filtered', filtered);
     setFilteredEvents(filtered);
   };
 
@@ -40,13 +48,17 @@ export default function InvitedList({ invitedEvents }) {
   }, []);
 
   return (
-    <View>
-      <Text>Invited List goes here</Text>
+    <View style={styles.container}>
       {filteredEvents.map((event) => (
-        <InvitedTile key={event._id} event={event} />
+        <InvitedTile key={event._id} event={event} hostMeta={hostMeta} />
       ))}
     </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    margin: '1%',
+  },
+});

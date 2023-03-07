@@ -3,12 +3,23 @@ import React from 'react';
 import api from '../../../api';
 import Constants from 'expo-constants';
 
-export default function InvitedTitle() {
+export default function InvitedTile({ event, hostMeta }) {
   return (
-    <View>
-      <Text>Invited Tile</Text>
+    <View style={styles.container}>
+      <Text>{hostMeta.mainImgPath}</Text>
+      <Text>{hostMeta.name}</Text>
+      <Text>{event.timestamp}</Text>
+      <Text>{event.title}</Text>
+      <Text>{event.city}</Text>
+      <Text>{event.state}</Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    margin: '1%',
+    backgroundColor: 'red',
+    height: 100,
+  },
+});
