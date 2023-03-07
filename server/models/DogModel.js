@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const locationSchema = require('./locationSchema');
 
 const dogSchema = new mongoose.Schema({
   _id: Number,
@@ -16,15 +17,7 @@ const dogSchema = new mongoose.Schema({
   rejectedDogs: [String],
   eventsAttending: [String],
   eventsPending: [String],
-  location: {
-    address1: String,
-    address2: String,
-    city: String,
-    state: String,
-    postalCode: String,
-    latitude: Number,
-    longitude: Number,
-  },
+  location: locationSchema,
   owner: {
     name: String,
     imageUrl: String,
