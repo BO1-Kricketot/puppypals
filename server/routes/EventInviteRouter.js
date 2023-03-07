@@ -3,6 +3,6 @@ const controller = require('../controllers').eventInvite;
 
 EventInviteRouter.post('/', controller.sendEventInvite);
 EventInviteRouter.get('/:recipientId', controller.getEventInvitesById);
-EventInviteRouter.patch('/', controller.updateEventInviteById);
+EventInviteRouter.patch('/:_id', controller.updateEventInviteById);
 
 module.exports = EventInviteRouter;

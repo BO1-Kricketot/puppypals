@@ -29,7 +29,7 @@ module.exports = {
   /**
    * Updates an Event_Invite by _id reflecting new status
    *
-   * Route: /einvites?_id=111
+   * Route: /einvites/111
    * Expects: body containing new status
    *
    * TODO: Implement
