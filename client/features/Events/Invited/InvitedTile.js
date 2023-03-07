@@ -30,7 +30,7 @@ export default function InvitedTile({ event, hostMeta }) {
 
 const styles = StyleSheet.create({
   container: {
-    margin: '1%',
+    marginTop: '1%',
     backgroundColor: 'red',
     height: 100,
   },

@@ -31,6 +31,5 @@ export default function InvitedList({ invitedEvents }) {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    margin: '1%',
   },
 });
