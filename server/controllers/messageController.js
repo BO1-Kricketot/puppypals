@@ -15,11 +15,11 @@ module.exports = {
   },
 
   /**
-   * Pushes a new Message into a Message_Log given a chatroom _id
+   * Creates a new message and push into a Message_Log given a Messages _id
    *
-   * Route: /messages/:logId
+   * Route: /messages/:_id
    * Expects: body containing message
-   * Example: /messages/123
+   * Example: /messages/333
    *
    * TODO: Implement
    */
@@ -28,19 +28,30 @@ module.exports = {
   },
 
   /**
-   * Retrieves the log of messages
+   * Retrieves a Message_Log by its _id
    *
-   * Expects: query containing id1, id2 -- these ids are Dog _ids
-   * Example: /messages?id1=12&id2=23
+   * Example: /messages/333
    *
    * TODO: Implement
    */
-  getMessageLogByIds(req, res) {
+  getMessageLogById(req, res) {
     throw new Error('getMessageLogById not implemented yet!');
   },
 
   /**
-   * Updates a Message with an emoji react given a logId and messageId
+   * Retrieves the log of messages between two Dogs by their _id
+   *
+   * Example: /messages/123/456
+   *
+   * TODO: Implement
+   */
+  getMessageLogByDogIds(req, res) {
+    throw new Error('getMessageLogByDogIds not implemented yet!');
+  },
+
+  /**
+   * Updates a Message with an emoji react given a Message_Log _id and
+   * Message _id
    *
    * Route: /messages/123/1
    * Expects: body containing emoji
@@ -48,6 +59,6 @@ module.exports = {
    * TODO: Implement
    */
   reactToMessage(req, res) {
-    throw new Error('getMessageLogById not implemented yet!');
+    throw new Error('reactToMessage not implemented yet!');
   },
 };
