@@ -1,9 +1,3 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import api from '../../../api';
-import Constants from 'expo-constants';
-import AttendingTile from './AttendingTile.js';
-
 const attendingEventsList = [
   {
     _id: 1,
@@ -43,31 +37,27 @@ const attendingEventsList = [
   },
 ];
 
-const hostMeta = {
-  _id: 1,
-  name: 'Kiwi',
-  mainImgPath: 'this is just a test',
-};
-
-export default function InvitedList({ attendingEvents }) {
-  const [eventList, setEventList] = useState([]);
-
-  useEffect(() => {
-    setEventList(attendingEventsList);
-  }, []);
-
-  return (
-    <View style={styles.container}>
-      {eventList.map((event) => (
-        <AttendingTile key={event._id} event={event} hostMeta={hostMeta} />
-      ))}
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    margin: '1%',
+const eventsData = [
+  {
+    _id: 1,
+    status: 'pending',
+    timestamp: 'May 6, 2023',
   },
-});
+  {
+    _id: 2,
+    status: 'pending',
+    timestamp: 'May 6, 2023',
+  },
+  {
+    _id: 3,
+    status: 'pending',
+    timestamp: 'May 6, 2023',
+  },
+  {
+    _id: 4,
+    status: 'accepted',
+    timestamp: 'May 6, 2023',
+  },
+];
+
+export { attendingEventsList, eventsData };
