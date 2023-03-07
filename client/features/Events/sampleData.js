@@ -7,6 +7,15 @@ const attendingEventsList = [
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
     attendees: ['kiwi', 'bella', 'finn'],
+    host_meta: {
+      _id: 1,
+      name: 'Kiwi',
+      mainImgPath: 'this is just a test',
+    },
+    location: {
+      city: 'Las Vegas',
+      state: 'NV',
+    },
   },
   {
     _id: 2,
@@ -16,6 +25,15 @@ const attendingEventsList = [
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
     attendees: ['kiwi', 'bella', 'finn'],
+    host_meta: {
+      _id: 2,
+      name: 'Kiwi',
+      mainImgPath: 'this is just a test',
+    },
+    location: {
+      city: 'Las Vegas',
+      state: 'NV',
+    },
   },
   {
     _id: 3,
@@ -25,6 +43,15 @@ const attendingEventsList = [
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
     attendees: ['kiwi', 'bella', 'finn'],
+    host_meta: {
+      _id: 3,
+      name: 'Kiwi',
+      mainImgPath: 'this is just a test',
+    },
+    location: {
+      city: 'Las Vegas',
+      state: 'NV',
+    },
   },
   {
     _id: 4,
@@ -34,6 +61,15 @@ const attendingEventsList = [
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
     attendees: ['kiwi', 'bella', 'finn'],
+    host_meta: {
+      _id: 4,
+      name: 'Kiwi',
+      mainImgPath: 'this is just a test',
+    },
+    location: {
+      city: 'Las Vegas',
+      state: 'NV',
+    },
   },
 ];
 
