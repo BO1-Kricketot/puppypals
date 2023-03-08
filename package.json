@@ -26,6 +26,7 @@
   "license": "ISC",
   "dependencies": {
     "@react-navigation/material-top-tabs": "^5.3.19",
+    "date-fns": "^2.29.3",
     "react-native-tab-view": "^2.16.0"
   }
 }
