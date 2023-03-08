@@ -7,13 +7,16 @@ import {
   Image,
   SafeAreaView,
   TextInput,
-  useWindowDimensions,
+  Dimensions,
+  Platform,
+  StatusBar,
 } from 'react-native';
 import DummyLogo from '../../assets/icon.png';
 import Constants from 'expo-constants';
+const { width, height } = Dimensions.get('window');
 
 const LandingPage = () => {
-  const { height } = useWindowDimensions();
+  const { height } = Dimensions();
   const goToLogIn = () => {
     console.log('go to log in');
   };
@@ -22,7 +25,7 @@ const LandingPage = () => {
   };
 
   return (
-    <SafeAreaView>
+    <View>
       <Image Source={DummyLogo} alt="Doggy Logo hehe" />
       <Button
         title="Log In"
@@ -36,8 +39,34 @@ const LandingPage = () => {
         color="#7371FC"
         accessibilityLabel="Press here to go to the sign up page"
       />
-    </SafeAreaView>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  root: {
+    alignItems: 'center',
+    width: width,
+    paddingTop: Platform.OS === 'android' && StatusBar.currentHeight,
+  },
+  logo: {
+    width: '50%',
+    maxWidth: 300,
+    maxHeight: 200,
+  },
+  inputs: {
+    width: '80%',
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 3,
+    marginVertical: 3,
+    paddingHorizontal: 10,
+  },
+  button: {
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 3,
+  },
+});
 
 export default LandingPage;

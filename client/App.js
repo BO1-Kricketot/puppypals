@@ -1,8 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import Example from './features/Example';
 import Profile from './features/Profile';
-import { StyleSheet, Text, SafeAreaView } from 'react-native';
 import React from 'react';
 // import Example from './features/Example';
 import LogIn from './features/LogInSignUp/LogIn.js';

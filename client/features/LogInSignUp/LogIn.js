@@ -3,26 +3,32 @@ import {
   Button,
   StyleSheet,
   Text,
-  // View,
+  View,
   Image,
-  SafeAreaView,
+  Platform,
   TextInput,
-  useWindowDimensions,
+  Dimensions,
+  StatusBar,
 } from 'react-native';
 import DummyLogo from '../../assets/icon.png';
+import axios from 'axios';
+const { width, height } = Dimensions.get('window');
 // import Constants from 'expo-constants';
 
 const LogIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { height } = useWindowDimensions();
 
   const signInPress = () => {
     console.log('send login info');
+    let logInData = {
+      email: email,
+      password: password,
+    }
   };
 
   return (
-    <SafeAreaView style={styles.root}>
+    <View style={styles.root}>
       <Text>Log In</Text>
       <Image
         Source={DummyLogo}
@@ -51,14 +57,15 @@ const LogIn = () => {
         color="#7371FC"
         accessibilityLabel="Press here to log in"
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   root: {
     alignItems: 'center',
-    width: '100%',
+    width: width,
+    paddingTop: Platform.OS === 'android' && StatusBar.currentHeight,
   },
   logo: {
     width: '50%',

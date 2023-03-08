@@ -11,6 +11,7 @@ module.exports = {
    * TODO: Implement
    */
   registerDog(req, res) {
+    console.log(req);
     throw new Error('registerDog not implemented yet!');
   },
 

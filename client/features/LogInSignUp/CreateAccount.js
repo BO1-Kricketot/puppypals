@@ -4,16 +4,18 @@ import {
   Text,
   SafeAreaView,
   TextInput,
-  useWindowDimensions,
+  Dimensions,
   Alert,
+  Platform,
+  StatusBar,
 } from 'react-native';
 import React, { useState } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
+const { width, height } = Dimensions.get('window');
 // import api from '../../api';
 // import Constants from 'expo-constants';
 
 const CreateAccount = () => {
-  const { height } = useWindowDimensions();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
@@ -94,7 +96,8 @@ const CreateAccount = () => {
 const styles = StyleSheet.create({
   root: {
     alignItems: 'center',
-    width: '100%',
+    width: width,
+    paddingTop: Platform.OS === 'android' && StatusBar.currentHeight,
   },
   logo: {
     width: '50%',
