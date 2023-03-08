@@ -5,15 +5,18 @@ import {
   TouchableOpacity,
   Modal,
   Button,
+  Image,
 } from 'react-native';
 import React from 'react';
 import api from '../../../api';
 import Constants from 'expo-constants';
 import axios from 'axios';
 import { dummyDogFriends } from '../sampleData.js';
+// console.log(dummyDogFriends[0].mainImageUrl);
 
 export default function InvitedInfo({ modal, toggleModal, event, dog }) {
   let friends = dummyDogFriends;
+
   // // PLACEHOLDERS FOR FE TO BE HOOKUP:
   // const handleAttendanceUpdate = (eventId, dogId, isAttending) => {
   //   console.log('isAttending?', isAttending);
@@ -42,7 +45,43 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
         <Text>{event.title}</Text>
         <Text>{event.description}</Text>
         <Text>Invited</Text>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={{ uri: dummyDogFriends[0].mainImageUrl }}
+          />
+        </View>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={{ uri: dummyDogFriends[1].mainImageUrl }}
+          />
+        </View>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={{ uri: dummyDogFriends[2].mainImageUrl }}
+          />
+        </View>
         <Text>Attending</Text>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={{ uri: dummyDogFriends[0].mainImageUrl }}
+          />
+        </View>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={{ uri: dummyDogFriends[1].mainImageUrl }}
+          />
+        </View>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={{ uri: dummyDogFriends[2].mainImageUrl }}
+          />
+        </View>
         <Text>Are you joining, pal?</Text>
         <View style={styles.buttonContainer}>
           <Button
@@ -79,5 +118,17 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '40%',
+  },
+  imageContainer: {
+    width: 50,
+    height: 50,
+    marginLeft: 'auto',
+    marginRight: 10,
+  },
+  image: {
+    flex: 1,
+    margin: '2%',
+    borderRadius: 25,
+    width: '100%',
   },
 });
