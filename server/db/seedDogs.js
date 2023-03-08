@@ -11,12 +11,12 @@ const DB_COLL = 'puppypals_db';
 
 mongoose.connect(`mongodb://${DB_HOST}/${DB_COLL}`);
 
-function getRandomIndex(arrayLength) {
-  return Math.floor(Math.random() * arrayLength);
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
 }
 
 function getRandomItem(array) {
-  return array[getRandomIndex(array.length)];
+  return array[getRandomInt(array.length)];
 }
 
 function generateRandomDog() {
@@ -29,11 +29,18 @@ function generateRandomDog() {
     dogImages,
     ownerImages,
   } = ProxyData;
+
+  const numImages = getRandomInt(4);
+  const images = [];
+  for (let i = 0; i < numImages; i += 1) {
+    images.push(getRandomItem(dogImages));
+  }
+
   return {
     name: getRandomItem(dogNames),
     breed: getRandomItem(dogBreeds),
     mainImage: getRandomItem(dogImages),
-    images: [],
+    images,
     energy: getRandomItem(['low', 'medium', 'high']),
     size: getRandomItem(['small', 'medium', 'large']),
     isDogFriendly: getRandomItem([true, false]),
@@ -69,4 +76,4 @@ async function main(size) {
   console.log('done! press ctrl+c to exit.');
 }
 
-main(50);
+main(1);

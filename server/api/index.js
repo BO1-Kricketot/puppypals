@@ -54,6 +54,9 @@ module.exports = {
         data: formData,
       };
     });
-    return axios.all(options.map((config) => axios(config)));
+    return axios
+      .all(options.map((config) => axios(config)))
+      .then((results) => results.map((result) => result.data.data.url))
+      .catch((err) => console.error(err));
   },
 };

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-vars */
 const _ = require('lodash');
 const api = require('../api');
@@ -38,6 +39,9 @@ module.exports = async function formatDog(dog) {
   const mainImageUrl = await api.uploadPhoto(dog?.mainImage);
   const imageUrls = await api.uploadPhotos(dog?.images);
   const ownerImage = await api.uploadPhoto(dog?.owner?.image);
+  delete dog.mainImage;
+  delete dog.images;
+  delete dog.owner.image;
   return {
     ...dog,
     mainImageUrl,
