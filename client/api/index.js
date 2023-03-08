@@ -30,6 +30,7 @@ export default {
   },
 
   getCoordinates({ address1, address2, city, state, postalCode }) {
+    console.log(openCageKey);
     return axios({
       method: 'get',
       url: `https://api.opencagedata.com/geocode/v1/json`,
