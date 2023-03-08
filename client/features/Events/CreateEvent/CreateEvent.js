@@ -37,6 +37,8 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
   const [form, setForm] = useState(initial);
   const [dob, setDob] = useState(new Date());
   const [showDatePick, setShowDatePick] = useState(false);
+  const [startTime, setStartTime] = useState(new Date());
+  const [showStartTimePicker, setShowStartTimePicker] = useState(false);
 
   const resetForm = () => {
     setForm(initial);
