@@ -7,22 +7,18 @@ export default function MainImgEditor({
   mainPic,
   setMainPic,
 }) {
-  console.log('mainPic: ', mainPic);
+  // const ext = mainPic[0].match(/\.(jpg|jpeg|png|gif|bmp)$/i)[1];
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      // base64: true,
+      base64: true,
       allowsEditing: true,
       aspect: [7, 10],
       quality: 1,
     });
 
-    console.log('pic is: ', result);
-
     if (!result.canceled) {
         setMainPic([result.assets[0].uri]);
-        console.log('mainPic is NOW: ', mainPic);
     }
   };
 
@@ -35,9 +31,7 @@ export default function MainImgEditor({
       {mainPic && (
         <Image
           source={{ uri: mainPic[0] }}
-            // uri: `data:image/png;base64,${mainPic[0].base64}`
-            // uri: `data:image/png;base64,${mainPic[0].toString()}`
-            // uri: mainPic[0].toString()
+            // uri: `data:image/${ext};base64, ${mainPic[0].base64}`
           style={imageStyles.pickImage}
         />
       )}

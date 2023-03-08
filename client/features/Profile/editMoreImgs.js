@@ -7,25 +7,20 @@ export default function MoreImgsEditor({
   morePics,
   setMorePics,
 }) {
-  console.log('morePics: ', morePics);
+  // const ext = morePics[imgKey].match(/\.(jpg|jpeg|png|gif|bmp)$/i)[1];
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      // base64: true,
+      base64: true,
       allowsEditing: true,
       aspect: [7, 10],
       quality: 1,
     });
 
-    console.log('pic is: ', result);
-
     if (!result.canceled) {
       const newPicList = morePics.slice();
       newPicList[imgKey] = result.assets[0].uri;
-      console.log('newPicList is: ', newPicList);
       setMorePics([...newPicList]);
-      console.log('morePics is NOW: ', morePics);
     }
   };
 
@@ -38,8 +33,7 @@ export default function MoreImgsEditor({
       {morePics && (
         <Image
           source={{ uri: morePics[imgKey] }}
-            // uri: `data:image/png;base64, ${morePics[imgKey].toString()}`
-            // uri: morePics[imgKey].toString()
+            // uri: `data:image/${ext};base64,${morePics[imgKey].base64}`
           style={imageStyles.pickImage}
         />
         )}
