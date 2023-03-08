@@ -13,8 +13,7 @@ import {
 
 import * as ImagePicker from 'expo-image-picker';
 import SelectDropdown from 'react-native-select-dropdown';
-import MainImagePicker from './editImages.js';
-import MoreImagesPicker from './editImages.js';
+import ImageEditor from './editImages.js';
 import LocationEditor from './editLocation.js';
 import BioEditor from './editBio.js';
 
@@ -26,8 +25,17 @@ export default function ModalContainer({
   profileChanged,
   setProfileChanged,
 }) {
-  const [mainImage, setMainImage] = useState(null);
-  const [moreImages, setMoreImages] = useState(null);
+  // const [mainImage, setMainImage] = useState([pics[0].url]);
+  // const [moreImages, setMoreImages] = useState([
+  //   pics[1].url,
+  //   pics[2].url,
+  //   pics[3].url,
+  //   pics[4].url,
+  //   pics[5].url,
+  // ]);
+
+  const [mainImage, setMainImage] = useState([null]);
+  const [moreImages, setMoreImages] = useState([null]);
   const [city, setCity] = useState(info.location.slice(0, -4));
   const [state, setState] = useState('');
   const [bio, setBio] = useState('');
@@ -47,15 +55,43 @@ export default function ModalContainer({
             <Text style={editProfileStyles.modalText}>
               Editing Your Profile
             </Text>
-            <MainImagePicker mainImage={mainImage} setMainImage={setMainImage} />
+            <ImageEditor
+              key={111} // make it super obvious
+              imgKey={111}
+              mainImage={mainImage}
+              setMainImage={setMainImage}
+            />
             <View style={{ flex: 1, flexDirection: 'row' }}>
-              {Array(5).fill(
-                <MoreImagesPicker
-                  moreImages={moreImages}
-                  setMoreImages={setMoreImages}
-                />)
-                .map((picker) => picker)
-              }
+              <ImageEditor
+                key={0}
+                imgKey={0}
+                moreImages={moreImages}
+                setMoreImages={setMoreImages}
+              />
+              <ImageEditor
+                key={1}
+                imgKey={1}
+                moreImages={moreImages}
+                setMoreImages={setMoreImages}
+              />
+              <ImageEditor
+                key={2}
+                imgKey={2}
+                moreImages={moreImages}
+                setMoreImages={setMoreImages}
+              />
+              <ImageEditor
+                key={3}
+                imgKey={3}
+                moreImages={moreImages}
+                setMoreImages={setMoreImages}
+              />
+              <ImageEditor
+                key={4}
+                imgKey={4}
+                moreImages={moreImages}
+                setMoreImages={setMoreImages}
+              />
             </View>
             <LocationEditor
               city={city}
@@ -128,3 +164,11 @@ const editProfileStyles = StyleSheet.create({
     fontWeight: 600,
   },
 });
+
+const dummyMoreImgs = [
+  'placeholder0',
+  'placeholder1',
+  'placeholder2',
+  'placeholder3',
+  'placeholder4',
+];
