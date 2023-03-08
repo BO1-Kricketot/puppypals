@@ -1,7 +1,8 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
+// eslint-disable-next-line no-unused-vars
 
-const {DB_HOST} = process.env;
+const { DB_HOST } = process.env;
 const DB_COLL = 'puppypals_db';
 
 async function main() {
