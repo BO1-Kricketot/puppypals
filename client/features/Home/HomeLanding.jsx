@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { StyleSheet, Text, View, Button,TouchableWithoutFeedback,Image, Modal, SafeAreaView, Dimensions, Platform, StatusBar } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import Profile from './ProfileView.jsx'
-
+import api from '../../api';
 
 const {width, height, fontScale} = Dimensions.get('window');
 
@@ -83,7 +83,7 @@ const HomeLanding = ({navigation}) => {
           </View>
         </Modal>
     <View style ={{width: '100%', height: '100%', flex: 1,position: 'absolute', top: 0.08* height}}>
-    <Swiper 
+    <Swiper
     cards={dummyUsers}
     containerStyle={{backgroundColor: 'transparent', }}
     stackSize ={5}
@@ -111,7 +111,7 @@ const HomeLanding = ({navigation}) => {
         }
       }
     }}
-    renderCard = {(card) => 
+    renderCard = {(card) =>
       (<View key={card.id} style={{backgroundColor:'white', height: '85%', position:'relative', borderColor: 'gray', borderWidth: 1, borderRadius: 4}}>
         <Image style ={{height: '100%', width: '100%', position: 'absolute', top: 0}} source ={{uri: card.photos[0].url}}></Image>
         <View style={{position: 'absolute', bottom: 0, display: 'flex',flexDirection: 'row', justifyContent:'space-between', backgroundColor: 'white', width: '100%', height: '10%', paddingTop: 8, paddingLeft: 6, paddingRight: 6}}>
@@ -122,6 +122,15 @@ const HomeLanding = ({navigation}) => {
       }/>
       </View>
     <View style={styles.navBar}>
+      <Button
+      title="DELETE ME"
+      onPress={async () => console.log(await api.getCoordinates({
+        address1: '123 Main St',
+        address2: '',
+        city: 'Los Angeles',
+        state: 'CA',
+        postalCode: '90012',
+      }))}></Button>
     <Text>navBar</Text></View>
   </SafeAreaView>}
     </>
@@ -150,7 +159,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 2,
     borderRadius: 75,
-  }, 
+  },
   navBar: {
     height: '10%',
     position: 'absolute',
@@ -173,5 +182,5 @@ export default HomeLanding;
 //   width: width - 10,
 //   height: '100%',
 //   backgroundColor: 'black'
-// }, 
+// },
 

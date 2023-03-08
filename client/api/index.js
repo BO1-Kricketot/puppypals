@@ -2,6 +2,7 @@ import axios from 'axios';
 import Constants from 'expo-constants';
 
 const baseUrl = Constants.expoConfig.extra.apiUrl;
+const openCageKey = Constants.expoConfig.extra.openCageKey;
 
 export default {
   getExample() {
@@ -25,6 +26,20 @@ export default {
       .then((res) =>
         console.log(`POST Successful-\n${JSON.stringify(res.data, null, 2)}`),
       )
+      .catch((err) => console.error(err));
+  },
+
+  getCoordinates({ address1, address2, city, state, postalCode }) {
+    console.log(openCageKey);
+    return axios({
+      method: 'get',
+      url: `https://api.opencagedata.com/geocode/v1/json`,
+      params: {
+        key: openCageKey,
+        q: `${address1} ${address2}, ${city}, ${state} ${postalCode}`,
+      },
+    })
+      .then(({ data }) => data.results[0].geometry)
       .catch((err) => console.error(err));
   },
 };
