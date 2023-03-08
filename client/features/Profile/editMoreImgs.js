@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Image, StyleSheet, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
 export default function MoreImgsEditor({
   imgKey,
-  morePics,
-  setMorePics,
+  morePicsCopy,
+  setMorePicsCopy,
 }) {
-  // const ext = morePics[imgKey].match(/\.(jpg|jpeg|png|gif|bmp)$/i)[1];
+  // const ext = morePicsCopy[imgKey].match(/\.(jpg|jpeg|png|gif|bmp)$/i)[1];
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -18,25 +18,22 @@ export default function MoreImgsEditor({
     });
 
     if (!result.canceled) {
-      const newPicList = morePics.slice();
+      const newPicList = morePicsCopy.slice();
       newPicList[imgKey] = result.assets[0].uri;
-      setMorePics([...newPicList]);
+      setMorePicsCopy([...newPicList]);
     }
   };
 
   return (
     <View style={imageStyles.container}>
-      <Button
-        title='Edit Pic'
-        onPress={pickImage}
-      />
-      {morePics && (
+      <Button title="Edit Pic" onPress={pickImage} />
+      {morePicsCopy && (
         <Image
-          source={{ uri: morePics[imgKey] }}
-            // uri: `data:image/${ext};base64,${morePics[imgKey].base64}`
+          source={{ uri: morePicsCopy[imgKey] }}
+          // uri: `data:image/${ext};base64,${morePicsCopy[imgKey].base64}`
           style={imageStyles.pickImage}
         />
-        )}
+      )}
     </View>
   );
 }

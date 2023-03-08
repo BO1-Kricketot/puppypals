@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   Modal,
   Platform,
   Pressable,
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 
-import * as ImagePicker from 'expo-image-picker';
-import SelectDropdown from 'react-native-select-dropdown';
 import MainImgEditor from './editMainImg.js';
 import MoreImgsEditor from './editMoreImgs.js';
 import LocationEditor from './editLocation.js';
@@ -20,6 +17,7 @@ import BioEditor from './editBio.js';
 
 export default function ModalContainer({
   info,
+  setInfo,
   mainPic,
   setMainPic,
   morePics,
@@ -29,13 +27,27 @@ export default function ModalContainer({
   profileChanged,
   setProfileChanged,
 }) {
+  const [mainPicCopy, setMainPicCopy] = useState([...mainPic]);
+  const [morePicsCopy, setMorePicsCopy] = useState([...morePics]);
+  const [city, setCity] = useState(info.location.city);
+  const [state, setState] = useState(info.location.state);
+  const [dogBioCopy, setDogBioCopy] = useState(info.dogBio);
 
+  const handleSaveAndClose = () => {
+    // do a big old put (or patch) request in real life
 
-  // const [mainImage, setMainImage] = useState([null]);
-  const [moreImages, setMoreImages] = useState(Array(5).fill(null));
-  const [city, setCity] = useState(info.location.slice(0, -4));
-  const [state, setState] = useState('');
-  const [bio, setBio] = useState('');
+    // with dummy data
+    const infoCopy = { ...info };
+    infoCopy.location.city = city;
+    infoCopy.location.state = state;
+    infoCopy.dogBio = dogBioCopy;
+
+    setInfo(infoCopy);
+    setMainPic(mainPicCopy);
+    setMorePics(morePicsCopy);
+    setModalVisible(!modalVisible);
+    setProfileChanged(!profileChanged);
+  };
 
   return (
     <View style={editProfileStyles.centeredView}>
@@ -55,16 +67,16 @@ export default function ModalContainer({
             <MainImgEditor
               key={111} // make it super obvious
               imgKey={111}
-              mainPic={mainPic}
-              setMainPic={setMainPic}
+              mainPicCopy={mainPicCopy}
+              setMainPicCopy={setMainPicCopy}
             />
             <View style={{ flex: 1, flexDirection: 'row' }}>
-              {morePics.map((slot, i) => (
+              {morePicsCopy.map((slot, i) => (
                 <MoreImgsEditor
                   key={i}
                   imgKey={i}
-                  morePics={morePics}
-                  setMorePics={setMorePics}
+                  morePicsCopy={morePicsCopy}
+                  setMorePicsCopy={setMorePicsCopy}
                 />
               ))}
             </View>
@@ -74,10 +86,10 @@ export default function ModalContainer({
               state={state}
               setState={setState}
             />
-            <BioEditor bio={bio} setBio={setBio} />
+            <BioEditor dogBioCopy={dogBioCopy} setDogBioCopy={setDogBioCopy} />
             <Pressable
               style={[editProfileStyles.button, editProfileStyles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
+              onPress={handleSaveAndClose}>
               <Text style={editProfileStyles.textStyle}>Save & Close</Text>
             </Pressable>
           </View>
@@ -104,7 +116,6 @@ const editProfileStyles = StyleSheet.create({
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
-    // alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -139,11 +150,3 @@ const editProfileStyles = StyleSheet.create({
     fontWeight: 600,
   },
 });
-
-const dummyMoreImgs = [
-  'placeholder0',
-  'placeholder1',
-  'placeholder2',
-  'placeholder3',
-  'placeholder4',
-];

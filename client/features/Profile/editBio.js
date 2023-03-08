@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
-import { Button, StyleSheet, TextInput, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
-export default function BioEditor({ bio, setBio }) {
-
+export default function BioEditor({ dogBioCopy, setDogBioCopy }) {
   return (
     <View style={bioStyles.container}>
+      <Text style={bioStyles.bioTitle}>
+        Enter a new bio, or leave it the way it is:
+      </Text>
       <View style={bioStyles.bioInput}>
         <TextInput
           editable
           multiline
-          numberOfLines={4}
-          maxLength={80}
-          onChangeText={(text) => setBio(text)}
-          value={bio}
-          placeholder={bio}
+          numberOfLines={8}
+          onChangeText={(text) => setDogBioCopy(text)}
+          value={dogBioCopy}
+          placeholder={dogBioCopy}
           style={{ margin: '2%' }}
         />
       </View>
@@ -25,6 +26,11 @@ const bioStyles = StyleSheet.create({
   container: {
     backgroundColor: 'darkcyan',
     flex: 2,
+  },
+  bioTitle: {
+    fontStyle: 'italic',
+    fontWeight: 600,
+    marginLeft: '2%',
   },
   bioInput: {
     backgroundColor: 'lightgray',

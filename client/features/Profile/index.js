@@ -35,7 +35,17 @@ export default function Profile({ dogId }) {
   const dummyInfo = {
     dogName: 'Billie',
     dogBreed: 'Poodle',
-    location: 'Chicago, IL',
+    location: {
+      // address1,
+      // address2,
+      city: 'Skagway',
+      state: 'AK',
+      // postalCode,
+      // coordinates: {
+      // lat,
+      // lng,
+      // },
+    },
     peopleFriendly: true,
     dogFriendly: true,
     dogBio:
@@ -91,12 +101,16 @@ export default function Profile({ dogId }) {
           </View>
         </View>
         <View style={mainPicContainer}>{renderPics(mainPic, true)}</View>
-        <View style={morePicsAndNavContainer}>{renderPics(morePics, false)}</View>
+        <View style={morePicsAndNavContainer}>
+          {renderPics(morePics, false)}
+        </View>
         <View style={dogInfoContainer}>
           <Text>
             {dummyInfo.dogName} ({dummyInfo.dogBreed})
           </Text>
-          <Text>{dummyInfo.location}</Text>
+          <Text>
+            {dummyInfo.location.city}, {dummyInfo.location.state}
+          </Text>
           {dummyInfo.peopleFriendly || dummyInfo.dogFriendly ? (
             <View style={friendlyContainer}>
               {dummyInfo.peopleFriendly && (
@@ -115,6 +129,7 @@ export default function Profile({ dogId }) {
         {modalVisible && (
           <ModalContainer
             info={info}
+            setInfo={setInfo}
             mainPic={mainPic}
             setMainPic={setMainPic}
             morePics={morePics}
