@@ -11,9 +11,10 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import axios from 'axios';
 const { width, height } = Dimensions.get('window');
 // import api from '../../api';
-// import Constants from 'expo-constants';
+import Constants from 'expo-constants';
 
 const CreateAccount = () => {
   const [email, setEmail] = useState('');
@@ -21,6 +22,7 @@ const CreateAccount = () => {
   const [password2, setPassword2] = useState('');
   const [dob, setDob] = useState(new Date());
   const [showDatePick, setShowDatePick] = useState(false);
+  const baseUrl = Constants.expoConfig.extra.apiUrl;
 
   const pressCreateAccount = () => {
     // shows amout of time since 1/1/1970
@@ -33,7 +35,14 @@ const CreateAccount = () => {
       Alert.alert('Users must be over the age of 18!');
     } else {
       //submit info
-      console.log('successful');
+      let userInfo = {
+        email: email,
+        password: password,
+      };
+      axios
+        .post(`${baseUrl}/api/user/signup`, userInfo)
+        .then((res) => console.log(res))
+        .catch((e) => console.log('error in react', e));
     }
   };
 

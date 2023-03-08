@@ -12,19 +12,25 @@ import {
 } from 'react-native';
 import DummyLogo from '../../assets/icon.png';
 import axios from 'axios';
+import api from '../../api';
 const { width, height } = Dimensions.get('window');
-// import Constants from 'expo-constants';
+import Constants from 'expo-constants';
 
 const LogIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const baseUrl = Constants.expoConfig.extra.apiUrl;
 
   const signInPress = () => {
     console.log('send login info');
     let logInData = {
       email: email,
       password: password,
-    }
+    };
+    axios
+      .get(`${baseUrl}/api/user/login`)
+      .then((res) => console.log(res))
+      .catch((e) => console.log(e));
   };
 
   return (

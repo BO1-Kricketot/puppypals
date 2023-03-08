@@ -116,7 +116,7 @@ const CreateProfile = () => {
         isHumanFriendly: humanFriendliness,
         bio: bio,
         ownerName: ownerName,
-        ownerPic: ownerPic,
+        ownerPic: ownerPic64,
         locationInfo: {
           address1: add1,
           address2: add2,

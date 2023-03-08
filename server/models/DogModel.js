@@ -22,10 +22,6 @@ const dogSchema = new mongoose.Schema({
     name: String,
     imageUrl: String,
   },
-  userInfo: {
-    email: String,
-    password: String,
-  },
 });
 
 const DogModel = mongoose.model('Dog', dogSchema);
