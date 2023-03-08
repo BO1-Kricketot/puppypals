@@ -29,4 +29,10 @@ module.exports = {
     apiUrl: process.env.API_URL,
     openCageKey: process.env.OPENCAGE_KEY,
   },
+  expo: {
+    scheme: 'myapp',
+    web: {
+      bundler: 'metro',
+    },
+  },
 };
