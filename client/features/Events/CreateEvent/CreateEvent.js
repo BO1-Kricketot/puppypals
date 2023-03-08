@@ -87,7 +87,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
 
   return (
     <Modal animationType="slide">
-      <View style={styles.modalContainer}>
+      <SafeAreaView style={styles.modalContainer}>
         <Text style={styles.formTitle}>Create Event</Text>
         <Text>Event name</Text>
         <TextInput
@@ -158,7 +158,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
         <TouchableOpacity onPress={handleCreateEvent}>
           <Text>Close</Text>
         </TouchableOpacity>
-      </View>
+      </SafeAreaView>
     </Modal>
   );
 }

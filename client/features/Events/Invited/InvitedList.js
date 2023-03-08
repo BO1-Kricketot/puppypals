@@ -3,26 +3,19 @@ import React, { useState, useEffect } from 'react';
 import api from '../../../api';
 import Constants from 'expo-constants';
 import InvitedTile from './InvitedTile.js';
-import { eventsData, hostMeta } from '../sampleData.js';
+import { eventsData } from '../sampleData.js';
 
 export default function InvitedList({ invitedEvents }) {
-  const [filteredEvents, setFilteredEvents] = useState([]);
-
-  const filterEvents = () => {
-    const filtered = eventsData.filter(
-      (invitedEvent) => invitedEvent.status === 'pending',
-    );
-    setFilteredEvents(filtered);
-  };
+  const [invitedList, setInvitedList] = useState([]);
 
   useEffect(() => {
-    filterEvents();
+    setInvitedList(eventsData);
   }, []);
 
   return (
     <ScrollView style={styles.container}>
-      {filteredEvents.map((event) => (
-        <InvitedTile key={event._id} event={event} hostMeta={hostMeta} />
+      {invitedList.map((event) => (
+        <InvitedTile key={event._id} event={event} />
       ))}
     </ScrollView>
   );
