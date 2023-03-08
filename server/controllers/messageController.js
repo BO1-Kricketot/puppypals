@@ -12,7 +12,19 @@ module.exports = {
    * TODO: Implement
    */
   createDialogue(req, res) {
-    throw new Error('createDialogue not implemented yet!');
+    const messageLog = new MessagesModel({
+      _id: new Date().getTime(),
+      req.body.members,
+      messages: [],
+    });
+    messageLog.save((err) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send('Error creating message log');
+      } else {
+        res.status(201).send('Message log created successfully');
+      }
+    });
   },
 
   /**
@@ -25,7 +37,24 @@ module.exports = {
    * TODO: Implement
    */
   postMessage(req, res) {
-    throw new Error('postMessage not implemented yet!');
+    const newMessage = {
+      _id: new Date().getTime(),
+      body: req.body.message.body,
+      timestamp: new Date(),
+      reactions: [],
+    };
+    MessagesModel.findByIdAndUpdate(
+      req.params._id,
+      { $push: { messages: newMessage } },
+      (err) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send('Error posting message');
+        } else {
+          res.status(201).send('Message posted successfully');
+        }
+      }
+    );
   },
 
   /**
@@ -36,7 +65,16 @@ module.exports = {
    * TODO: Implement
    */
   getMessageLogById(req, res) {
-    throw new Error('getMessageLogById not implemented yet!');
+    MessagesModel.findById(req.params._id, (err, messageLog) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send('Error getting message log');
+      } else if (!messageLog) {
+        res.status(404).send('Message log not found');
+      } else {
+        res.status(200).json(messageLog);
+      }
+    });
   },
 
   /**
@@ -47,7 +85,19 @@ module.exports = {
    * TODO: Implement
    */
   getMessageLogByDogIds(req, res) {
-    throw new Error('getMessageLogByDogIds not implemented yet!');
+    MessagesModel.findOne(
+      { members: { $all: [req.params.dog1, req.params.dog2] } },
+      (err, messageLog) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send('Error getting message log');
+        } else if (!messageLog) {
+          res.status(404).send('Message log not found');
+        } else {
+          res.status(200).json(messageLog);
+        }
+      }
+    );
   },
 
   /**
@@ -60,6 +110,17 @@ module.exports = {
    * TODO: Implement
    */
   reactToMessage(req, res) {
-    throw new Error('reactToMessage not implemented yet!');
+    MessagesModel.findOneAndUpdate(
+      { _id: req.params.logId, 'messages._id': req.params.messageId },
+      { $addToSet: { 'messages.$.reactions': req.body.reaction } },
+      (err) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Error reacting to message');
+        } else {
+          res.status(200).send('Reaction added successfully');
+        }
+      }
+    );
   },
 };
