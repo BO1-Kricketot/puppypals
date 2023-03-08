@@ -1,15 +1,13 @@
 const mongoose = require('mongoose');
 
 const messageSchema = new mongoose.Schema({
-  _id: Number,
   body: String,
   timestamp: Date,
-  reactions: [String],
+  reactions: { type: [String], default: undefined },
 });
 
 const messageLogSchema = new mongoose.Schema({
-  _id: Number,
-  members: [Number, Number],
+  members: { type: [String, String], default: undefined },
   messages: [messageSchema],
 });
 

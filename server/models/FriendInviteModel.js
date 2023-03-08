@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 
 const friendInviteSchema = new mongoose.Schema({
-  _id: Number,
-  senderId: Number,
-  recipientId: Number,
+  senderId: String,
+  recipientId: String,
   status: String, // pending, accepted, rejected
   creationDate: Date,
 });
