@@ -37,8 +37,8 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
   };
 
   const [form, setForm] = useState(initial);
-  const [dob, setDob] = useState(new Date());
-  const [showDatePick, setShowDatePick] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
   const [startTime, setStartTime] = useState(new Date());
   const [showStartTimePicker, setShowStartTimePicker] = useState(false);
 
@@ -65,10 +65,9 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
     });
   };
 
-  const handleDateChange = (event, selectedDate) => {
-    const currentDate = selectedDate || dob;
-    setShowDatePick(false);
-    setDob(currentDate);
+  const handleDateChange = (event, newDate) => {
+    const currentDate = newDate || selectedDate;
+    setSelectedDate(currentDate);
     const formattedDate = currentDate.toLocaleDateString();
     setForm({
       ...form,
@@ -102,24 +101,12 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
         />
 
         <Text>Event date</Text>
-        <TouchableOpacity onPress={() => setShowDatePick(true)}>
-          <TextInput
-            style={styles.input}
-            placeholder="Event date"
-            value={form.datetime}
-            editable={false}
-            onTouchStart={() => setShowDatePick(true)}
-          />
-        </TouchableOpacity>
-        {showDatePick && (
-          <DateTimePicker
-            value={dob}
-            mode="date"
-            display="default"
-            onChange={handleDateChange}
-          />
-        )}
-
+        <DateTimePicker
+          value={selectedDate}
+          mode="date"
+          display="default"
+          onChange={handleDateChange}
+        />
         <Text>Event location</Text>
         <TextInput
           style={styles.input}
