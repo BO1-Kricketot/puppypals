@@ -28,7 +28,7 @@ const LogIn = () => {
       password: password,
     };
     axios
-      .get(`${baseUrl}/api/user/login`)
+      .post(`${baseUrl}/api/user/login`, logInData)
       .then((res) => console.log(res))
       .catch((e) => console.log(e));
   };
