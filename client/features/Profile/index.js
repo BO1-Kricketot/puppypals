@@ -14,12 +14,36 @@ import {
 import ModalContainer from './editProfile.js';
 
 export default function Profile({ dogId }) {
-  const [pics, setPics] = useState([...dummyPics]);
-  const [info, setInfo] = useState({ ...dummyInfo });
+  const [mainPic, setMainPic] = useState([]);
+  const [morePics, setMorePics] = useState([]);
+  const [info, setInfo] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
   const [profileChanged, setProfileChanged] = useState(false);
 
-  useEffect(() => {}, [profileChanged]);
+  const dummyMainPic = [
+    'http://3.bp.blogspot.com/-GfiMn3VSfnc/VigKnxj9x5I/AAAAAAAA9zI/CXLjzRlI2yA/s1600/boo2.jpg',
+  ];
+
+  const dummyMorePics = [
+    'https://i.ytimg.com/vi/xEDP5N5SNQM/maxresdefault.jpg',
+    'http://2.bp.blogspot.com/-o1Nlm1LBxD0/UKpxdFESiuI/AAAAAAAAKQg/6FynR1gMNqU/s1600/cute-puppy-pictures-901.jpg',
+    'http://3.bp.blogspot.com/-90Yj9zzFtn4/Tp-4Ai23riI/AAAAAAAAAhc/AvNYsJxGuuQ/s1600/Cute-Puppy-Dog.jpg',
+    'https://4.bp.blogspot.com/-f_ubVt0YDqs/VkyD1uolD5I/AAAAAAAAAiA/X2VaFT6cE0M/s1600/Q9.jpg',
+    'https://wallpapercave.com/wp/wp2480956.jpg',
+  ];
+
+  const dummyInfo = {
+    dogName: 'Billie',
+    dogBreed: 'Poodle',
+    location: 'Chicago, IL',
+    peopleFriendly: true,
+    dogFriendly: true,
+    dogBio:
+      "Billie is a sweety little snookums that loves to sniff butts and stuff. Yay! Billie is a poodle and likes long walks on the beach. Or the treadmill. Billie is a silly billie, lulz. Do you like Billie's bio? Billie likes your bio, too!",
+    ownerPic:
+      'https://www.essence.com/wp-content/uploads/2014/01/images/2013/11/11/steve-harvey-show.jpg',
+    ownerName: 'Peppy',
+  };
 
   const {
     container,
@@ -31,6 +55,12 @@ export default function Profile({ dogId }) {
     userInfoContainer,
     userPicContainer,
   } = profileStyles;
+
+  useEffect(() => {
+    setMainPic([...dummyMainPic]);
+    setMorePics([...dummyMorePics]);
+    setInfo({ ...dummyInfo });
+  }, [profileChanged]);
 
   return (
     <>
@@ -60,8 +90,8 @@ export default function Profile({ dogId }) {
             </Pressable>
           </View>
         </View>
-        <View style={mainPicContainer}>{mainPhoto}</View>
-        <View style={morePicsAndNavContainer}>{otherPhotos}</View>
+        <View style={mainPicContainer}>{renderPics(mainPic, true)}</View>
+        <View style={morePicsAndNavContainer}>{renderPics(morePics, false)}</View>
         <View style={dogInfoContainer}>
           <Text>
             {dummyInfo.dogName} ({dummyInfo.dogBreed})
@@ -85,7 +115,10 @@ export default function Profile({ dogId }) {
         {modalVisible && (
           <ModalContainer
             info={info}
-            pics={pics}
+            mainPic={mainPic}
+            setMainPic={setMainPic}
+            morePics={morePics}
+            setMorePics={setMorePics}
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
             profileChanged={profileChanged}
@@ -167,23 +200,22 @@ const profileStyles = StyleSheet.create({
   },
 });
 
+const dummyNav = Array(5).fill('https://reactnative.dev/img/tiny_logo.png');
 const { width, height } = Dimensions.get('window');
 const isAndroid = Platform.OS === 'android';
 
 const renderPics = (picList, isDefault) => {
   const { mainPic, morePicsAndNav } = profileStyles;
-  return picList
-    .filter((pic) => pic.default === isDefault)
-    .map((pic, i) => {
-      return (
-        <Image
-          key={i}
-          style={isDefault ? mainPic : morePicsAndNav}
-          default={pic.default}
-          src={pic.url}
-        />
-      );
-    });
+  return picList.map((url, i) => {
+    return (
+      <Image
+        key={i}
+        style={isDefault ? mainPic : morePicsAndNav}
+        default={isDefault}
+        src={url}
+      />
+    );
+  });
 };
 
 const renderNav = (icons) => {
@@ -192,47 +224,3 @@ const renderNav = (icons) => {
     <Image key={i} src={icon} style={morePicsAndNav} />
   ));
 };
-
-const dummyPics = [
-  {
-    default: true,
-    url: 'http://3.bp.blogspot.com/-GfiMn3VSfnc/VigKnxj9x5I/AAAAAAAA9zI/CXLjzRlI2yA/s1600/boo2.jpg',
-  },
-  {
-    default: false,
-    url: 'https://i.ytimg.com/vi/xEDP5N5SNQM/maxresdefault.jpg',
-  },
-  {
-    default: false,
-    url: 'http://2.bp.blogspot.com/-o1Nlm1LBxD0/UKpxdFESiuI/AAAAAAAAKQg/6FynR1gMNqU/s1600/cute-puppy-pictures-901.jpg',
-  },
-  {
-    default: false,
-    url: 'http://3.bp.blogspot.com/-90Yj9zzFtn4/Tp-4Ai23riI/AAAAAAAAAhc/AvNYsJxGuuQ/s1600/Cute-Puppy-Dog.jpg',
-  },
-  {
-    default: false,
-    url: 'https://4.bp.blogspot.com/-f_ubVt0YDqs/VkyD1uolD5I/AAAAAAAAAiA/X2VaFT6cE0M/s1600/Q9.jpg',
-  },
-  {
-    default: false,
-    url: 'https://wallpapercave.com/wp/wp2480956.jpg',
-  },
-];
-
-const dummyInfo = {
-  dogName: 'Billie',
-  dogBreed: 'Poodle',
-  location: 'Chicago, IL',
-  peopleFriendly: true,
-  dogFriendly: true,
-  dogBio:
-    "Billie is a sweety little snookums that loves to sniff butts and stuff. Yay! Billie is a poodle and likes long walks on the beach. Or the treadmill. Billie is a silly billie, lulz. Do you like Billie's bio? Billie likes your bio, too!",
-  ownerPic:
-    'https://www.essence.com/wp-content/uploads/2014/01/images/2013/11/11/steve-harvey-show.jpg',
-  ownerName: 'Peppy',
-};
-
-const mainPhoto = renderPics(dummyPics, true);
-const otherPhotos = renderPics(dummyPics, false);
-const dummyNav = Array(5).fill('https://reactnative.dev/img/tiny_logo.png');
