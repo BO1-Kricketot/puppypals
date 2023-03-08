@@ -1,6 +1,9 @@
 module.exports = {
   root: true,
   extends: '@react-native-community',
+  plugins: [
+    'babel'
+  ]
   rules: {
     'prettier/prettier': [
       'error',
