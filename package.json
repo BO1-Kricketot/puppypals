@@ -23,5 +23,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.4.1"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "expo-image-picker": "~14.1.1"
+  }
 }

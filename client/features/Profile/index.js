@@ -80,7 +80,7 @@ export default function Profile() {
             />
           </View>
           <View style={{ width: 50, height: 50, marginLeft: 'auto', marginRight: 10 }}>
-          <Image
+          <Image /* EDIT BTN */
               style={userPicContainer}
               source={{ uri: 'http://cdn.onlinewebfonts.com/svg/img_397968.png'}}
             />
