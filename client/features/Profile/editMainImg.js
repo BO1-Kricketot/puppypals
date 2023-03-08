@@ -4,10 +4,10 @@ import * as ImagePicker from 'expo-image-picker';
 
 export default function MainImgEditor({
   imgKey,
-  mainImage,
-  setMainImage,
+  mainPic,
+  setMainPic,
 }) {
-  console.log('mainImage: ', mainImage);
+  console.log('mainPic: ', mainPic);
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -21,8 +21,8 @@ export default function MainImgEditor({
     console.log('pic is: ', result);
 
     if (!result.canceled) {
-        setMainImage([result.assets[0].uri]);
-        console.log('mainImage is NOW: ', mainImage);
+        setMainPic([result.assets[0].uri]);
+        console.log('mainPic is NOW: ', mainPic);
     }
   };
 
@@ -31,14 +31,13 @@ export default function MainImgEditor({
       <Button
         title='Edit Main Pic'
         onPress={pickImage}
-        style={{ width: 100, height: 100 }}
       />
-      {mainImage && (
+      {mainPic && (
         <Image
-          source={{ uri: mainImage[0] }}
-            // uri: `data:image/png;base64,${mainImage[0].base64}`
-            // uri: `data:image/png;base64,${mainImage[0].toString()}`
-            // uri: mainImage[0].toString()
+          source={{ uri: mainPic[0] }}
+            // uri: `data:image/png;base64,${mainPic[0].base64}`
+            // uri: `data:image/png;base64,${mainPic[0].toString()}`
+            // uri: mainPic[0].toString()
           style={imageStyles.pickImage}
         />
       )}
@@ -54,7 +53,9 @@ const imageStyles = StyleSheet.create({
   },
   pickImage: {
     flex: 1,
-    width: 640,
-    height: 640,
+    borderRadius: 10,
+    width: '80%',
+    height: '80%',
+    margin: '2%',
   },
 });

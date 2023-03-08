@@ -20,22 +20,18 @@ import BioEditor from './editBio.js';
 
 export default function ModalContainer({
   info,
-  pics,
+  mainPic,
+  setMainPic,
+  morePics,
+  setMorePics,
   modalVisible,
   setModalVisible,
   profileChanged,
   setProfileChanged,
 }) {
-  // const [mainImage, setMainImage] = useState([pics[0].url]);
-  // const [moreImages, setMoreImages] = useState([
-  //   pics[1].url,
-  //   pics[2].url,
-  //   pics[3].url,
-  //   pics[4].url,
-  //   pics[5].url,
-  // ]);
 
-  const [mainImage, setMainImage] = useState([null]);
+
+  // const [mainImage, setMainImage] = useState([null]);
   const [moreImages, setMoreImages] = useState(Array(5).fill(null));
   const [city, setCity] = useState(info.location.slice(0, -4));
   const [state, setState] = useState('');
@@ -59,16 +55,16 @@ export default function ModalContainer({
             <MainImgEditor
               key={111} // make it super obvious
               imgKey={111}
-              mainImage={mainImage}
-              setMainImage={setMainImage}
+              mainPic={mainPic}
+              setMainPic={setMainPic}
             />
             <View style={{ flex: 1, flexDirection: 'row' }}>
-              {moreImages.map((slot, i) => (
+              {morePics.map((slot, i) => (
                 <MoreImgsEditor
                   key={i}
                   imgKey={i}
-                  moreImages={moreImages}
-                  setMoreImages={setMoreImages}
+                  morePics={morePics}
+                  setMorePics={setMorePics}
                 />
               ))}
             </View>

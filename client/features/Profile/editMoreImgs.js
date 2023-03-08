@@ -4,10 +4,10 @@ import * as ImagePicker from 'expo-image-picker';
 
 export default function MoreImgsEditor({
   imgKey,
-  moreImages,
-  setMoreImages,
+  morePics,
+  setMorePics,
 }) {
-  console.log('moreImages: ', moreImages);
+  console.log('morePics: ', morePics);
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -21,23 +21,25 @@ export default function MoreImgsEditor({
     console.log('pic is: ', result);
 
     if (!result.canceled) {
-      setMoreImages(moreImages[imgKey] = result.assets[0].uri);
-      console.log('moreImages is NOW: ', moreImages);
+      const newPicList = morePics.slice();
+      newPicList[imgKey] = result.assets[0].uri;
+      console.log('newPicList is: ', newPicList);
+      setMorePics([...newPicList]);
+      console.log('morePics is NOW: ', morePics);
     }
   };
 
   return (
     <View style={imageStyles.container}>
       <Button
-        title={imgKey > 4 ? 'Edit Main Pic' : 'Edit This Pic'}
+        title='Edit Pic'
         onPress={pickImage}
-        style={{ width: 100, height: 100 }}
       />
-      {moreImages && (
+      {morePics && (
         <Image
-          source={{ uri: moreImages[imgKey] }}
-            // uri: `data:image/png;base64, ${moreImages[imgKey].toString()}`
-            // uri: moreImages[imgKey].toString()
+          source={{ uri: morePics[imgKey] }}
+            // uri: `data:image/png;base64, ${morePics[imgKey].toString()}`
+            // uri: morePics[imgKey].toString()
           style={imageStyles.pickImage}
         />
         )}
@@ -53,7 +55,11 @@ const imageStyles = StyleSheet.create({
   },
   pickImage: {
     flex: 1,
-    width: 640,
-    height: 640,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    borderRadius: 10,
+    width: '90%',
+    height: '90%',
+    margin: '2%',
   },
 });
