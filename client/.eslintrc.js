@@ -15,5 +15,6 @@ module.exports = {
         trailingComma: 'all',
       },
     ],
+    'react/react-in-jsx-scope': 0,
   },
 };
