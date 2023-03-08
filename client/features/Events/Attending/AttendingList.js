@@ -14,12 +14,10 @@ export default function InvitedList({ attendingEvents }) {
   }, []);
 
   return (
-    <ScrollView>
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {eventList.map((event) => (
         <AttendingTile key={event._id} event={event} />
       ))}
-    </View>
     </ScrollView>
   );
 }
@@ -27,6 +25,5 @@ export default function InvitedList({ attendingEvents }) {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    margin: '1%',
   },
 });

@@ -29,7 +29,7 @@ export default function AttendingTile({ event }) {
 
 const styles = StyleSheet.create({
   container: {
-    margin: '1%',
+    marginTop: '1%',
     backgroundColor: 'blue',
     height: 100,
   },
