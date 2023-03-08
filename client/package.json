@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^18.0.1",
+    "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
     "@reduxjs/toolkit": "^1.9.3",
@@ -31,7 +32,6 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@react-native-community/eslint-config": "^3.2.0",
-    "eslint-plugin-babel": "^5.3.1",
     "babel-jest": "^29.2.1",
     "eslint-plugin-babel": "^5.3.1",
     "jest": "^29.2.1",
