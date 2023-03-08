@@ -13,7 +13,8 @@ import {
 
 import * as ImagePicker from 'expo-image-picker';
 import SelectDropdown from 'react-native-select-dropdown';
-import ImageEditor from './editImages.js';
+import MainImgEditor from './editMainImg.js';
+import MoreImgsEditor from './editMoreImgs.js';
 import LocationEditor from './editLocation.js';
 import BioEditor from './editBio.js';
 
@@ -35,7 +36,7 @@ export default function ModalContainer({
   // ]);
 
   const [mainImage, setMainImage] = useState([null]);
-  const [moreImages, setMoreImages] = useState([null]);
+  const [moreImages, setMoreImages] = useState(Array(5).fill(null));
   const [city, setCity] = useState(info.location.slice(0, -4));
   const [state, setState] = useState('');
   const [bio, setBio] = useState('');
@@ -55,43 +56,21 @@ export default function ModalContainer({
             <Text style={editProfileStyles.modalText}>
               Editing Your Profile
             </Text>
-            <ImageEditor
+            <MainImgEditor
               key={111} // make it super obvious
               imgKey={111}
               mainImage={mainImage}
               setMainImage={setMainImage}
             />
             <View style={{ flex: 1, flexDirection: 'row' }}>
-              <ImageEditor
-                key={0}
-                imgKey={0}
-                moreImages={moreImages}
-                setMoreImages={setMoreImages}
-              />
-              <ImageEditor
-                key={1}
-                imgKey={1}
-                moreImages={moreImages}
-                setMoreImages={setMoreImages}
-              />
-              <ImageEditor
-                key={2}
-                imgKey={2}
-                moreImages={moreImages}
-                setMoreImages={setMoreImages}
-              />
-              <ImageEditor
-                key={3}
-                imgKey={3}
-                moreImages={moreImages}
-                setMoreImages={setMoreImages}
-              />
-              <ImageEditor
-                key={4}
-                imgKey={4}
-                moreImages={moreImages}
-                setMoreImages={setMoreImages}
-              />
+              {moreImages.map((slot, i) => (
+                <MoreImgsEditor
+                  key={i}
+                  imgKey={i}
+                  moreImages={moreImages}
+                  setMoreImages={setMoreImages}
+                />
+              ))}
             </View>
             <LocationEditor
               city={city}
