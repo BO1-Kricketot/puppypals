@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import styles from './styles';
 
-const OneChat = ({ name, timestamp, dogName, dogImage, pending, onAccept, onReject }) => {
+const OneChat = ({ name, timestamp, dogName, dogImage, pending, onAccept, onReject, styles }) => {
   const [seen, setSeen] = useState(false);
 
   const onSwipeLeft = () => {

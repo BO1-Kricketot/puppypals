@@ -5,10 +5,12 @@ import OneChat from './OneChat';
 const ChatList = () => {
   const onAccept = (id) => {
     console.log(`Accepted chat with ID ${id}`);
+    //axios call when controllers updated
   };
 
   const onReject = (id) => {
     console.log(`Rejected chat with ID ${id}`);
+    //axios call when controllers updated
   };
 
   const styles = {
@@ -88,6 +90,7 @@ const ChatList = () => {
           seen={data.seen}
           onAccept={() => onAccept(data.id)}
           onReject={() => onReject(data.id)}
+          styles={styles}
         />
       ))}
     </View>
