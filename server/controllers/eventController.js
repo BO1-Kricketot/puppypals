@@ -5,13 +5,13 @@ const debug = require('../utils/debug');
 module.exports = {
   /**
    * Creates a new Event document
-   *
    * Expects: body containing Event information
-   *
-   * TODO: Implement
    */
   createEvent(req, res) {
-    throw new Error('createEvent not implemented yet!');
+    const event = req.body;
+    return EventModel.create(event)
+      .then(result => res.status(201).send(result))
+      .catch(err => res.status(500).send(err));
   },
 
   /**
@@ -19,11 +19,13 @@ module.exports = {
    *
    * Query: _id - Event _id
    * Example: /events/222
-   *
-   * TODO: Implement
    */
   getEventById(req, res) {
-    throw new Error('getEventById not implemented yet!');
+    const { eventId } = req.params;
+
+    return EventModel.findOne({_id: eventId})
+      .then((result) => res.status(200).send(result))
+      .catch((err) => res.status(500).send(err));
   },
 
   /**
@@ -35,24 +37,54 @@ module.exports = {
    * Example: /events/dog/123?filter=invited
    *
    * TODO: Implement
+   * /events/dog/123?filter=invited
+   * req.query = { filter: invited }
+   * req.params = { dogId: 123 }
    */
-  getEventsByDogId(req, res) {
-    // query for dog
+
+    // query for the dog
     // get their pendingEvents OR attendingEvents array
     // query for those events
     // return those events
-    throw new Error('getEventsByDogId not implemented yet!');
+  getEventsByDogId(req, res) {
+    const { dogId } = req.params;
+    const {filter} = req.query;
+
+    if (!filter) {
+      return res.status(404).send('No query provided');
+    }
+
+    return DogModel.findOne({ _id: dogId })
+      .exec()
+      .then((dog) => {
+        let events;
+
+        if (filter === 'invited') {
+          events = dog.eventsPending;
+        } else if (filter === 'attending') {
+          events = dog.eventsAttending;
+        }
+
+        EventModel.find({ _id: { $in: events } })
+          .exec()
+          .then((result) => res.status(200).send(result))
+          .catch(err => res.status(500).send(err));
+      })
+      .catch((err) => res.status(500).send(err));
   },
 
   /**
    * Updates one Event by (Event)_id with new information
-   *
    * Expects: body containing new Event information
-   *
-   * TODO: Implement
    */
   updateEventById(req, res) {
-    throw new Error('updateEventById not implemented yet!');
+    const { eventId } = req.params;
+    const update = req.body;
+
+    return EventModel.findOneAndUpdate({ _id: eventId }, update, { new: true })
+      .exec()
+      .then((result) => res.status(204).send(result))
+      .catch((err) => res.status(500).send(err));
   },
 
   /**
@@ -61,6 +93,10 @@ module.exports = {
    * TODO: Implement
    */
   deleteEventById(req, res) {
-    throw new Error('deleteEventById not implemented yet!');
+    const { eventId } = req.params;
+    return EventModel.findOneAndDelete({ _id: eventId })
+      .exec()
+      .then(() => res.status(204).send('Event deleted'))
+      .catch((err) => res.status(500).send(err));
   },
 };

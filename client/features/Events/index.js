@@ -9,6 +9,7 @@ import {
 import React, { useState } from 'react';
 import api from '../../api';
 import Constants from 'expo-constants';
+import axios from 'axios';
 import InvitedList from './Invited/InvitedList.js';
 import AttendingList from './Attending/AttendingList.js';
 import CreateEvent from './CreateEvent/CreateEvent.js';
@@ -29,6 +30,14 @@ export default function Events({ dog }) {
 
   const toggleModal = () => {
     setModal(!modal);
+  };
+
+  const updateInvited = () => {
+
+  };
+
+  const updateAttending = () => {
+
   };
 
   return (

@@ -1,9 +1,12 @@
 import Example from './features/Example';
-import Profile from './features/Profile';
+import { StyleSheet, Text, View } from 'react-native';
+// import Profile from './features/Profile';
+import Events from './features/Events';
 
 export default function App() {
   return (
-    <Profile />
+    <Events />
+    // <Profile />
     // <View style={styles.container}>
     //   <Example />
     //   <Text>Open up App.js to start working on your app!</Text>
