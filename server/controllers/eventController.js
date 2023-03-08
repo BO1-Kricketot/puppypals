@@ -48,7 +48,7 @@ module.exports = {
     // return those events
   getEventsByDogId(req, res) {
     const { dogId } = req.params;
-    const {filter} = req.query;
+    const { filter } = req.query;
 
     if (!filter) {
       return res.status(404).send('No query provided');
@@ -89,8 +89,6 @@ module.exports = {
 
   /**
    * Deletes one Event by (Event)_id
-   *
-   * TODO: Implement
    */
   deleteEventById(req, res) {
     const { eventId } = req.params;

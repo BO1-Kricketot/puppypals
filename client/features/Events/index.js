@@ -6,7 +6,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../../api';
 import Constants from 'expo-constants';
 import axios from 'axios';
@@ -20,6 +20,26 @@ export default function Events({ dog }) {
   const [attendingEvents, setAttendingEvents] = useState([]);
   const [modal, setModal] = useState(false);
 
+  // // PLACEHOLDERS:
+  // const updateInvitedList = () => {
+  //   axios
+  //     .get(`/events/dog/${dog._id}?filter=invited`)
+  //     .then((results) => setInvitedEvents(results.data))
+  //     .catch((err) => console.error('Error getting invited events: ', err));
+  // };
+
+  // const updateAttendingList = () => {
+  //   axios
+  //     .get(`/events/dog/${dog._id}?filter=attending`)
+  //     .then((results) => setAttendingEvents(results.data))
+  //     .catch((err) => console.error('Error getting attending events: ', err));
+  // };
+
+  // useEffect(() => {
+  //   updateInvitedList();
+  //   updateAttendingList();
+  // }, []);
+
   const handleInvited = () => {
     setInvited(true);
   };
@@ -30,14 +50,6 @@ export default function Events({ dog }) {
 
   const toggleModal = () => {
     setModal(!modal);
-  };
-
-  const updateInvited = () => {
-
-  };
-
-  const updateAttending = () => {
-
   };
 
   return (
@@ -53,7 +65,9 @@ export default function Events({ dog }) {
           <Text style={styles.addEventText}>+</Text>
         </TouchableOpacity>
       </View>
-      {modal && <CreateEvent modal={modal} toggleModal={toggleModal} />}
+      {modal && (
+        <CreateEvent modal={modal} toggleModal={toggleModal} dog={dog} />
+      )}
       {invited ? (
         <InvitedList invitedEvents={invitedEvents} />
       ) : (
