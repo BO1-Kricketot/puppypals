@@ -17,8 +17,12 @@ export default function AttendingTile({ event }) {
       <TouchableOpacity onPress={toggleModal}>
         <View style={styles.hostContainer}>
           <View style={styles.imageContainer}>
-            <Image style={styles.image} source={{uri: event.host_meta.mainImgPath}} />
+            <Image
+              style={styles.image}
+              source={{ uri: event.host_meta.mainImgPath }}
+            />
           </View>
+          {event.host_meta._id === 1 && <Text>HOST</Text>}
           <Text>{event.host_meta.name}</Text>
         </View>
         <View style={styles.eventDetails}>

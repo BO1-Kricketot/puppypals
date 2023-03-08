@@ -7,12 +7,14 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Modal,
+  Image,
 } from 'react-native';
 import React, { useState } from 'react';
 import api from '../../../api';
 import Constants from 'expo-constants';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
+import { dummyDogFriends } from '../sampleData.js';
 
 export default function CreateEvent({ modal, toggleModal, dog }) {
   const initial = {
@@ -157,6 +159,26 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
           onChange={(text) => handleChange('description', text)}
           value={form.description}
         />
+        <Text>Add Friends: </Text>
+        <TouchableOpacity style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={{ uri: dummyDogFriends[0].mainImageUrl }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={{ uri: dummyDogFriends[1].mainImageUrl }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={{ uri: dummyDogFriends[2].mainImageUrl }}
+          />
+        </TouchableOpacity>
+
         <TouchableOpacity onPress={handleCreateEvent}>
           <Text>Close</Text>
         </TouchableOpacity>
@@ -172,5 +194,17 @@ const styles = StyleSheet.create({
   },
   formTitle: {
     backgroundColor: 'white',
+  },
+  imageContainer: {
+    width: 50,
+    height: 50,
+    marginLeft: 'auto',
+    marginRight: 10,
+  },
+  image: {
+    flex: 1,
+    margin: '2%',
+    borderRadius: 25,
+    width: '100%',
   },
 });

@@ -2,7 +2,7 @@ const dummyAttending = [
   {
     _id: 1,
     title: 'Puppies in the Park',
-    dateTime: '2012-10-15T21:26:17Z',
+    dateTime: '2013-10-15T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -21,15 +21,16 @@ const dummyAttending = [
   {
     _id: 2,
     title: 'Puppies in the Park',
-    dateTime: '2013-10-15T21:26:17Z',
+    dateTime: '2013-10-17T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
     attendees: ['kiwi', 'bella', 'finn'],
     host_meta: {
-      _id: 2,
+      _id: 1,
       name: 'Kiwi',
-      mainImgPath: 'https://i.ytimg.com/vi/xEDP5N5SNQM/maxresdefault.jpg',
+      mainImgPath:
+        'http://3.bp.blogspot.com/-GfiMn3VSfnc/VigKnxj9x5I/AAAAAAAA9zI/CXLjzRlI2yA/s1600/boo2.jpg',
     },
     location: {
       city: 'Las Vegas',
@@ -39,7 +40,7 @@ const dummyAttending = [
   {
     _id: 3,
     title: 'Puppies in the Park',
-    dateTime: 'May 6, 2023',
+    dateTime: '2013-10-31T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -48,7 +49,7 @@ const dummyAttending = [
       _id: 2,
       name: 'Kiwi',
       mainImgPath:
-      'http://2.bp.blogspot.com/-o1Nlm1LBxD0/UKpxdFESiuI/AAAAAAAAKQg/6FynR1gMNqU/s1600/cute-puppy-pictures-901.jpg',
+        'http://2.bp.blogspot.com/-o1Nlm1LBxD0/UKpxdFESiuI/AAAAAAAAKQg/6FynR1gMNqU/s1600/cute-puppy-pictures-901.jpg',
     },
     location: {
       city: 'Las Vegas',
@@ -58,7 +59,7 @@ const dummyAttending = [
   {
     _id: 4,
     title: 'Puppies in the Park',
-    dateTime: 'May 6, 2023',
+    dateTime: '2013-11-20T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -67,7 +68,7 @@ const dummyAttending = [
       _id: 4,
       name: 'Kiwi',
       mainImgPath:
-      'http://3.bp.blogspot.com/-90Yj9zzFtn4/Tp-4Ai23riI/AAAAAAAAAhc/AvNYsJxGuuQ/s1600/Cute-Puppy-Dog.jpg',
+        'http://3.bp.blogspot.com/-90Yj9zzFtn4/Tp-4Ai23riI/AAAAAAAAAhc/AvNYsJxGuuQ/s1600/Cute-Puppy-Dog.jpg',
     },
     location: {
       city: 'Las Vegas',
@@ -77,7 +78,7 @@ const dummyAttending = [
   {
     _id: 5,
     title: 'Puppies in the Park',
-    dateTime: 'May 6, 2023',
+    dateTime: '2013-11-22T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -96,7 +97,7 @@ const dummyAttending = [
   {
     _id: 6,
     title: 'Puppies in the Park',
-    dateTime: 'May 6, 2023',
+    dateTime: '2013-12-1T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -115,7 +116,7 @@ const dummyAttending = [
   {
     _id: 7,
     title: 'Puppies in the Park',
-    dateTime: 'May 6, 2023',
+    dateTime: '2013-12-12T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -134,7 +135,7 @@ const dummyAttending = [
   {
     _id: 8,
     title: 'Puppies in the Park',
-    dateTime: 'May 6, 2023',
+    dateTime: '2013-12-30T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -240,7 +241,7 @@ const dummyInvited = [
       _id: 2,
       name: 'Kiwi',
       mainImgPath:
-      'http://2.bp.blogspot.com/-o1Nlm1LBxD0/UKpxdFESiuI/AAAAAAAAKQg/6FynR1gMNqU/s1600/cute-puppy-pictures-901.jpg',
+        'http://2.bp.blogspot.com/-o1Nlm1LBxD0/UKpxdFESiuI/AAAAAAAAKQg/6FynR1gMNqU/s1600/cute-puppy-pictures-901.jpg',
     },
     location: {
       city: 'Las Vegas',
@@ -259,7 +260,7 @@ const dummyInvited = [
       _id: 4,
       name: 'Kiwi',
       mainImgPath:
-      'http://3.bp.blogspot.com/-90Yj9zzFtn4/Tp-4Ai23riI/AAAAAAAAAhc/AvNYsJxGuuQ/s1600/Cute-Puppy-Dog.jpg',
+        'http://3.bp.blogspot.com/-90Yj9zzFtn4/Tp-4Ai23riI/AAAAAAAAAhc/AvNYsJxGuuQ/s1600/Cute-Puppy-Dog.jpg',
     },
     location: {
       city: 'Las Vegas',
@@ -388,7 +389,7 @@ const dummyDog = {
   bio: "Yip yip! I'm a small dog with a big personality. I'm always the life of the party, making everyone laugh and smile. I'm outgoing, vivacious, and always ready to have a good time!",
   breed: 'Lhasa Apso',
   energy: 'high',
-  imageUrls: [ 'https://i.ibb.co/x7QtS5F/769657881405.jpg' ],
+  imageUrls: ['https://i.ibb.co/x7QtS5F/769657881405.jpg'],
   isDogFriendly: true,
   isHumanFriendly: true,
   location: {
@@ -427,15 +428,15 @@ const dummyDogFriends = [
       city: 'Newhall',
       state: 'CA',
       postalCode: '91321',
-      coordinates: { lat: 34.3718041, lng: -118.5139913 }
+      coordinates: { lat: 34.3718041, lng: -118.5139913 },
     },
     mainImageUrl: 'https://i.ibb.co/q98bFYn/20de60804614.jpg',
     name: 'Minnie',
     owner: {
       name: 'Travis Patel',
-      imageUrl: 'https://i.ibb.co/106hvp4/5876b5bde435.jpg'
+      imageUrl: 'https://i.ibb.co/106hvp4/5876b5bde435.jpg',
     },
-    size: 'medium'
+    size: 'medium',
   },
   {
     _id: '3',
@@ -452,15 +453,15 @@ const dummyDogFriends = [
       city: 'San Mateo',
       state: 'CA',
       postalCode: '94402',
-      coordinates: { lat: 37.551594, lng: -122.313355 }
+      coordinates: { lat: 37.551594, lng: -122.313355 },
     },
     mainImageUrl: 'https://i.ibb.co/QvMHWtt/89c0c293399c.jpg',
     name: 'Harley',
     owner: {
       name: 'Kasey Khan',
-      imageUrl: 'https://i.ibb.co/tZNCj6G/29d49aacbd00.jpg'
+      imageUrl: 'https://i.ibb.co/tZNCj6G/29d49aacbd00.jpg',
     },
-    size: 'large'
+    size: 'large',
   },
   {
     _id: '4',
@@ -468,7 +469,7 @@ const dummyDogFriends = [
     bio: "Bow wow! I'm a cute and cuddly dog who loves snuggling up with my favorite humans. I'm playful, affectionate, and always eager to please. I may be small, but I've got a big heart!",
     breed: 'French Bulldog',
     energy: 'high',
-    imageUrls: [ 'https://i.ibb.co/QvMHWtt/89c0c293399c.jpg' ],
+    imageUrls: ['https://i.ibb.co/QvMHWtt/89c0c293399c.jpg'],
     isDogFriendly: true,
     isHumanFriendly: true,
     location: {
@@ -477,21 +478,16 @@ const dummyDogFriends = [
       city: 'San Diego',
       state: 'CA',
       postalCode: '92101',
-      coordinates: { lat: 33.0549183, lng: -116.8845669 }
+      coordinates: { lat: 33.0549183, lng: -116.8845669 },
     },
     mainImageUrl: 'https://i.ibb.co/QHQ81LQ/e2bd11bd051b.jpg',
     name: 'Milo',
     owner: {
       name: 'Angela Rodriguez',
-      imageUrl: 'https://i.ibb.co/DzzWq6b/6a6f403c1196.jpg'
+      imageUrl: 'https://i.ibb.co/DzzWq6b/6a6f403c1196.jpg',
     },
-    size: 'medium'
+    size: 'medium',
   },
 ];
 
-export {
-  dummyAttending,
-  dummyInvited,
-  dummyDog,
-  dummyDogFriends,
-};
+export { dummyAttending, dummyInvited, dummyDog, dummyDogFriends };
