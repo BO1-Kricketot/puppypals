@@ -14,23 +14,24 @@ import {
 import * as ImagePicker from 'expo-image-picker';
 import SelectDropdown from 'react-native-select-dropdown';
 import MainImagePicker from './editImages.js';
+import MoreImagesPicker from './editImages.js';
 import LocationEditor from './editLocation.js';
 import BioEditor from './editBio.js';
 
-// ========= Everything =============
-export default function EditProfile() {
-  return (
-    <SafeAreaView style={editProfileStyles.editContainer}>
-      <ModalContainer />
-      <MainImagePicker />
-      <LocationEditor />
-      <BioEditor />
-    </SafeAreaView>
-  );
-}
+export default function ModalContainer({
+  info,
+  pics,
+  modalVisible,
+  setModalVisible,
+  profileChanged,
+  setProfileChanged,
+}) {
+  const [mainImage, setMainImage] = useState(null);
+  const [moreImages, setMoreImages] = useState(null);
+  const [city, setCity] = useState(info.location.slice(0, -4));
+  const [state, setState] = useState('');
+  const [bio, setBio] = useState('');
 
-export function ModalContainer() {
-  const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={editProfileStyles.centeredView}>
       <Modal
@@ -46,9 +47,23 @@ export function ModalContainer() {
             <Text style={editProfileStyles.modalText}>
               Editing Your Profile
             </Text>
-            <MainImagePicker />
-            <LocationEditor />
-            <BioEditor />
+            <MainImagePicker mainImage={mainImage} setMainImage={setMainImage} />
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              {Array(5).fill(
+                <MoreImagesPicker
+                  moreImages={moreImages}
+                  setMoreImages={setMoreImages}
+                />)
+                .map((picker) => picker)
+              }
+            </View>
+            <LocationEditor
+              city={city}
+              setCity={setCity}
+              state={state}
+              setState={setState}
+            />
+            <BioEditor bio={bio} setBio={setBio} />
             <Pressable
               style={[editProfileStyles.button, editProfileStyles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}>
@@ -57,12 +72,6 @@ export function ModalContainer() {
           </View>
         </View>
       </Modal>
-
-      <Pressable
-        style={[editProfileStyles.button, editProfileStyles.buttonOpen]}
-        onPress={() => setModalVisible(true)}>
-        <Text style={editProfileStyles.textStyle}>Show Modal</Text>
-      </Pressable>
     </View>
   );
 }
@@ -79,12 +88,12 @@ const editProfileStyles = StyleSheet.create({
     alignItems: 'center',
   },
   modalView: {
-    height: '80%',
-    width: '80%',
+    height: '90%',
+    width: '90%',
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
-    alignItems: 'center',
+    // alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -96,6 +105,8 @@ const editProfileStyles = StyleSheet.create({
   },
   button: {
     borderRadius: 20,
+    marginLeft: '33%',
+    marginRight: '33%',
     padding: 10,
     elevation: 2,
   },
@@ -111,7 +122,9 @@ const editProfileStyles = StyleSheet.create({
     textAlign: 'center',
   },
   modalText: {
-    marginBottom: 15,
+    marginTop: 10,
+    marginBottom: 10,
     textAlign: 'center',
+    fontWeight: 600,
   },
 });

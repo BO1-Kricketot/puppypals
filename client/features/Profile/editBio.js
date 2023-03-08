@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, TextInput, View } from 'react-native';
 
-export default function BioEditor() {
-  const [bio, setBio] = useState('current bio');
+export default function BioEditor({ bio, setBio }) {
 
   return (
     <View style={bioStyles.container}>
@@ -11,10 +10,11 @@ export default function BioEditor() {
           editable
           multiline
           numberOfLines={4}
-          maxLength={40}
+          maxLength={80}
           onChangeText={(text) => setBio(text)}
           value={bio}
-          style={{ padding: 10 }}
+          placeholder={bio}
+          style={{ margin: '2%' }}
         />
       </View>
     </View>
@@ -24,10 +24,10 @@ export default function BioEditor() {
 const bioStyles = StyleSheet.create({
   container: {
     backgroundColor: 'darkcyan',
-    flex: 1,
+    flex: 2,
   },
   bioInput: {
-    backgroundColor: 'white',
+    backgroundColor: 'lightgray',
     borderBottomColor: 'black',
     borderBottomWidth: 1,
   },
