@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+const _ = require('lodash');
 const api = require('../api');
 
 const dogTemplate = {
@@ -32,6 +33,8 @@ const dogTemplate = {
  * @returns a dog object that matches DogModel schema
  */
 module.exports = async function formatDog(dog) {
+  if (!_.isEqual(Object.keys(dog), Object.keys(dogTemplate)))
+    throw new Error("input dog doesn't match the template!");
   const mainImageUrl = await api.uploadPhoto(dog?.mainImage);
   const imageUrls = await api.uploadPhotos(dog?.images);
   const ownerImage = await api.uploadPhoto(dog?.owner?.image);

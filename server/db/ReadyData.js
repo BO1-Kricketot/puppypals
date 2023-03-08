@@ -43,11 +43,7 @@ module.exports = [
     },
     owner: {
       name: 'String',
-      image: 'base64String',
-    },
-    userInfo: {
-      email: 'String',
-      password: 'String',
+      image: '',
     },
   },
 ];
