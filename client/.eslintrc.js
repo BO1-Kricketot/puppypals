@@ -1,11 +1,6 @@
 module.exports = {
   root: true,
   extends: '@react-native-community',
-<<<<<<< HEAD
-  plugins: [
-    'babel'
-  ]
-=======
   plugins: ['babel'],
   parserOptions: {
     ecmaVersion: 'latest',
@@ -13,7 +8,6 @@ module.exports = {
       jsx: true,
     },
   },
->>>>>>> eslint-fix
   rules: {
     'prettier/prettier': [
       'error',
