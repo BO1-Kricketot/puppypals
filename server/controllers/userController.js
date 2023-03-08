@@ -13,9 +13,9 @@ module.exports = {
     const newPassword = crypto.pbkdf2Sync(req.body.password, salt, 1000, 64, `sha512`).toString(`hex`);
     newUser.salt = salt;
     newUser.password = newPassword;
-    // newUser.save()
-        // .then((result) => console.log(result))
-        // .catch((e) => console.log(e))
+    newUser.save()
+      .then((result) => console.log(result))
+      .catch((e) => console.log(e))
     // throw new Error('registerUser not implemented yet!');
   },
 
@@ -34,9 +34,6 @@ module.exports = {
         }
       })
       .catch((e) => {console.log(e)})
-        // const hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, `sha512`).toString(`hex`);
-        // return this.hash === hash;
-      };
     // throw new Error('getUser not implemented yet!');
   },
 }

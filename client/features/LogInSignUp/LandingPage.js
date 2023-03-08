@@ -26,7 +26,7 @@ const LandingPage = () => {
 
   return (
     <View>
-      <Image Source={DummyLogo} alt="Doggy Logo hehe" />
+      <Image Source={DummyLogo} alt="Doggy Logo" />
       <Button
         title="Log In"
         onPress={goToLogIn}

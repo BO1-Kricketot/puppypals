@@ -8,11 +8,6 @@ const userSchema = new mongoose.Schema({
   salt: String,
 })
 
-userSchema.methods.validPassword = (password) => {
-  const hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, `sha512`).toString(`hex`);
-  return this.hash === hash;
-};
-
 const UserModel = mongoose.model('User', userSchema);
 
 module.exports = UserModel;
