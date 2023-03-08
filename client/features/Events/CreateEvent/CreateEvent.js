@@ -11,6 +11,8 @@ import {
 import React, { useState } from 'react';
 import api from '../../../api';
 import Constants from 'expo-constants';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import axios from 'axios';
 
 export default function CreateEvent({ modal, toggleModal, dog }) {
   const initial = {
@@ -33,6 +35,12 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
   };
 
   const [form, setForm] = useState(initial);
+  const [dob, setDob] = useState(new Date());
+  const [showDatePick, setShowDatePick] = useState(false);
+
+  const resetForm = () => {
+    setForm(initial);
+  };
 
   const handleChange = (name, event) => {
     const { text } = event.nativeEvent;
@@ -53,10 +61,32 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
     });
   };
 
+  const handleDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate || dob;
+    setShowDatePick(false);
+    setDob(currentDate);
+    const formattedDate = currentDate.toLocaleDateString();
+    setForm({
+      ...form,
+      datetime: formattedDate,
+    });
+  };
+
+  const handleCreateEvent = () => {
+    axios
+      .post('/', form) // update endpoint here
+      .then((result) => {
+        console.info(result.status);
+        toggleModal();
+        resetForm();
+      })
+      .catch((err) => console.error(err));
+  };
+
   return (
     <Modal animationType="slide">
       <View style={styles.modalContainer}>
-        <Text>Create Event</Text>
+        <Text style={styles.formTitle}>Create Event</Text>
         <Text>Event name</Text>
         <TextInput
           style={styles.input}
@@ -64,6 +94,25 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
           onChange={(text) => handleChange('title', text)}
           value={form.title}
         />
+
+        <Text>Event date</Text>
+        <TouchableOpacity onPress={() => setShowDatePick(true)}>
+          <TextInput
+            style={styles.input}
+            placeholder="Event date"
+            value={form.datetime}
+            editable={false}
+            onTouchStart={() => setShowDatePick(true)}
+          />
+        </TouchableOpacity>
+        {showDatePick && (
+          <DateTimePicker
+            value={dob}
+            mode="date"
+            display="default"
+            onChange={handleDateChange}
+          />
+        )}
 
         <Text>Event location</Text>
         <TextInput
@@ -104,7 +153,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
           onChange={(text) => handleChange('description', text)}
           value={form.description}
         />
-        <TouchableOpacity onPress={toggleModal}>
+        <TouchableOpacity onPress={handleCreateEvent}>
           <Text>Close</Text>
         </TouchableOpacity>
       </View>
@@ -116,5 +165,8 @@ const styles = StyleSheet.create({
   modalContainer: {
     backgroundColor: 'purple',
     flex: 1,
+  },
+  formTitle: {
+    backgroundColor: 'white',
   },
 });
