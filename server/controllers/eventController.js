@@ -87,6 +87,51 @@ module.exports = {
       .catch((err) => res.status(500).send(err));
   },
 
+  updateAttendancebyId(req, res) {
+    const { eventId } = req.params;
+    const { dogId, isAttending } = req.body;
+
+    EventModel.findById(eventId)
+      .exec()
+      .then((event) => {
+
+        DogModel.findById(dogId)
+          .exec()
+          .then((dog) => {
+
+            if (isAttending) {
+              if (!event.attendees.includes(dogId)) {
+                event.attendees.push(dogId);
+              }
+              if (!dog.eventsAttending.includes(eventId)) {
+                dog.eventsAttending.push(eventId);
+              }
+              // Remove the event ID from the dog's eventsPending array
+              const index = dog.eventsPending.indexOf(eventId);
+              if (index !== -1) {
+                dog.eventsPending.splice(index, 1);
+              }
+            } else {
+              // Remove the dog ID from the event's attendees array
+              if (event.attendees.includes(dogId)) {
+                event.attendees.splice(event.attendees.indexOf(dogId), 1);
+              }
+              // Remove the event ID from the dog's eventsAttending array
+              if (dog.eventsAttending.includes(eventId)) {
+                dog.eventsAttending.splice(dog.eventsAttending.indexOf(eventId), 1);
+              }
+            }
+
+            // Save the updated event and dog objects
+            Promise.all([event.save(), dog.save()])
+              .then(() => res.status(200).send('Attendance updated'))
+              .catch((err) => res.status(500).send(err));
+          })
+          .catch((err) => res.status(500).send(err));
+      })
+      .catch((err) => res.status(500).send(err));
+  },
+
   /**
    * Deletes one Event by (Event)_id
    */

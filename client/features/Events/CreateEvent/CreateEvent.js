@@ -75,14 +75,16 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
   };
 
   const handleCreateEvent = () => {
-    axios
-      .post('/', form) // update endpoint here
-      .then((result) => {
-        console.info(result.status);
-        toggleModal();
-        resetForm();
-      })
-      .catch((err) => console.error(err));
+    console.log('data saved');
+    toggleModal();
+    // axios
+    //   .post('/', form) // update endpoint here
+    //   .then((result) => {
+    //     console.info(result.status);
+    //     toggleModal();
+    //     resetForm();
+    //   })
+    //   .catch((err) => console.error(err));
   };
 
   return (

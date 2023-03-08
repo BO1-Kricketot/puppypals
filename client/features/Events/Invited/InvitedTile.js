@@ -1,10 +1,17 @@
-import { Button, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import React, { useState } from 'react';
 import api from '../../../api';
 import Constants from 'expo-constants';
 import InvitedInfo from './InvitedInfo.js';
 
-export default function InvitedTile({ event }) {
+export default function InvitedTile({ event, dog }) {
   const [modal, setModal] = useState(false);
 
   const toggleModal = () => {
@@ -16,7 +23,10 @@ export default function InvitedTile({ event }) {
       <TouchableOpacity onPress={toggleModal}>
         <View style={styles.hostContainer}>
           <View style={styles.imageContainer}>
-          <Image style={styles.image} source={{uri: event.host_meta.mainImgPath}} />
+            <Image
+              style={styles.image}
+              source={{ uri: event.host_meta.mainImgPath }}
+            />
           </View>
           <Text>{event.host_meta.name}</Text>
         </View>
@@ -27,7 +37,7 @@ export default function InvitedTile({ event }) {
         </View>
       </TouchableOpacity>
       {modal && (
-        <InvitedInfo modal={modal} toggleModal={toggleModal} event={event} />
+        <InvitedInfo modal={modal} toggleModal={toggleModal} event={event} dog={dog} />
       )}
     </View>
   );

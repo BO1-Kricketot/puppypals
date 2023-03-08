@@ -13,31 +13,38 @@ import axios from 'axios';
 import InvitedList from './Invited/InvitedList.js';
 import AttendingList from './Attending/AttendingList.js';
 import CreateEvent from './CreateEvent/CreateEvent.js';
+import { dummyAttending, dummyInvited, dummyDog } from './sampleData.js';
+console.log('dummyInvited', dummyInvited);
 
-export default function Events({ dog }) {
+export default function Events() {
+  // to be ({ dog })
   const [invited, setInvited] = useState(true);
-  const [invitedEvents, setInvitedEvents] = useState([]);
-  const [attendingEvents, setAttendingEvents] = useState([]);
+  const [invitedEvents, setInvitedEvents] = useState(dummyInvited);
+  const [attendingEvents, setAttendingEvents] = useState(dummyAttending);
   const [modal, setModal] = useState(false);
 
-  // // PLACEHOLDERS:
+  const dog = dummyDog;
+
+  // // PLACEHOLDERS FOR FE TO BE HOOKUP:
   // const updateInvitedList = () => {
-  //   axios
-  //     .get(`/events/dog/${dog._id}?filter=invited`)
-  //     .then((results) => setInvitedEvents(results.data))
-  //     .catch((err) => console.error('Error getting invited events: ', err));
+    // setInvitedEvents(dummyInvited);
+    // axios
+    //   .get(`/events/dog/${dog._id}?filter=invited`)
+    //   .then((results) => setInvitedEvents(results.data))
+    //   .catch((err) => console.error('Error getting invited events: ', err));
   // };
 
   // const updateAttendingList = () => {
-  //   axios
-  //     .get(`/events/dog/${dog._id}?filter=attending`)
-  //     .then((results) => setAttendingEvents(results.data))
-  //     .catch((err) => console.error('Error getting attending events: ', err));
+    // setAttendingEvents(dummyAttending);
+    // axios
+    //   .get(`/events/dog/${dog._id}?filter=attending`)
+    //   .then((results) => setAttendingEvents(results.data))
+    //   .catch((err) => console.error('Error getting attending events: ', err));
   // };
 
   // useEffect(() => {
-  //   updateInvitedList();
-  //   updateAttendingList();
+    // updateInvitedList();
+    // updateAttendingList();
   // }, []);
 
   const handleInvited = () => {
@@ -69,9 +76,9 @@ export default function Events({ dog }) {
         <CreateEvent modal={modal} toggleModal={toggleModal} dog={dog} />
       )}
       {invited ? (
-        <InvitedList invitedEvents={invitedEvents} />
+        <InvitedList invitedEvents={invitedEvents} dog={dog} />
       ) : (
-        <AttendingList attendingEvents={attendingEvents} />
+        <AttendingList attendingEvents={attendingEvents} dog={dog} />
       )}
     </SafeAreaView>
   );

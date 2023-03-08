@@ -3,19 +3,18 @@ import React, { useState, useEffect } from 'react';
 import api from '../../../api';
 import Constants from 'expo-constants';
 import InvitedTile from './InvitedTile.js';
-import { eventsData } from '../sampleData.js';
 
-export default function InvitedList({ invitedEvents }) {
+export default function InvitedList({ invitedEvents, dog }) {
   const [invitedList, setInvitedList] = useState([]);
 
   useEffect(() => {
-    setInvitedList(eventsData);
+    setInvitedList(invitedEvents);
   }, []);
 
   return (
     <ScrollView style={styles.container}>
       {invitedList.map((event) => (
-        <InvitedTile key={event._id} event={event} />
+        <InvitedTile key={event._id} event={event} dog={dog} />
       ))}
     </ScrollView>
   );
