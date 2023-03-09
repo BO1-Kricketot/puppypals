@@ -23,5 +23,10 @@
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.4.1"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@react-navigation/material-top-tabs": "^5.3.19",
+    "date-fns": "^2.29.3",
+    "react-native-tab-view": "^2.16.0"
+  }
 }

@@ -25,7 +25,10 @@ module.exports = {
   web: {
     favicon: './assets/favicon.png',
   },
-  extra: {
-    apiUrl: process.env.API_URL,
+  expo: {
+    scheme: 'myapp',
+    web: {
+      bundler: 'metro',
+    },
   },
 };
