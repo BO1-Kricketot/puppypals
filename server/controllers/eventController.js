@@ -1,17 +1,19 @@
 const DogModel = require('../models/DogModel');
 const EventModel = require('../models/EventModel');
+const api = require('../api');
 const debug = require('../utils/debug');
 
 module.exports = {
   /**
    * Creates a new Event document
-   *
    * Expects: body containing Event information
-   *
-   * TODO: Implement
    */
   createEvent(req, res) {
-    throw new Error('createEvent not implemented yet!');
+    const event = req.body;
+    event.location = { ...event.location, coordinates: api.getCoordinates(event.location) };
+    return EventModel.create(event)
+      .then(result => res.status(201).send(result))
+      .catch(err => res.status(500).send(err));
   },
 
   /**
@@ -19,11 +21,13 @@ module.exports = {
    *
    * Query: _id - Event _id
    * Example: /events/222
-   *
-   * TODO: Implement
    */
   getEventById(req, res) {
-    throw new Error('getEventById not implemented yet!');
+    const { eventId } = req.params;
+
+    return EventModel.findOne({_id: eventId})
+      .then((result) => res.status(200).send(result))
+      .catch((err) => res.status(500).send(err));
   },
 
   /**
@@ -35,32 +39,109 @@ module.exports = {
    * Example: /events/dog/123?filter=invited
    *
    * TODO: Implement
+   * /events/dog/123?filter=invited
+   * req.query = { filter: invited }
+   * req.params = { dogId: 123 }
    */
-  getEventsByDogId(req, res) {
-    // query for dog
+
+    // query for the dog
     // get their pendingEvents OR attendingEvents array
     // query for those events
     // return those events
-    throw new Error('getEventsByDogId not implemented yet!');
+  getEventsByDogId(req, res) {
+    const { dogId } = req.params;
+    const { filter } = req.query;
+
+    if (!filter) {
+      return res.status(404).send('No query provided');
+    }
+
+    return DogModel.findOne({ _id: dogId })
+      .exec()
+      .then((dog) => {
+        let events;
+
+        if (filter === 'invited') {
+          events = dog.eventsPending;
+        } else if (filter === 'attending') {
+          events = dog.eventsAttending;
+        }
+
+        EventModel.find({ _id: { $in: events } })
+          .exec()
+          .then((result) => res.status(200).send(result))
+          .catch(err => res.status(500).send(err));
+      })
+      .catch((err) => res.status(500).send(err));
   },
 
   /**
    * Updates one Event by (Event)_id with new information
-   *
    * Expects: body containing new Event information
-   *
-   * TODO: Implement
    */
   updateEventById(req, res) {
-    throw new Error('updateEventById not implemented yet!');
+    const { eventId } = req.params;
+    const update = req.body;
+
+    return EventModel.findOneAndUpdate({ _id: eventId }, update, { new: true })
+      .exec()
+      .then((result) => res.status(204).send(result))
+      .catch((err) => res.status(500).send(err));
+  },
+
+  updateAttendancebyId(req, res) {
+    const { eventId } = req.params;
+    const { dogId, isAttending } = req.body;
+
+    EventModel.findById(eventId)
+      .exec()
+      .then((event) => {
+
+        DogModel.findById(dogId)
+          .exec()
+          .then((dog) => {
+
+            if (isAttending) {
+              if (!event.attendees.includes(dogId)) {
+                event.attendees.push(dogId);
+              }
+              if (!dog.eventsAttending.includes(eventId)) {
+                dog.eventsAttending.push(eventId);
+              }
+              // Remove the event ID from the dog's eventsPending array
+              const index = dog.eventsPending.indexOf(eventId);
+              if (index !== -1) {
+                dog.eventsPending.splice(index, 1);
+              }
+            } else {
+              // Remove the dog ID from the event's attendees array
+              if (event.attendees.includes(dogId)) {
+                event.attendees.splice(event.attendees.indexOf(dogId), 1);
+              }
+              // Remove the event ID from the dog's eventsAttending array
+              if (dog.eventsAttending.includes(eventId)) {
+                dog.eventsAttending.splice(dog.eventsAttending.indexOf(eventId), 1);
+              }
+            }
+
+            // Save the updated event and dog objects
+            Promise.all([event.save(), dog.save()])
+              .then(() => res.status(200).send('Attendance updated'))
+              .catch((err) => res.status(500).send(err));
+          })
+          .catch((err) => res.status(500).send(err));
+      })
+      .catch((err) => res.status(500).send(err));
   },
 
   /**
    * Deletes one Event by (Event)_id
-   *
-   * TODO: Implement
    */
   deleteEventById(req, res) {
-    throw new Error('deleteEventById not implemented yet!');
+    const { eventId } = req.params;
+    return EventModel.findOneAndDelete({ _id: eventId })
+      .exec()
+      .then(() => res.status(204).send('Event deleted'))
+      .catch((err) => res.status(500).send(err));
   },
 };
