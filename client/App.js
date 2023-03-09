@@ -1,7 +1,11 @@
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import Example from './features/Example';
 import { StyleSheet, Text, View } from 'react-native';
 // import Profile from './features/Profile';
 import Events from './features/Events';
+
+
 
 export default function App() {
   return (
