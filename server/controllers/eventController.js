@@ -46,33 +46,15 @@ module.exports = {
    * req.params = { dogId: 123 }
    */
 
-    // query for the dog
-    // get their pendingEvents OR attendingEvents array
-    // query for those events
-    // return those events
+
   getEventsByDogId(req, res) {
     const { dogId } = req.params;
-    const { filter } = req.query;
 
-    if (!filter) {
-      return res.status(404).send('No query provided');
-    }
-
-    return DogModel.findOne({ _id: dogId })
+    return EventModel.find()
       .exec()
-      .then((dog) => {
-        let events;
-
-        if (filter === 'invited') {
-          events = dog.eventsPending;
-        } else if (filter === 'attending') {
-          events = dog.eventsAttending;
-        }
-
-        EventModel.find({ _id: { $in: events } })
-          .exec()
-          .then((result) => res.status(200).send(result))
-          .catch(err => res.status(500).send(err));
+      .then((result) => {
+        const filtered = result.map((event) => event.attendees.includes(dogId));
+        res.status(200).send(filtered);
       })
       .catch((err) => res.status(500).send(err));
   },
@@ -100,52 +82,6 @@ module.exports = {
 
   },
 
-  // route: /events/:eventId/:dogId
-  // 'attendance route' take dogId out of eventId's invitees[] and into attendees[]
-  updateAttendance(req, res) {
-    const { eventId } = req.params;
-    const { dogId, isAttending } = req.body;
-
-    EventModel.findById(eventId)
-      .exec()
-      .then((event) => {
-
-        DogModel.findById(dogId)
-          .exec()
-          .then((dog) => {
-
-            if (isAttending) {
-              if (!event.attendees.includes(dogId)) {
-                event.attendees.push(dogId);
-              }
-              if (!dog.eventsAttending.includes(eventId)) {
-                dog.eventsAttending.push(eventId);
-              }
-              // Remove the event ID from the dog's eventsPending array
-              const index = dog.eventsPending.indexOf(eventId);
-              if (index !== -1) {
-                dog.eventsPending.splice(index, 1);
-              }
-            } else {
-              // Remove the dog ID from the event's attendees array
-              if (event.attendees.includes(dogId)) {
-                event.attendees.splice(event.attendees.indexOf(dogId), 1);
-              }
-              // Remove the event ID from the dog's eventsAttending array
-              if (dog.eventsAttending.includes(eventId)) {
-                dog.eventsAttending.splice(dog.eventsAttending.indexOf(eventId), 1);
-              }
-            }
-
-            // Save the updated event and dog objects
-            Promise.all([event.save(), dog.save()])
-              .then(() => res.status(200).send('Attendance updated'))
-              .catch((err) => res.status(500).send(err));
-          })
-          .catch((err) => res.status(500).send(err));
-      })
-      .catch((err) => res.status(500).send(err));
-  },
 
   /**
    * Deletes one Event by (Event)_id

@@ -13,22 +13,21 @@ import Constants from 'expo-constants';
 import axios from 'axios';
 
 import { dummyDogFriends } from '../sampleData.js';
-// console.log(dummyDogFriends[0].mainImageUrl);
 
 export default function InvitedInfo({ modal, toggleModal, event, dog }) {
+  // TO DELETE: dummy data
   let friends = dummyDogFriends;
 
   const handleAttendanceYes = async () => {
-    console.log('I am attending');
     const eventId = event._id;
-    // const deleteResults = await axios.delete /einvites/${eventId}
-    // const patchResults = await axios.patch /events/attend/${eventId}/${dog._id}
+    const deleteResults = await axios.delete(`/einvites/${eventId}`);
+    const patchResults = await axios.patch(`/events/attend/${eventId}/${dog._id}`);
   };
 
-  const handleAttendanceNo = () => {
-    console.log('I am not attending');
-    // axios.delete /einvites/${eventId}
-    // axios.patch /events/reject/${eventId}/${dog._id}
+  const handleAttendanceNo = async () => {
+    const eventId = event._id;
+    const deleteInvite = await axios.delete(`/einvites/${eventId}`);
+    const rejectEvent = await axios.patch(`/events/reject/${eventId}/${dog._id}`);
   };
 
   return (

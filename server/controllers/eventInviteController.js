@@ -30,7 +30,6 @@ module.exports = {
    *
    * Route: /einvites/123
    *
-   * TODO: Implement
    */
   getEventInvitesById(req, res) {
     // (a,b) => b.creationDate - a.creationDate
@@ -45,7 +44,7 @@ module.exports = {
   },
 
   /**
-   * Updates an Event_Invite by _id reflecting new status
+   * Deletes the event invite for a user who rejects invite
    *
    * Route: /einvites/${eventId}
    *

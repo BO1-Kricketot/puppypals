@@ -23,35 +23,33 @@ export default function Events() {
   const [attendingEvents, setAttendingEvents] = useState(dummyAttending);
   const [modal, setModal] = useState(false);
 
+  // TO DELETE: dummy data
   const dog = dummyDog;
 
-  // // PLACEHOLDERS FOR FE TO BE HOOKUP:
-  // const updateInvitedList = () => {
-    // setInvitedEvents(dummyInvited);
-    // axios
-    //   .get(`/events/dog/${dog._id}?filter=invited`)
-    //   .then((results) => setInvitedEvents(results.data))
-    //   .catch((err) => console.error('Error getting invited events: ', err));
-  // };
+  const updateInvitedList = () => {
+    axios
+      .get(`/einvites/${dog._id}`)
+      .then((result) => setInvitedEvents(result.data))
+      .catch((err) => console.error('Error getting invited events: ', err));
+  };
 
-  // const updateAttendingList = () => {
-    // setAttendingEvents(dummyAttending);
-    // axios
-    //   .get(`/events/dog/${dog._id}?filter=attending`)
-    //   .then((results) => setAttendingEvents(results.data))
-    //   .catch((err) => console.error('Error getting attending events: ', err));
-  // };
+  const updateAttendingList = () => {
+    axios
+      .get(`/events/dog/${dog._id}`)
+      .then((results) => setAttendingEvents(results.data))
+      .catch((err) => console.error('Error getting attending events: ', err));
+  };
 
-  // useEffect(() => {
-    // updateInvitedList();
+  useEffect(() => {
+    updateInvitedList();
     // updateAttendingList();
-  // }, []);
+  }, []);
 
-  const handleInvited = () => {
+  const handleInvitedTab = () => {
     setInvited(true);
   };
 
-  const handleAttending = () => {
+  const handleAttendingTab = () => {
     setInvited(false);
   };
 
@@ -62,10 +60,10 @@ export default function Events() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.eventHeader}>
-        <TouchableOpacity onPress={handleInvited}>
+        <TouchableOpacity onPress={handleInvitedTab}>
           <Text style={styles.text}>Invited</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleAttending}>
+        <TouchableOpacity onPress={handleAttendingTab}>
           <Text style={styles.text}>Attending</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={toggleModal}>
