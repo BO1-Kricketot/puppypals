@@ -17,6 +17,7 @@ import * as ImagePicker from 'expo-image-picker';
 const { width, height } = Dimensions.get('window');
 import axios from 'axios';
 import { API_URL } from '@env';
+import { useRouter } from 'expo-router';
 
 const CreateProfile = () => {
   const [dogName, setDogName] = useState();
@@ -39,6 +40,7 @@ const CreateProfile = () => {
   const [state, setState] = useState();
   const [zip, setZip] = useState();
   const baseUrl = API_URL;
+  const router = useRouter();
 
   const pickOwnerImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -128,7 +130,7 @@ const CreateProfile = () => {
       };
       axios
         .post(`${baseUrl}/api/dogs`, dogInfo)
-        .then((res) => null) // console.log(res))
+        .then((res) => router.push('/home')) // console.log(res))
         .catch((e) => console.log(e));
     }
   };

@@ -42,7 +42,7 @@ const CreateAccount = () => {
       };
       axios
         .post(`${baseUrl}/api/user/signup`, userInfo)
-        .then((res) => router.push('/createprofile'))
+        .then((res) => router.push({ pathname: `/createprofile`, params: { id: '123' }}))
         .catch((e) => console.log('error in react', e));
     }
   };

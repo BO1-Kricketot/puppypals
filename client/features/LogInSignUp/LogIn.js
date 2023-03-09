@@ -15,11 +15,13 @@ import axios from 'axios';
 import api from '../../api';
 const { width, height } = Dimensions.get('window');
 import { API_URL } from '@env';
+import { useRouter } from 'expo-router';
 
 const LogIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const baseUrl = API_URL;
+  const router = useRouter();
 
   const signInPress = () => {
     console.log('send login info');
@@ -29,7 +31,7 @@ const LogIn = () => {
     };
     axios
       .post(`${baseUrl}/api/user/login`, logInData)
-      .then((res) => console.log(res)) // use navigator to send user to app or alert w/ message if not
+      .then((res) => router.push('/home')) // use navigator to send user to app or alert w/ message if not
       .catch((e) => console.log(e));
   };
 
