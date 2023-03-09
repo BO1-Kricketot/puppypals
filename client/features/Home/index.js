@@ -69,20 +69,15 @@ const dummyUsers = [
   { ...dummyInfo, id: 3 },
   { ...dummyInfo, id: 4 },
 ];
-
-<<<<<<< Updated upstream
-import { useAuth } from '../../context/Provider';
-
-const Home = ({ navigation }) => {
-=======
 const applyFilter = (filterName, filterValue, usersArray) => {
   return usersArray.filter((dog) => {
     return dog.filterName === filterValue;
   });
 };
+import { useAuth } from '../../context/Provider';
 
-const HomeLanding = ({ id }) => {
->>>>>>> Stashed changes
+const Home = ({ navigation }) => {
+
   const [picClicked, setPicClicked] = useState(false);
   const [filterVisible, setFilterVisible] = useState(false);
   const [userProfile, setUserProfile] = useState({});
@@ -323,7 +318,7 @@ const styles = StyleSheet.create({
     borderRadius: 75,
   },
 });
-export default HomeLanding;
+export default Home;
 
 // header: {
 //   width: width,

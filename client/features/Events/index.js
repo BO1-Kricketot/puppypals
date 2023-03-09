@@ -15,10 +15,7 @@ import AttendingList from './Attending/AttendingList.js';
 import CreateEvent from './CreateEvent/CreateEvent.js';
 import { API_URL } from '@env';
 import { dummyAttending, dummyInvited, dummyDog } from './sampleData.js';
-<<<<<<< Updated upstream
-=======
 // console.log('dummyInvited', dummyInvited);
->>>>>>> Stashed changes
 
 export default function Events() {
   // to be ({ dog })
