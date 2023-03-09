@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const ProxyData = require('./ProxyData');
 const DogModel = require('../models/DogModel');
 const EventModel = require('../models/EventModel');
+const api = require('../api');
 
 const { DB_HOST } = process.env;
 const DB_COLL = 'puppypals_db';
@@ -28,13 +29,19 @@ function getRandomDate() {
   return randomDate.toISOString();
 }
 
-function generateRandomEvent() {
+async function generateRandomEvent() {
   const { eventNames, eventDescriptions, locations } = ProxyData;
+  let location = getRandomItem(locations);
+  const coordinates = await api.getCoordinates(location);
+  location = {
+    ...location,
+    coordinates,
+  };
   return {
     title: getRandomItem(eventNames),
     datetime: getRandomDate(),
     description: getRandomItem(eventDescriptions),
-    location: getRandomItem(locations),
+    location,
   };
 }
 
@@ -58,8 +65,10 @@ async function main(numEvents) {
       getRandomItem(dogs)._id,
       getRandomItem(dogs)._id,
     ];
-    const event = {
-      ...generateRandomEvent(),
+    // eslint-disable-next-line no-await-in-loop
+    let event = await generateRandomEvent();
+    event = {
+      ...event,
       hostMeta: {
         dogId,
         name,
@@ -69,7 +78,7 @@ async function main(numEvents) {
     };
     promises.push(EventModel.create(event));
   }
-  Promise.all(promises).then(() => console.log('done!'));
+  Promise.all(promises).then(() => console.log('done! press ctrl+c to exit'));
 }
 
-main(5);
+main(50);
