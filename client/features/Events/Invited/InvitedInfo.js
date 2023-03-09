@@ -11,33 +11,24 @@ import React from 'react';
 import api from '../../../api';
 import Constants from 'expo-constants';
 import axios from 'axios';
-
+import { API_URL } from '@env';
+// TO DELETE: dummy data
 import { dummyDogFriends } from '../sampleData.js';
-// console.log(dummyDogFriends[0].mainImageUrl);
 
 export default function InvitedInfo({ modal, toggleModal, event, dog }) {
+  // TO DELETE: dummy data
   let friends = dummyDogFriends;
 
-  // // PLACEHOLDERS FOR FE TO BE HOOKUP:
-  // const handleAttendanceUpdate = (eventId, dogId, isAttending) => {
-  //   console.log('isAttending?', isAttending);
-  //   axios
-  //     .patch(`/events/${eventId}/attendance`, { dogId, isAttending })
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       // need to update on close, to update invitedlist
-  //     })
-  //     .catch((error) => console.error(error));
-  // };
-
-  const handleAttendanceYes = () => {
-    console.log('I am attending');
-    // handleAttendanceUpdate(event._id, dog._id, true);
+  const handleAttendanceYes = async () => {
+    const eventId = event._id;
+    await axios.delete(`${API_URL}/einvites/${eventId}`);
+    await axios.patch(`${API_URL}/events/attend/${eventId}/${dog._id}`);
   };
 
-  const handleAttendanceNo = () => {
-    console.log('I am not attending');
-    // handleAttendanceUpdate(event._id, dog._id, false);
+  const handleAttendanceNo = async () => {
+    const eventId = event._id;
+    await axios.delete(`${API_URL}/einvites/${eventId}`);
+    await axios.patch(`${API_URL}/events/reject/${eventId}/${dog._id}`);
   };
 
   return (
