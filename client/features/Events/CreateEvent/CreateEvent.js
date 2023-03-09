@@ -24,7 +24,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
     invitees: [],
     attendees: [],
     hostMeta: {
-      _id:
+      _id: "1",
       name: 'Kiwi', // to update to dog.name
       mainImgPath: 'thiswillbeaURL', // to update to dog.mainImagePath
     },
@@ -88,21 +88,16 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
     }
   };
 
-  const handleEventInvites = () => {
-    axios
-      .post('/events/', form)
-      .then((result) => console.info(result.status))
-      .catch((err) => console.err(err));
-  };
-
-
-
   const handleCreateEvent = () => {
     console.log('data saved');
     axios
       .post('/events/', form)
       .then((result) => {
-        console.info(result.status);
+        const eventId = result._id;
+        axios
+          .post('/einvites', { ...form, eventId })
+          .then(() => console.info('Event posted'))
+          .catch((err) => console.error('Error posting'));
         toggleModal();
         resetForm();
       })

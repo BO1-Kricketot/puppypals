@@ -13,10 +13,11 @@ module.exports = {
   sendEventInvite(req, res) {
     const invitedDogs = req.body.invitees; // array of dog IDs
     const sender = req.body.host_meta._id; // sender dog
+    const { eventId } = req.body;
     const promises = [];
     for (let i = 0; i < invitedDogs.length; i += 1 ) {
       const dogId = invitedDogs[i];
-      promises.push(EventInviteModel.create({ senderId: sender , recipientId: dogId }))
+      promises.push(EventInviteModel.create({ senderId: sender , recipientId: dogId, eventId }))
     }
     Promise.all(promises)
       .then((result) => res.status(200).send(result))
