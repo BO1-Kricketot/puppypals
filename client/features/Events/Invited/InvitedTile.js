@@ -20,7 +20,7 @@ export default function InvitedTile({ event, dog }) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={toggleModal}>
+      <TouchableOpacity onPress={toggleModal} style={styles.row}>
         <View style={styles.hostContainer}>
           <View style={styles.imageContainer}>
             <Image
@@ -50,19 +50,27 @@ export default function InvitedTile({ event, dog }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: '1%',
+    marginTop: '2%',
     backgroundColor: 'red',
-    height: 115,
+    // height: 115,
+    flex: 1,
+  },
+  row: {
+    flexDirection: 'row',
   },
   hostContainer: {
     backgroundColor: 'lightslategray',
-    // flex: 1,
+    flex: 1,
+    alignItems: 'center',
+  },
+  eventDetails: {
+    backgroundColor: 'pink',
+    flex: 3,
   },
   imageContainer: {
-    width: 50,
-    height: 50,
-    marginLeft: 'auto',
-    marginRight: 10,
+    width: 60,
+    height: 60,
+    justifyContent: 'center',
   },
   image: {
     flex: 1,

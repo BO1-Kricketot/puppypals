@@ -5,6 +5,8 @@ import {
   View,
   SafeAreaView,
   TouchableOpacity,
+  Platform,
+  StatusBar,
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import api from '../../api';
@@ -86,6 +88,7 @@ export default function Events() {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: Platform.OS === 'android' && StatusBar.currentHeight,
     flex: 1,
     width: '100%',
     backgroundColor: '#F4F4F6',
