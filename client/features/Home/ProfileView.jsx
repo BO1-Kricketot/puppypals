@@ -5,10 +5,15 @@ import {
   Text,
   View,
   Button,
+  Pressable,
   Platform,
   StatusBar,
   Dimensions,
+  ScrollView
 } from 'react-native';
+import Swiper from 'react-native-swiper';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 const { width, height } = Dimensions.get('window');
 //if you need to use the width and height for some reason
 
@@ -73,62 +78,63 @@ export default function Profile({ picClicked, setPicClicked }) {
     <>
       <SafeAreaView style={profileStyles.container}>
         <View style={userInfoContainer}>
-          <Text style={{ marginLeft: 10 }}>{dummyInfo.ownerName}</Text>
+          <Text style={{ marginLeft: 10, fontSize: 20, color: '#FAFAFA'}}>{dummyInfo.ownerName}</Text>
           <View style={{ width: 50, height: 50, marginLeft: 20 }}>
             <Image
               style={userPicContainer}
               source={{ uri: dummyInfo.ownerPic }}
             />
           </View>
-          <View
-            style={{
-              width: 50,
-              height: 50,
+         
+            <Pressable style={{
+              width: 40,
+              height: 40,
               marginLeft: 'auto',
               marginRight: 10,
-            }}>
-            <Button
-              title="X"
-              onPress={() => {
+              borderRadius: 50,
+              backgroundColor: '#F4F4F6',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }} onPress={() => {
                 setPicClicked(!picClicked);
-              }}></Button>
+              }}>
+                <Ionicons name={'close'} size={36} color={'#474747'} />
+              </Pressable>
+  
           </View>
-        </View>
+         
         <View style={mainPicContainer}>{mainPhoto}</View>
         <View style={morePicsAndNavContainer}>{otherPhotos}</View>
+     
         <View style={profileStyles.dogInfoContainer}>
-          <Text>
-            {dummyInfo.dogName}
-            <Text>{dummyInfo.dogBreed}</Text>
-          </Text>
-          <Text>{dummyInfo.location}</Text>
+          <View style={{display: 'flex',flexDirection: 'row', gap: 6, justifyContent: 'flex-start'}}>
+          <Text style={{color: '#A594F9', fontWeight: 'bold', fontSize: 30}}>
+            {dummyInfo.dogName} </Text>
+          <Text style={{color: '#474747',paddingTop: 10, fontWeight: 'bold', fontSize: 20}}>{dummyInfo.dogBreed}</Text>
+         
+          </View>
+          <Text style={{fontSize: 15, fontWeight: 500, color: '#66666E'}}>{dummyInfo.location}</Text>
           {dummyInfo.peopleFriendly || dummyInfo.dogFriendly ? (
             <View style={profileStyles.friendlyContainer}>
               {dummyInfo.peopleFriendly && (
                 <Text style={profileStyles.friendlyItem}>
-                  I'm people friendly!
+                  People friendly
                 </Text>
               )}
               {dummyInfo.dogFriendly && (
                 <Text style={profileStyles.friendlyItem}>
-                  I'm dog friendly!
+                  Dog friendly
                 </Text>
               )}
             </View>
           ) : null}
-          <Text>{dummyInfo.dogBio}</Text>
+          <ScrollView persistentScrollbar= {true} style={{marginTop: 12}} removeClippedSubviews={true}>
+          <Text style={{backgroundColor: 'white', fontSize: 20, paddingLeft: 13, paddingRight: 13, paddingTop: 6, borderRadius: 10, letterSpacing: 0.3}}>{dummyInfo.dogBio}</Text>
+          </ScrollView>
         </View>
-        {isAndroid && (
-          <View style={profileStyles.morePicsAndNavContainer}>
-            {renderNav(dummyNav)}
-          </View>
-        )}
+        
       </SafeAreaView>
-      {!isAndroid && ( //conditionally render navbar to be at the bottom for android/ios
-        <View style={profileStyles.morePicsAndNavContainer}>
-          {renderNav(dummyNav)}
-        </View>
-      )}
     </>
   );
 }
@@ -136,13 +142,13 @@ export default function Profile({ picClicked, setPicClicked }) {
 const profileStyles = StyleSheet.create({
   // holds everything else, flex val 1 fills avail space
   container: {
-    backgroundColor: 'yellow',
+    backgroundColor: '#F4F4F6',
     flex: 1,
     paddingTop: Platform.OS === 'android' && StatusBar.currentHeight,
   },
   // flex val 4 equates to 'fill 4 something-ths of the available space in (main) container'
   mainPicContainer: {
-    backgroundColor: 'darkblue',
+    backgroundColor: '#F4F4F6',
     flex: 4,
   },
   // 'fill the whole container' (which in this case is mainPicContainer)
@@ -153,7 +159,7 @@ const profileStyles = StyleSheet.create({
   },
   // 'fill 1 something-ths of the available space in (main) container'
   morePicsAndNavContainer: {
-    backgroundColor: 'dodgerblue',
+    backgroundColor: '#F4F4F6',
     flex: 1,
     flexDirection: 'row',
   },
@@ -162,19 +168,19 @@ const profileStyles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    margin: '2%',
+    margin: '1.2%',
     borderRadius: 10,
   },
   // 'fill 2 something-th of the available space in (main) container'
   dogInfoContainer: {
-    backgroundColor: 'lightslategray',
+    backgroundColor: '#F4F4F6',
     flex: 2,
     marginLeft: '2%',
     marginRight: '2%',
   },
   // 'fill 1 something-ths of the available space in (main) container'
   userInfoContainer: {
-    backgroundColor: 'lightgray',
+    backgroundColor: '#7371FC',
     flex: 0.6,
     flexDirection: 'row',
     alignItems: 'center',
@@ -183,8 +189,8 @@ const profileStyles = StyleSheet.create({
   userPicContainer: {
     width: '100%',
     height: '100%',
-    borderColor: 'black',
-    borderWidth: 2,
+    borderColor: '#FAFAFA',
+    borderWidth: 1,
     borderRadius: 75,
   },
   // 'fill 1 something-ths of the available space in (main) container'
@@ -200,8 +206,10 @@ const profileStyles = StyleSheet.create({
     padding: 4,
     width: '40%',
     textAlign: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#CDC1FF',
     borderRadius: 8,
+    fontSize: 15,
+    fontWeight: 400
   },
   phNavContainer: {
     backgroundColor: 'violet',
@@ -210,6 +218,15 @@ const profileStyles = StyleSheet.create({
   },
   // currently, in the main container, there are I think 8 'something-ths'
   // e.g. mainPicContainer will fill 4/8ths of the container
+  //bgColor: deepPurple #7371FC //
+  //lightPurple: #A594F9 //fontcolor
+  //vealPurple": #CDC1FF
+  //#474747 text color
+  //#66666E gray color /dog breed
+  //poppup model #FAFAFA
+  //subtitle #E6E6E9
+  //#F4F4F6 bg color
+
 });
 
 const renderPics = (picList, isDefault) => {

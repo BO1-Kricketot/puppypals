@@ -7,13 +7,19 @@ import {
   TouchableWithoutFeedback,
   Image,
   Modal,
+  Pressable,
   SafeAreaView,
   Dimensions,
   Platform,
   StatusBar,
+  Switch,
 } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
-import Profile from './ProfileView';
+import Slider from 'react-native-sliders';
+import Profile from './ProfileView.jsx';
+import api from '../../api';
+import axios from 'axios';
+import { API_URL } from '@env';
 
 const { width, height, fontScale } = Dimensions.get('window');
 
@@ -64,11 +70,39 @@ const dummyUsers = [
   { ...dummyInfo, id: 4 },
 ];
 
+<<<<<<< Updated upstream
 import { useAuth } from '../../context/Provider';
 
 const Home = ({ navigation }) => {
+=======
+const applyFilter = (filterName, filterValue, usersArray) => {
+  return usersArray.filter((dog) => {
+    return dog.filterName === filterValue;
+  });
+};
+
+const HomeLanding = ({ id }) => {
+>>>>>>> Stashed changes
   const [picClicked, setPicClicked] = useState(false);
   const [filterVisible, setFilterVisible] = useState(false);
+  const [userProfile, setUserProfile] = useState({});
+  const [users, setUsers] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
+
+  useEffect(() => {
+    Promise.all([
+      axios.get(`${API_URL}/api/dogs/6408d66fec97eb3b6680290f`),
+      axios.get(`${API_URL}/api/dogs/6408d66fec97eb3b6680290f/one`),
+    ])
+      .then((res) => {
+        setUsers(res[0].data);
+        setUserProfile(res[1].data);
+        setCurrentUser(res[0].data[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const { user } = useAuth();
 
@@ -86,7 +120,7 @@ const Home = ({ navigation }) => {
             <View style={{ width: 50, height: 50, marginLeft: 20 }}>
               <Image
                 style={styles.userPicContainer}
-                source={{ uri: dummyInfo.ownerPic }}
+                source={{ uri: '../../assets/splash.png' }}
               />
             </View>
             <View
@@ -116,15 +150,53 @@ const Home = ({ navigation }) => {
                 opacity: 0.5,
               }}>
               <View>
-                <View
-                  style={{
-                    height: '40%',
-                    width: '40%',
-                    backgroundColor: 'red',
-                    opacity: 1,
-                  }}>
+                <View style={{ backgroundColor: 'white', opacity: 1 }}>
+                  <View>
+                    <Text>Distance</Text>
+                    <View>
+                      <Slider value={0} maximumValue={50}></Slider>
+                    </View>
+                  </View>
+                  <View>
+                    <Text>Size</Text>
+                    <Pressable>
+                      <Text>S</Text>
+                      <Text>M</Text>
+                      <Text>L</Text>
+                    </Pressable>
+                  </View>
+                  <View>
+                    <Text>Dog Friendliness</Text>
+                    <Switch
+                      trackColor={{ false: '#767577', true: '#81b0ff' }}
+                      thumbColor={true ? '#f5dd4b' : '#f4f3f4'}
+                      ios_backgroundColor="#3e3e3e"
+                      onValueChange={() => {
+                        console.log('witch');
+                      }}
+                      value={true}
+                    />
+                  </View>
+                  <View>
+                    <Text>Human Friendliness</Text>
+                    <Switch
+                      trackColor={{ false: '#767577', true: '#81b0ff' }}
+                      thumbColor={true ? '#f5dd4b' : '#f4f3f4'}
+                      ios_backgroundColor="#3e3e3e"
+                      onValueChange={() => {
+                        console.log('witch');
+                      }}
+                      value={true}
+                    />
+                  </View>
                   <Button
-                    title="My lord"
+                    title="Apply Filter"
+                    onPress={() => {
+                      console.log('setting Filter');
+                      setFilterVisible(!filterVisible);
+                    }}></Button>
+                  <Button
+                    title="X"
                     onPress={() => {
                       setFilterVisible(!filterVisible);
                     }}></Button>
@@ -138,10 +210,10 @@ const Home = ({ navigation }) => {
               height: '100%',
               flex: 1,
               position: 'absolute',
-              top: 0.08 * height,
+              top: 0.06 * height,
             }}>
             <Swiper
-              cards={dummyUsers}
+              cards={users.length ? users : []}
               containerStyle={{ backgroundColor: 'transparent' }}
               stackSize={5}
               cardIndex={0}
@@ -176,39 +248,46 @@ const Home = ({ navigation }) => {
               }}
               renderCard={(card) => (
                 <View
-                  key={card.id}
+                  key={card?._id}
                   style={{
                     backgroundColor: 'white',
-                    height: '85%',
+                    height: '90%',
                     position: 'relative',
-                    borderColor: 'gray',
-                    borderWidth: 1,
-                    borderRadius: 4,
+                    display: 'flex',
+                    
                   }}>
                   <Image
                     style={{
                       height: '100%',
                       width: '100%',
-                      position: 'absolute',
-                      top: 0,
+                      // position: 'absolute',
+                      // top: 0,
+                    borderWidth: 1,
+                    borderRadius: 10,
                     }}
-                    source={{ uri: card.photos[0].url }}></Image>
+                    source={{ uri: card?.mainImageUrl }}></Image>
                   <View
                     style={{
                       position: 'absolute',
-                      bottom: 0,
+                      bottom: 1,
                       display: 'flex',
                       flexDirection: 'row',
                       justifyContent: 'space-between',
+                      alignItems: 'center',
                       backgroundColor: 'white',
                       width: '100%',
                       height: '10%',
-                      paddingTop: 8,
                       paddingLeft: 6,
                       paddingRight: 6,
+                      borderWidth: 1,
+                      borderTopWidth: 0,
+                      borderTopLeftRadius: 0,
+                      borderTopRightRadius: 0,
+                      borderBottomRightRadius: 10,
+                      borderBottomLeftRadius: 10,
                     }}>
-                    <Text>{card.dogName}</Text>
-                    <Text>3 miles away</Text>
+                    <Text style={{fontSize: 30, color: '#A594F9', fontWeight: 'bold' }}>{card?.name}</Text>
+                    <Text style={{fontSize: 20, color: '#66666E', fontWeight: '400'}}>{card?.distanceFrom} miles away</Text>
                   </View>
                 </View>
               )}
@@ -225,11 +304,11 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'android' && StatusBar.currentHeight,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: 'yellow',
+    backgroundColor: '#F4F4F6',
     position: 'relative',
   },
   userInfoContainer: {
-    backgroundColor: 'lightgray',
+    backgroundColor: '#F4F4F6',
     display: 'flex',
     width: '100%',
     flexDirection: 'row',
@@ -243,15 +322,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 75,
   },
-  navBar: {
-    height: '10%',
-    position: 'absolute',
-    bottom: 0,
-    width: width,
-    backgroundColor: 'red',
-  },
 });
-export default Home;
+export default HomeLanding;
+
 // header: {
 //   width: width,
 //   backgroundColor: 'green',
