@@ -15,6 +15,7 @@ module.exports = {
     const newPassword = crypto.pbkdf2Sync(req.body.password, salt, 1000, 64, `sha512`).toString(`hex`);
     newUser.salt = salt;
     newUser.password = newPassword;
+    res.send('asdf')
     // newDog.save()
     // newUser.save()
     //   .then((result) => console.log(result))
