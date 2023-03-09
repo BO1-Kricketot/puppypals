@@ -97,7 +97,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
         axios
           .post('/einvites', { ...form, eventId })
           .then(() => console.info('Event posted'))
-          .catch((err) => console.error('Error posting'));
+          .catch((err) => console.error(err));
         toggleModal();
         resetForm();
       })

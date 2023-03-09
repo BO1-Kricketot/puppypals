@@ -18,26 +18,17 @@ import { dummyDogFriends } from '../sampleData.js';
 export default function InvitedInfo({ modal, toggleModal, event, dog }) {
   let friends = dummyDogFriends;
 
-  // // PLACEHOLDERS FOR FE TO BE HOOKUP:
-  // const handleAttendanceUpdate = (eventId, dogId, isAttending) => {
-  //   console.log('isAttending?', isAttending);
-  //   axios
-  //     .patch(`/events/${eventId}/attendance`, { dogId, isAttending })
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       // need to update on close, to update invitedlist
-  //     })
-  //     .catch((error) => console.error(error));
-  // };
-
-  const handleAttendanceYes = () => {
+  const handleAttendanceYes = async () => {
     console.log('I am attending');
-    // handleAttendanceUpdate(event._id, dog._id, true);
+    const eventId = event._id;
+    // const deleteResults = await axios.delete /einvites/${eventId}
+    // const patchResults = await axios.patch /events/attend/${eventId}/${dog._id}
   };
 
   const handleAttendanceNo = () => {
     console.log('I am not attending');
-    // handleAttendanceUpdate(event._id, dog._id, false);
+    // axios.delete /einvites/${eventId}
+    // axios.patch /events/reject/${eventId}/${dog._id}
   };
 
   return (

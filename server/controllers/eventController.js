@@ -91,7 +91,18 @@ module.exports = {
       .catch((err) => res.status(500).send(err));
   },
 
-  updateAttendancebyId(req, res) {
+  async attendEvent(req, res) {
+    const { eventId, dogId } = req.params;
+    const results = await EventModel.findOne({ _id: eventId });
+  },
+
+  rejectEvent(req,res) {
+
+  },
+
+  // route: /events/:eventId/:dogId
+  // 'attendance route' take dogId out of eventId's invitees[] and into attendees[]
+  updateAttendance(req, res) {
     const { eventId } = req.params;
     const { dogId, isAttending } = req.body;
 

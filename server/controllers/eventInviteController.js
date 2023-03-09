@@ -47,12 +47,14 @@ module.exports = {
   /**
    * Updates an Event_Invite by _id reflecting new status
    *
-   * Route: /einvites/111
-   * Expects: body containing new status
+   * Route: /einvites/${eventId}
    *
-   * TODO: Implement
    */
-  updateEventInviteById(req, res) {
-    throw new Error('updateEventInviteById not implemented yet!');
+  deleteEventInviteById(req, res) {
+    const { eventId } = req.params;
+    return EventInviteModel.findOneAndDelete({ _id: eventId })
+      .exec()
+      .then(() => res.status(204).send('Event Invite deleted'))
+      .catch((err) => res.status(500).send(err));
   },
 };
