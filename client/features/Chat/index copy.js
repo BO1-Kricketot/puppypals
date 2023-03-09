@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { parseISO, format } from 'date-fns';
+const { width, height } = Dimensions.get('window');
 import { io } from 'socket.io-client';
 import dummyData from './dummyData.js';
 
@@ -21,46 +22,50 @@ export default function Chat() {
   const isAndroid = Platform.OS === 'android';
   const [currentMessage, setCurrentMessage] = useState('');
   const [newMessages, setNewMessages] = useState([]);
-  const {Chats, CurrentUser1, CurrentUser2} = dummyData;
+  const [currentLog, setCurrentLog] = useState(dummyData)
+  const arr = [];
+
+
+  const { dummyCurrentUser1, dummyCurrentUser2 } = currentLog;
+  const dummyChats = currentLog.dummyChats;
 
   useEffect(() => {
-    socket.on('connect', () => {
-      console.log('You are connected to socket');
-    });
-
-    socket.on('disconnect', () => {
-      console.log('You are disconnected');
-    });
-
-    socket.on('receive-message', (message) => {
-      console.log('received message',message);
-    });
-
-    socket.emit('join-room', Chats._id, (message) => {
+    socket.emit('join-room', dummyChats._id, (message) => {
       console.log(message);
     })
-  },[]);
+  },[currentLog]);
+
+  // useEffect to use updateLog to change current log
+  const updateLog = (dog1,dog2) => {
+    axios.get(`/api/messages/${dog1}/${dog2}`)
+      .then((log) => {
+        setCurrentLog(log);
+      });
+  };
+
+  socket.on('receive-message', (message) => {
+    console.log(message);
+    arr.push(message);
+  });
 
   const handleMessageSend = () => {
     const newMessage = {
-      userId: CurrentUser1.id,
+      userId: dummyCurrentUser1.id,
       body: currentMessage,
       timestamp: new Date(),
       reactions: [],
     }
-    // socket.emit('post', newMessage, dummyChats._id);
-    console.log(newMessage);
-    socket.emit('josh', newMessage);
+    socket.emit('post', newMessage, dummyChats._id);
     setNewMessages([...newMessages, newMessage]);
-    // axios.post(`api/messages/`);
-  };
+    // axios.post(`api/messages/`)
+  }
 
   return (
     <>
       <SafeAreaView style={container}>
         <View style={headerContainer}>
-          <Text style={userName}>
-            hello
+          <Text>
+            {dummyChats.members[0] === dummyCurrentUser1.id ? dummyCurrentUser2.name : dummyCurrentUser1.name}
           </Text>
           <View style={{ width: 50, height: 50, marginLeft: 'auto', marginRight: 10 }}>
             <Image
@@ -69,45 +74,58 @@ export default function Chat() {
             />
           </View>
         </View>
-        <View>
-          {Chats.messages.map((chat,i) => {
-            return (
-              <View
-                style={chat.userId === CurrentUser1._id ? user1BubbleContainer: user2BubbleContainer}
-                key={i}
+        {dummyChats.messages.map((chat, i) => {
+          return (
+            <View
+              style={chat.userId === dummyCurrentUser1.id ? user1BubbleContainer: user2BubbleContainer}
+              key={i}
+            >
+              <Text
+                style={chat.userId === dummyCurrentUser1.id ? user1Bubble: user2Bubble}
               >
-                <Text
-                  style={chat.userId === CurrentUser1._id ? user1Bubble: user2Bubble}
-                >
-                  {chat.body}
-                </Text>
-              </View>
-            )
-          })}
-          {newMessages.map((chat,i) => {
-            return (
-              <View
-                style={chat.userId === CurrentUser1._id ? user1BubbleContainer: user2BubbleContainer}
-                key={i}
+                {chat.body}
+              </Text>
+              <Text
+                style={timestamp}
               >
-                <Text
-                  style={chat.userId === CurrentUser1._id ? user1Bubble: user2Bubble}
-                >
-                  {chat.body}
-                </Text>
-              </View>
-            )
-          })}
-        </View>
+                {format(parseISO(chat.timestamp), 'LLLL d, yyyy')}
+              </Text>
+            </View>
+          )
+        })}
+        {/* {newMessages.map((chat, i) => {
+          return (
+            <View
+              style={chat.userId === dummyCurrentUser1.id ? user1BubbleContainer: user2BubbleContainer}
+              key={i}
+            >
+              <Text
+                style={chat.userId === dummyCurrentUser1.id ? user1Bubble: user2Bubble}
+              >
+                {chat.body}
+              </Text>
+              <Text
+                style={timestamp}
+              >
+                {format(parseISO(chat.timestamp), 'LLLL d, yyyy')}
+              </Text>
+            </View>
+          )
+        })} */}
         <View style={inputContainer}>
           <TextInput
-            placeholder='Send a message!'
+            placeholder='Say Hi!'
             placeholderTextColor='black'
             style={input}
             onChangeText={setCurrentMessage}
           />
           <Button
+            title='console'
+            onPress={() => {console.log(arr)}}
+          />
+          <Button
             title='Send'
+            // style={chatStyle.button}
             onPress={handleMessageSend}
             color='#7371fc'
           />
@@ -120,12 +138,12 @@ export default function Chat() {
 const chatStyle = StyleSheet.create({
   // holds everything else, flex val 1 fills avail space
   container: {
-    backgroundColor: '#f4f4f6',
+    backgroundColor: '#fff',
     flex: 1,
     paddingTop: Platform.OS === 'android' && StatusBar.currentHeight,
   },
   headerContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: '#a594f9',
     flexDirection: 'row',
     height: 60,
     justifyContent: 'center',
@@ -148,17 +166,21 @@ const chatStyle = StyleSheet.create({
     borderRadius: 75,
   },
   input: {
-    width: '88%',
+    width: '50%',
   },
   user1BubbleContainer: {
     alignItems: 'center',
     flexDirection: 'row',
     height: 40,
+    borderColor: '#fafafa',
+    borderTopWidth: 5,
   },
   user2BubbleContainer: {
     alignItems: 'center',
     flexDirection: 'row-reverse',
     height: 40,
+    borderColor: '#fafafa',
+    borderTopWidth: 5,
   },
   timestamp: {
     marginRight: '2%',
@@ -166,24 +188,19 @@ const chatStyle = StyleSheet.create({
     fontSize: 10,
   },
   user1Bubble: {
-    backgroundColor: '#CDC1FF',
+    backgroundColor: '#cdc1ff',
     borderRadius: 10,
     padding: 7,
-    color: 'white'
   },
   user2Bubble: {
     backgroundColor: '#A594F9',
     borderRadius: 10,
     padding: 7,
-    color: 'white',
-  },
-  userName: {
-    color: '#474747'
   }
 });
 
 const {
   container, headerContainer, userPicContainer, inputContainer,
-  input, user1BubbleContainer, user2BubbleContainer, timestamp, userName,
+  input, user1BubbleContainer, user2BubbleContainer, timestamp,
   user1Bubble, user2Bubble
 } = chatStyle
