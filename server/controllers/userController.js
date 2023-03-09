@@ -15,12 +15,14 @@ module.exports = {
     const newPassword = crypto.pbkdf2Sync(req.body.password, salt, 1000, 64, `sha512`).toString(`hex`);
     newUser.salt = salt;
     newUser.password = newPassword;
-    res.send('asdf');
+    let dogId;
     newDog.save()
-      .then((resultDog) => console.log(resultDog))
+      .then((resultDog) => {
+        dogId = resultDog._id;
+      }) //console.log('dog save', resultDog))
       .catch((eDog) => console.log(eDog))
     newUser.save()
-      .then((resultUser) => console.log(resultUser))
+      .then((resultUser) => res.status(200).send({ id: dogId }))
       .catch((eUser) => console.log(eUser))
     // throw new Error('registerUser not implemented yet!');
   },

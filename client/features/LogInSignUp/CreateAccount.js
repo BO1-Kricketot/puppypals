@@ -22,6 +22,7 @@ const CreateAccount = () => {
   const [password2, setPassword2] = useState('');
   const [dob, setDob] = useState(new Date());
   const [showDatePick, setShowDatePick] = useState(false);
+  const [dogId, setDogId] = useState();
   const baseUrl = API_URL;
   const router = useRouter();
 
@@ -42,7 +43,13 @@ const CreateAccount = () => {
       };
       axios
         .post(`${baseUrl}/api/user/signup`, userInfo)
-        .then((res) => router.push({ pathname: `/createprofile`, params: { id: '123' }}))
+        .then((res) => {
+          console.log(res.data);
+          router.push({
+            pathname: '/createprofile',
+            params: { id: res.data.id },
+          });
+        })
         .catch((e) => console.log('error in react', e));
     }
   };
