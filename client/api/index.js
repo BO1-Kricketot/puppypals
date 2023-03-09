@@ -1,8 +1,8 @@
 import axios from 'axios';
-import Constants from 'expo-constants';
+import { API_URL, OPENCAGE_KEY } from '@env';
 
-const baseUrl = Constants.expoConfig.extra.apiUrl;
-const openCageKey = Constants.expoConfig.extra.openCageKey;
+const baseUrl = API_URL;
+const openCageKey = OPENCAGE_KEY;
 
 export default {
   getExample() {

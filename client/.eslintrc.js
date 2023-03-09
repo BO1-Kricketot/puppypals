@@ -1,6 +1,13 @@
 module.exports = {
   root: true,
   extends: '@react-native-community',
+  plugins: ['babel'],
+  parserOptions: {
+    ecmaVersion: 'latest',
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
   rules: {
     'prettier/prettier': [
       'error',
@@ -16,5 +23,6 @@ module.exports = {
       },
     ],
     'react/react-in-jsx-scope': 0,
+    'react-native/no-inline-styles': 0,
   },
 };

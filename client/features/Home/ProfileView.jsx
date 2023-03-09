@@ -14,7 +14,7 @@ const { width, height } = Dimensions.get('window');
 
 //pass in a dog object
 
-export default function ProfileView({picClicked, setPicClicked}) {
+export default function Profile({ picClicked, setPicClicked }) {
   const isAndroid = Platform.OS === 'android';
 
   const dummyPics = [
@@ -80,8 +80,18 @@ export default function ProfileView({picClicked, setPicClicked}) {
               source={{ uri: dummyInfo.ownerPic }}
             />
           </View>
-          <View style={{ width: 50, height: 50, marginLeft: 'auto', marginRight: 10 }}>
-            <Button title="X" onPress={()=>{setPicClicked(!picClicked)}}></Button>
+          <View
+            style={{
+              width: 50,
+              height: 50,
+              marginLeft: 'auto',
+              marginRight: 10,
+            }}>
+            <Button
+              title="X"
+              onPress={() => {
+                setPicClicked(!picClicked);
+              }}></Button>
           </View>
         </View>
         <View style={mainPicContainer}>{mainPhoto}</View>
@@ -220,5 +230,7 @@ const renderPics = (picList, isDefault) => {
 
 const renderNav = (icons) => {
   const { morePicsAndNav } = profileStyles;
-  return icons.map((icon, i) => <Image key={i} src={icon} style={morePicsAndNav} />);
+  return icons.map((icon, i) => (
+    <Image key={i} src={icon} style={morePicsAndNav} />
+  ));
 };
