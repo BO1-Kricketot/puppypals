@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -64,9 +64,17 @@ const dummyUsers = [
   { ...dummyInfo, id: 4 },
 ];
 
+import { useAuth } from '../../context/Provider';
+
 const Home = ({ navigation }) => {
   const [picClicked, setPicClicked] = useState(false);
   const [filterVisible, setFilterVisible] = useState(false);
+
+  const { user } = useAuth();
+
+  useEffect(() => {
+    console.log(user);
+  }, []);
 
   return (
     <>
