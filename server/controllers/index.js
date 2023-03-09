@@ -3,6 +3,7 @@ const friendInvite = require('./friendInviteController');
 const messages = require('./messageController');
 const eventInvite = require('./eventInviteController');
 const event = require('./eventController');
+const user = require('./userController');
 
 module.exports = {
   dog,
@@ -10,4 +11,5 @@ module.exports = {
   messages,
   eventInvite,
   event,
+  user,
 };
