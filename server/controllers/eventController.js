@@ -1,18 +1,16 @@
-const DogModel = require('../models/DogModel');
 const EventModel = require('../models/EventModel');
 const api = require('../api');
-const debug = require('../utils/debug');
 
 module.exports = {
   /**
    * Creates a new Event document
    * Expects: body containing Event information
    */
-  createEvent(req, res) {
+  async createEvent(req, res) {
     const event = req.body;
     event.location = {
       ...event.location,
-      coordinates: api.getCoordinates(event.location),
+      coordinates: await api.getCoordinates(event.location),
     };
     return EventModel.create(event)
       .then((result) => {
