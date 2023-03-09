@@ -1,23 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import Example from './features/Example';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeLanding from './features/Home/HomeLanding.jsx';
 
 import Profile from './features/Profile';
-import Messages from './features/Messages';
+
+
 
 export default function App() {
   return (
-    <Messages />
-    // <Profile />
-    // <View style={styles.container}>
-    //   <Example />
-    //   <Text>Open up App.js to start working on your app!</Text>
-    //   <StatusBar style="auto" />
-    //   <Profile />
-    // </View>
+    <><HomeLanding/></>
   );
 }
 
