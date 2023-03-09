@@ -9,6 +9,7 @@ import {
   TextInput,
   Dimensions,
   StatusBar,
+  Alert,
 } from 'react-native';
 import DummyLogo from '../../assets/icon.png';
 import axios from 'axios';
@@ -32,7 +33,14 @@ const LogIn = () => {
     axios
       .post(`${baseUrl}/api/user/login`, logInData)
       .then((res) => router.push('/home')) // use navigator to send user to app or alert w/ message if not
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        // console.log(e.response.data);
+        if (e.response.data.message === 'User not found.') {
+          Alert.alert('User not found');
+        } else if (e.response.data.message === 'Wrong Password') {
+          Alert.alert('Wrong Password');
+        }
+      });
   };
 
   return (
@@ -83,7 +91,6 @@ const styles = StyleSheet.create({
   inputs: {
     width: '80%',
     borderWidth: 1,
-    borderRadius: 5,
     borderColor: '#7371FC',
     padding: 3,
     marginVertical: 3,

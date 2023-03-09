@@ -14,7 +14,7 @@ import InvitedList from './Invited/InvitedList.js';
 import AttendingList from './Attending/AttendingList.js';
 import CreateEvent from './CreateEvent/CreateEvent.js';
 import { dummyAttending, dummyInvited, dummyDog } from './sampleData.js';
-console.log('dummyInvited', dummyInvited);
+//console.log('dummyInvited', dummyInvited);
 
 export default function Events() {
   // to be ({ dog })
