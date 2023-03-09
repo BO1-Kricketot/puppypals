@@ -58,6 +58,7 @@ export default function Profile({ dogId }) {
   const {
     container,
     dogInfoContainer,
+    editButton,
     friendlyContainer,
     friendlyItem,
     mainPicContainer,
@@ -83,13 +84,7 @@ export default function Profile({ dogId }) {
               source={{ uri: dummyInfo.ownerPic }}
             />
           </View>
-          <View
-            style={{
-              width: 50,
-              height: 50,
-              marginLeft: 'auto',
-              marginRight: 10,
-            }}>
+          <View style={editButton}>
             <Pressable onPress={() => setModalVisible(true)}>
               <Image
                 style={userPicContainer}
@@ -212,6 +207,12 @@ const profileStyles = StyleSheet.create({
     backgroundColor: 'violet',
     flex: 1,
     flexDirection: 'row',
+  },
+  editButton: {
+    width: 50,
+    height: 50,
+    marginLeft: 'auto',
+    marginRight: 10,
   },
 });
 

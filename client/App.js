@@ -6,7 +6,7 @@ import EditProfile from './features/Profile/editProfile.js';
 
 export default function App() {
   return (
-    <Profile dogId={'a dogID'}/>
+    <Profile dogId={'a dogID'} />
     // <View style={styles.container}>
     //   <Example />
     //   <Text>Open up App.js to start working on your app!</Text>
