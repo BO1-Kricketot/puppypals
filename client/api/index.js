@@ -1,7 +1,8 @@
 import axios from 'axios';
-import Constants from 'expo-constants';
+import { API_URL, OPENCAGE_KEY } from '@env';
 
-const baseUrl = Constants.expoConfig.extra.apiUrl;
+const baseUrl = API_URL;
+const openCageKey = OPENCAGE_KEY;
 
 export default {
   getUserProfile(userId) {
@@ -29,6 +30,19 @@ export default {
           `PATCH one profile success: ${JSON.stringify(res.data, null, 2)}`,
         );
       })
+      .catch((err) => console.error(err));
+  },
+
+  getCoordinates({ address1, address2, city, state, postalCode }) {
+    return axios({
+      method: 'get',
+      url: `https://api.opencagedata.com/geocode/v1/json`,
+      params: {
+        key: openCageKey,
+        q: `${address1} ${address2}, ${city}, ${state} ${postalCode}`,
+      },
+    })
+      .then(({ data }) => data.results[0].geometry)
       .catch((err) => console.error(err));
   },
 };

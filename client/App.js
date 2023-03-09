@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import Example from './features/Example';
 import Profile from './features/Profile/index.js';
 import EditProfile from './features/Profile/editProfile.js';

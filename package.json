@@ -25,6 +25,8 @@
   },
   "license": "ISC",
   "dependencies": {
-    "expo-image-picker": "~14.1.1"
+    "@react-navigation/material-top-tabs": "^5.3.19",
+    "date-fns": "^2.29.3",
+    "react-native-tab-view": "^2.16.0"
   }
 }
