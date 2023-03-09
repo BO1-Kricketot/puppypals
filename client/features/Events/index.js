@@ -13,8 +13,8 @@ import axios from 'axios';
 import InvitedList from './Invited/InvitedList.js';
 import AttendingList from './Attending/AttendingList.js';
 import CreateEvent from './CreateEvent/CreateEvent.js';
+import { API_URL } from '@env';
 import { dummyAttending, dummyInvited, dummyDog } from './sampleData.js';
-console.log('dummyInvited', dummyInvited);
 
 export default function Events() {
   // to be ({ dog })
@@ -23,36 +23,36 @@ export default function Events() {
   const [attendingEvents, setAttendingEvents] = useState(dummyAttending);
   const [modal, setModal] = useState(false);
 
+  // TO DELETE: dummy data
   const dog = dummyDog;
 
-  // // PLACEHOLDERS FOR FE TO BE HOOKUP:
-  // const updateInvitedList = () => {
-    // setInvitedEvents(dummyInvited);
-    // axios
-    //   .get(`/events/dog/${dog._id}?filter=invited`)
-    //   .then((results) => setInvitedEvents(results.data))
-    //   .catch((err) => console.error('Error getting invited events: ', err));
-  // };
-
-  // const updateAttendingList = () => {
-    // setAttendingEvents(dummyAttending);
-    // axios
-    //   .get(`/events/dog/${dog._id}?filter=attending`)
-    //   .then((results) => setAttendingEvents(results.data))
-    //   .catch((err) => console.error('Error getting attending events: ', err));
-  // };
-
-  // useEffect(() => {
-    // updateInvitedList();
-    // updateAttendingList();
-  // }, []);
-
-  const handleInvited = () => {
-    setInvited(true);
+  const updateInvitedList = () => {
+    axios
+      .get(`${API_URL}/einvites/${dog._id}`)
+      .then((result) => setInvitedEvents(result.data))
+      .catch((err) => console.error('Error getting invited events: ', err));
   };
 
-  const handleAttending = () => {
+  const updateAttendingList = () => {
+    axios
+      .get(`${API_URL}/events/dog/${dog._id}`)
+      .then((results) => setAttendingEvents(results.data))
+      .catch((err) => console.error('Error getting attending events: ', err));
+  };
+
+  useEffect(() => {
+    updateInvitedList();
+    updateAttendingList();
+  }, []);
+
+  const handleInvitedTab = () => {
+    setInvited(true);
+    updateInvitedList();
+  };
+
+  const handleAttendingTab = () => {
     setInvited(false);
+    updateAttendingList();
   };
 
   const toggleModal = () => {
@@ -62,10 +62,10 @@ export default function Events() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.eventHeader}>
-        <TouchableOpacity onPress={handleInvited}>
+        <TouchableOpacity onPress={handleInvitedTab}>
           <Text style={styles.text}>Invited</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleAttending}>
+        <TouchableOpacity onPress={handleAttendingTab}>
           <Text style={styles.text}>Attending</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={toggleModal}>

@@ -14,6 +14,7 @@ import api from '../../../api';
 import Constants from 'expo-constants';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
+import { API_URL } from '@env';
 import { dummyDogFriends } from '../sampleData.js';
 
 export default function CreateEvent({ modal, toggleModal, dog }) {
@@ -24,6 +25,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
     invitees: [],
     attendees: [],
     hostMeta: {
+      _id: "1",
       name: 'Kiwi', // to update to dog.name
       mainImgPath: 'thiswillbeaURL', // to update to dog.mainImagePath
     },
@@ -89,16 +91,18 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
 
   const handleCreateEvent = () => {
     console.log('data saved');
-    toggleModal();
-    resetForm();
-    // axios
-    //   .post('/events', form)
-    //   .then((result) => {
-    //     console.info(result.status);
-    //     toggleModal();
-    //     resetForm();
-    //   })
-    //   .catch((err) => console.error(err));
+    axios
+      .post(`${API_URL}/events`, form)
+      .then((result) => {
+        const eventId = result._id;
+        axios
+          .post(`${API_URL}/einvites`, { ...form, eventId })
+          .then(() => console.info('Event posted'))
+          .catch((err) => console.error(err));
+        toggleModal();
+        resetForm();
+      })
+      .catch((err) => console.error(err));
   };
 
   return (

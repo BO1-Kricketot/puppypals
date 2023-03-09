@@ -39,7 +39,6 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen name="home" options={{ href: '/home' }} />
-      <Tabs.Screen name="profile" options={{ href: '/profile' }} />
       <Tabs.Screen
         name="login"
         options={{ href: null, tabBarStyle: { display: 'none' } }}
@@ -54,6 +53,7 @@ export default function Layout() {
       />
       <Tabs.Screen name="messages" options={{ href: '/messages' }} />
       <Tabs.Screen name="events" options={{ href: '/events' }} />
+      <Tabs.Screen name="profile" options={{ href: '/profile' }} />
     </Tabs>
   );
 }
