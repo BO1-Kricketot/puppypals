@@ -6,21 +6,18 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeLanding from './features/Home/HomeLanding.jsx';
 
 import Profile from './features/Profile';
-import React from 'react';
-// import Example from './features/Example';
-import LandingPage from './features/LogInSignUp/LandingPage.js';
-import LogIn from './features/LogInSignUp/LogIn.js';
-import CreateAccount from './features/LogInSignUp/CreateAccount.js';
-import CreateProfile from './features/LogInSignUp/CreateProfile.js';
-
-const Stack = createNativeStackNavigator();
+import Messages from './features/Messages';
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar style="auto" />
-      <CreateProfile />
-    </SafeAreaView>
+    <Messages />
+    // <Profile />
+    // <View style={styles.container}>
+    //   <Example />
+    //   <Text>Open up App.js to start working on your app!</Text>
+    //   <StatusBar style="auto" />
+    //   <Profile />
+    // </View>
   );
 }
 
