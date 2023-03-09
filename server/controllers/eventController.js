@@ -10,12 +10,16 @@ module.exports = {
    */
   createEvent(req, res) {
     const event = req.body;
-    event.location = { ...event.location, coordinates: api.getCoordinates(event.location) };
+    event.location = {
+      ...event.location,
+      coordinates: api.getCoordinates(event.location),
+    };
     return EventModel.create(event)
-      .then(result => {
+      .then((result) => {
         console.log(result);
-        res.status(201).send(result)})
-      .catch(err => res.status(500).send(err));
+        res.status(201).send(result);
+      })
+      .catch((err) => res.status(500).send(err));
   },
 
   /**
@@ -27,7 +31,7 @@ module.exports = {
   getEventById(req, res) {
     const { eventId } = req.params;
 
-    return EventModel.findOne({_id: eventId})
+    return EventModel.findOne({ _id: eventId })
       .then((result) => res.status(200).send(result))
       .catch((err) => res.status(500).send(err));
   },
@@ -46,10 +50,10 @@ module.exports = {
    * req.params = { dogId: 123 }
    */
 
-    // query for the dog
-    // get their pendingEvents OR attendingEvents array
-    // query for those events
-    // return those events
+  // query for the dog
+  // get their pendingEvents OR attendingEvents array
+  // query for those events
+  // return those events
   getEventsByDogId(req, res) {
     const { dogId } = req.params;
     const { filter } = req.query;
@@ -72,7 +76,7 @@ module.exports = {
         EventModel.find({ _id: { $in: events } })
           .exec()
           .then((result) => res.status(200).send(result))
-          .catch(err => res.status(500).send(err));
+          .catch((err) => res.status(500).send(err));
       })
       .catch((err) => res.status(500).send(err));
   },
@@ -91,13 +95,42 @@ module.exports = {
       .catch((err) => res.status(500).send(err));
   },
 
+  /**
+   * removes dog from event's invitees and adds it to the event's attendees
+   */
   async attendEvent(req, res) {
-    const { eventId, dogId } = req.params;
-    const results = await EventModel.findOne({ _id: eventId });
+    try {
+      const { eventId, dogId } = req.params;
+      const event = await EventModel.findById({ _id: eventId }).exec();
+      event.invitees.splice(event.invitees.indexOf(dogId), 1);
+      event.attendees.push(dogId);
+      const results = await EventModel.findOneAndUpdate(
+        { _id: eventId },
+        event,
+      ).exec();
+      res.status(200).send(results);
+    } catch {
+      res.sendStatus(404);
+    }
   },
 
-  rejectEvent(req,res) {
-
+  /**
+   * removes dog from event's invitees
+   */
+  async rejectEvent(req, res) {
+    try {
+      const { eventId, dogId } = req.params;
+      const event = await EventModel.findById({ _id: eventId }).exec();
+      event.invitees.push(dogId);
+      event.invitees.splice(event.invitees.indexOf(dogId), 1);
+      const results = await EventModel.findOneAndUpdate(
+        { _id: eventId },
+        event,
+      ).exec();
+      res.status(200).send(results);
+    } catch {
+      res.sendStatus(404);
+    }
   },
 
   // route: /events/:eventId/:dogId
@@ -109,11 +142,9 @@ module.exports = {
     EventModel.findById(eventId)
       .exec()
       .then((event) => {
-
         DogModel.findById(dogId)
           .exec()
           .then((dog) => {
-
             if (isAttending) {
               if (!event.attendees.includes(dogId)) {
                 event.attendees.push(dogId);
@@ -133,7 +164,10 @@ module.exports = {
               }
               // Remove the event ID from the dog's eventsAttending array
               if (dog.eventsAttending.includes(eventId)) {
-                dog.eventsAttending.splice(dog.eventsAttending.indexOf(eventId), 1);
+                dog.eventsAttending.splice(
+                  dog.eventsAttending.indexOf(eventId),
+                  1,
+                );
               }
             }
 
