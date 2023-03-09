@@ -17,7 +17,7 @@ const HeaderBar = ({ styles, oneChat, exampleData }) => {
   });
 
   return (
-    <View style={styles}>
+    <View style={[styles, { justifyContent: 'center' }]}>
       <View style={{ flexDirection: 'row' }}>
         <TouchableOpacity onPress={() => handleSort('pending')}>
           <Text style={{ color: sortOption === 'pending' ? 'red' : 'black' }}>

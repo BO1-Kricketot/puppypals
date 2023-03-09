@@ -24,7 +24,7 @@ const OneChat = ({
 
   const renderLeftActions = () => {
     return (
-      <View style={styles.leftActions}>
+      <View style={styles.rightActions}>
         <Text style={styles.actionText}>Reject</Text>
       </View>
     );
@@ -32,7 +32,7 @@ const OneChat = ({
 
   const renderRightActions = () => {
     return (
-      <View style={styles.rightActions}>
+      <View style={styles.leftActions}>
         <Text style={styles.actionText}>Accept</Text>
       </View>
     );
@@ -48,10 +48,10 @@ const OneChat = ({
 
   return (
     <Swipeable
-      renderLeftActions={renderLeftActions}
-      renderRightActions={renderRightActions}
-      onSwipeableLeftOpen={onSwipeLeft}
-      onSwipeableRightOpen={onSwipeRight}
+      renderLeftActions={renderRightActions}
+      renderRightActions={renderLeftActions}
+      onSwipeableLeftOpen={onSwipeRight}
+      onSwipeableRightOpen={onSwipeLeft}
       onSwipeableOpen={onOpen}>
       <TouchableOpacity onPress={onSeen}>
         <View style={styles.container}>
