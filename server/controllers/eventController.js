@@ -12,7 +12,9 @@ module.exports = {
     const event = req.body;
     event.location = { ...event.location, coordinates: api.getCoordinates(event.location) };
     return EventModel.create(event)
-      .then(result => res.status(201).send(result))
+      .then(result => {
+        console.log(result);
+        res.status(201).send(result)})
       .catch(err => res.status(500).send(err));
   },
 

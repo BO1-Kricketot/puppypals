@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const DogModel = require('../models/DogModel');
 const EventInviteModel = require('../models/EventInviteModel');
 const debug = require('../utils/debug');
@@ -8,10 +9,18 @@ module.exports = {
    *
    * Expects: body containing senderId and recipientId
    *
-   * TODO: Implement
    */
   sendEventInvite(req, res) {
-    throw new Error('sendEventInvite not implemented yet!');
+    const invitedDogs = req.body.invitees; // array of dog IDs
+    const sender = req.body.host_meta._id; // sender dog
+    const promises = [];
+    for (let i = 0; i < invitedDogs.length; i += 1 ) {
+      const dogId = invitedDogs[i];
+      promises.push(EventInviteModel.create({ senderId: sender , recipientId: dogId }))
+    }
+    Promise.all(promises)
+      .then((result) => res.status(200).send(result))
+      .catch((err) => res.status(500).send(err));
   },
 
   /**
@@ -23,7 +32,15 @@ module.exports = {
    * TODO: Implement
    */
   getEventInvitesById(req, res) {
-    throw new Error('getEventInvitesById not implemented yet!');
+    // (a,b) => b.creationDate - a.creationDate
+    EventInviteModel.find({recipientId: req.params['recipientId']}).sort({creationDate: -1})
+    .exec()
+    .then((result) => {
+      res.status(200).send(result)
+    })
+    .catch(err => {
+      console.log(err)
+    })
   },
 
   /**
