@@ -7,7 +7,7 @@ const OneChat = ({
   timestamp,
   dogName,
   dogImage,
-  pending,
+  status,
   onAccept,
   onReject,
   styles,
@@ -54,7 +54,7 @@ const OneChat = ({
       onSwipeableRightOpen={onSwipeLeft}
       onSwipeableOpen={onOpen}>
       <TouchableOpacity onPress={onSeen}>
-        <View style={styles.container}>
+        <View style={styles.oneChatContainer}>
           <View style={styles.dotContainer}>
             <View
               style={[
@@ -70,7 +70,7 @@ const OneChat = ({
           <View style={styles.dogContainer}>
             <Image style={styles.dogImage} source={{ uri: dogImage }} />
             <Text style={styles.dogName}>{dogName}</Text>
-            {pending && <Text style={styles.pending}>Pending</Text>}
+            {status && <Text style={styles.status}>Pending</Text>}
           </View>
           <View style={styles.messageContainer}>
             <Text style={styles.message}>

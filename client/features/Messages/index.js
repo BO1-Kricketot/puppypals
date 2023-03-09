@@ -1,17 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Platform, StatusBar } from 'react-native';
 import ChatList from './ChatList';
 import HeaderBar from './HeaderBar';
 
 const Messages = () => {
+  const [sortOption, setSortOption] = useState('pending');
   const styles = {
     paddingTop: Platform.OS === 'android' && StatusBar.currentHeight,
     container: {
       backgroundColor: '#FFFFFF',
       padding: 16,
-      flexDirection: 'row',
+      paddingTop: 8,
+      paddingBottom: 0,
       alignItems: 'center',
       justifyContent: 'space-between',
+      flexDirection: 'column',
+    },
+    oneChatContainer: {
+      backgroundColor: '#FFFFFF',
+      padding: 10,
+      paddingTop: 0,
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flexDirection: 'row',
     },
     userContainer: {
       flexDirection: 'row',
@@ -74,7 +85,7 @@ const Messages = () => {
       timestamp: '10:30 AM',
       dogName: 'Buddy',
       dogImage: 'https://via.placeholder.com/150',
-      pending: true,
+      status: 'pending',
       seen: false,
     },
     {
@@ -83,7 +94,7 @@ const Messages = () => {
       timestamp: '1:45 PM',
       dogName: 'Max',
       dogImage: 'https://via.placeholder.com/150',
-      pending: false,
+      status: 'pending',
       seen: true,
     },
     {
@@ -92,15 +103,30 @@ const Messages = () => {
       timestamp: '6:15 PM',
       dogName: 'Charlie',
       dogImage: 'https://via.placeholder.com/150',
-      pending: false,
+      status: 'accepted',
       seen: false,
     },
   ];
 
+  const handleSort = (option) => {
+    setSortOption(option);
+  };
+  const filteredData = exampleData.filter((data) => {
+    if (sortOption === 'pending') {
+      return data.status === 'pending';
+    } else {
+      return data.status === 'accepted';
+    }
+  });
+
   return (
-    <View style={styles}>
-      <HeaderBar exampleData={exampleData} styles={styles} />
-      <ChatList exampleData={exampleData} styles={styles} />
+    <View style={styles.container}>
+      <HeaderBar
+        styles={styles}
+        onSort={handleSort}
+        exampleData={exampleData}
+      />
+      <ChatList data={filteredData} styles={styles} />
     </View>
   );
 };
