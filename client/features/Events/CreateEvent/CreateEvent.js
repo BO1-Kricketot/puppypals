@@ -25,7 +25,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
     attendees: [],
     hostMeta: {
       name: 'Kiwi', // to update to dog.name
-      mainImgPath: 'thiswillbeaURL', // to update to dog.mainImgPath
+      mainImgPath: 'thiswillbeaURL', // to update to dog.mainImagePath
     },
     location: {
       address1: '',
@@ -92,7 +92,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
     toggleModal();
     resetForm();
     // axios
-    //   .post('/', form) // update endpoint here
+    //   .post('/events', form)
     //   .then((result) => {
     //     console.info(result.status);
     //     toggleModal();
