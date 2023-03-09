@@ -14,12 +14,12 @@ import DummyLogo from '../../assets/icon.png';
 import axios from 'axios';
 import api from '../../api';
 const { width, height } = Dimensions.get('window');
-import Constants from 'expo-constants';
+import { API_URL } from '@env';
 
 const LogIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const baseUrl = Constants.expoConfig.extra.apiUrl;
+  const baseUrl = API_URL;
 
   const signInPress = () => {
     console.log('send login info');

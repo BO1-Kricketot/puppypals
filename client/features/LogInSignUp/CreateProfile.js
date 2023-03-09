@@ -16,7 +16,7 @@ import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 const { width, height } = Dimensions.get('window');
 import axios from 'axios';
-import Constants from 'expo-constants';
+import { API_URL } from '@env';
 
 const CreateProfile = () => {
   const [dogName, setDogName] = useState();
@@ -38,7 +38,7 @@ const CreateProfile = () => {
   const [city, setCity] = useState();
   const [state, setState] = useState();
   const [zip, setZip] = useState();
-  const baseUrl = Constants.expoConfig.extra.apiUrl;
+  const baseUrl = API_URL;
 
   const pickOwnerImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({

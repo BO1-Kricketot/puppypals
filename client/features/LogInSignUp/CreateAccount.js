@@ -13,7 +13,7 @@ import React, { useState } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 const { width, height } = Dimensions.get('window');
-import Constants from 'expo-constants';
+import { API_URL } from '@env';
 
 const CreateAccount = () => {
   const [email, setEmail] = useState('');
@@ -21,7 +21,7 @@ const CreateAccount = () => {
   const [password2, setPassword2] = useState('');
   const [dob, setDob] = useState(new Date());
   const [showDatePick, setShowDatePick] = useState(false);
-  const baseUrl = Constants.expoConfig.extra.apiUrl;
+  const baseUrl = API_URL;
 
   const pressCreateAccount = () => {
     // shows amout of time since 1/1/1970

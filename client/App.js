@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import Example from './features/Example';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeLanding from './features/Home/HomeLanding.jsx';
 
 import Profile from './features/Profile';
@@ -17,15 +17,10 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-<<<<<<< HEAD
-    <><HomeLanding/></>
-    
-=======
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
       <CreateProfile />
     </SafeAreaView>
->>>>>>> origin/auth
   );
 }
 

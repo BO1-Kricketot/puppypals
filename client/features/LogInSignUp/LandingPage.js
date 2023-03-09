@@ -14,14 +14,13 @@ import {
 import DummyLogo from '../../assets/icon.png';
 import Constants from 'expo-constants';
 const { width, height } = Dimensions.get('window');
+import { useRouter } from 'expo-router';
 
 const LandingPage = () => {
-  const goToLogIn = () => {
-    console.log('go to log in');
-  };
-  const goToSignUp = () => {
-    console.log('go to sign up');
-  };
+  const router = useRouter();
+
+  const goToLogIn = () => router.push('/login');
+  const goToSignUp = () => router.push('/signup');
 
   return (
     <View>
