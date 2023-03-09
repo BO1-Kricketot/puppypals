@@ -14,6 +14,7 @@ import api from '../../../api';
 import Constants from 'expo-constants';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
+import { API_URL } from '@env';
 import { dummyDogFriends } from '../sampleData.js';
 
 export default function CreateEvent({ modal, toggleModal, dog }) {
@@ -91,11 +92,11 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
   const handleCreateEvent = () => {
     console.log('data saved');
     axios
-      .post('/events/', form)
+      .post(`${API_URL}/events`, form)
       .then((result) => {
         const eventId = result._id;
         axios
-          .post('/einvites', { ...form, eventId })
+          .post(`${API_URL}/einvites`, { ...form, eventId })
           .then(() => console.info('Event posted'))
           .catch((err) => console.error(err));
         toggleModal();

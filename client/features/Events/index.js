@@ -13,8 +13,8 @@ import axios from 'axios';
 import InvitedList from './Invited/InvitedList.js';
 import AttendingList from './Attending/AttendingList.js';
 import CreateEvent from './CreateEvent/CreateEvent.js';
+import { API_URL } from '@env';
 import { dummyAttending, dummyInvited, dummyDog } from './sampleData.js';
-console.log('dummyInvited', dummyInvited);
 
 export default function Events() {
   // to be ({ dog })
@@ -28,29 +28,31 @@ export default function Events() {
 
   const updateInvitedList = () => {
     axios
-      .get(`/einvites/${dog._id}`)
+      .get(`${API_URL}/einvites/${dog._id}`)
       .then((result) => setInvitedEvents(result.data))
       .catch((err) => console.error('Error getting invited events: ', err));
   };
 
   const updateAttendingList = () => {
     axios
-      .get(`/events/dog/${dog._id}`)
+      .get(`${API_URL}/events/dog/${dog._id}`)
       .then((results) => setAttendingEvents(results.data))
       .catch((err) => console.error('Error getting attending events: ', err));
   };
 
   useEffect(() => {
     updateInvitedList();
-    // updateAttendingList();
+    updateAttendingList();
   }, []);
 
   const handleInvitedTab = () => {
     setInvited(true);
+    updateInvitedList();
   };
 
   const handleAttendingTab = () => {
     setInvited(false);
+    updateAttendingList();
   };
 
   const toggleModal = () => {

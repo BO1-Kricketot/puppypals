@@ -11,7 +11,8 @@ import React from 'react';
 import api from '../../../api';
 import Constants from 'expo-constants';
 import axios from 'axios';
-
+import { API_URL } from '@env';
+// TO DELETE: dummy data
 import { dummyDogFriends } from '../sampleData.js';
 
 export default function InvitedInfo({ modal, toggleModal, event, dog }) {
@@ -20,14 +21,14 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
 
   const handleAttendanceYes = async () => {
     const eventId = event._id;
-    const deleteResults = await axios.delete(`/einvites/${eventId}`);
-    const patchResults = await axios.patch(`/events/attend/${eventId}/${dog._id}`);
+    await axios.delete(`${API_URL}/einvites/${eventId}`);
+    await axios.patch(`${API_URL}/events/attend/${eventId}/${dog._id}`);
   };
 
   const handleAttendanceNo = async () => {
     const eventId = event._id;
-    const deleteInvite = await axios.delete(`/einvites/${eventId}`);
-    const rejectEvent = await axios.patch(`/events/reject/${eventId}/${dog._id}`);
+    await axios.delete(`${API_URL}/einvites/${eventId}`);
+    await axios.patch(`${API_URL}/events/reject/${eventId}/${dog._id}`);
   };
 
   return (
