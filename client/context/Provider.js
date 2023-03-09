@@ -32,7 +32,7 @@ function useProtectedRoute(user) {
 }
 
 const dummyDog = {
-  _id: '',
+  _id: '6408c5ed2d155686c068d6e0',
   name: 'Kiwi',
   breed: 'Golden Retriever',
   mainImage: 'https://i.ibb.co/gSq3C1N/kiwi2.jpg',
