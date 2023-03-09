@@ -206,9 +206,6 @@ const Home = ({ navigation }) => {
               )}
             />
           </View>
-          <View style={styles.navBar}>
-            <Text>navBar</Text>
-          </View>
         </SafeAreaView>
       )}
     </>
