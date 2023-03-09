@@ -10,6 +10,8 @@ import {
   View,
 } from 'react-native';
 
+import api from '../../api';
+
 import MainImgEditor from './editMainImg.js';
 import MoreImgsEditor from './editMoreImgs.js';
 import LocationEditor from './editLocation.js';
@@ -34,19 +36,28 @@ export default function ModalContainer({
   const [dogBioCopy, setDogBioCopy] = useState(info.dogBio);
 
   const handleSaveAndClose = () => {
-    // do a big old put (or patch) request in real life
-
-    // with dummy data
     const infoCopy = { ...info };
+    infoCopy.location.coordinates = { ...info.location.coordinates };
+    infoCopy.location = { ...info.location };
+
     infoCopy.location.city = city;
     infoCopy.location.state = state;
     infoCopy.dogBio = dogBioCopy;
 
-    setInfo(infoCopy);
-    setMainPic(mainPicCopy);
-    setMorePics(morePicsCopy);
-    setModalVisible(!modalVisible);
-    setProfileChanged(!profileChanged);
+    // do a big old put (or patch) request in real life
+    api
+      .patchUserProfile(info._id, infoCopy)
+      .then(() => {
+        // keep
+        setModalVisible(!modalVisible);
+        setProfileChanged(!profileChanged);
+      })
+      .catch((err) => console.error(err));
+
+    // get rid of for live data
+    // setInfo(infoCopy);
+    // setMainPic(mainPicCopy);
+    // setMorePics(morePicsCopy);
   };
 
   return (

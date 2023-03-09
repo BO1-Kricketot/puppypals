@@ -11,12 +11,15 @@ import {
   Text,
   View,
 } from 'react-native';
+
+import api from '../../api';
+
 import ModalContainer from './editProfile.js';
 
 export default function Profile({ dogId }) {
+  const [info, setInfo] = useState({});
   const [mainPic, setMainPic] = useState([]);
   const [morePics, setMorePics] = useState([]);
-  const [info, setInfo] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
   const [profileChanged, setProfileChanged] = useState(false);
 
@@ -67,21 +70,34 @@ export default function Profile({ dogId }) {
     userPicContainer,
   } = profileStyles;
 
+  const addImgBlanks = (blanks) => {
+    const noImgPic = '../../assets/noPic1.png';
+    const morePicsCopy = morePics.slice();
+    const morePicsBlanks = Array(blanks).fill(noImgPic);
+    setMorePics(morePicsCopy.concat(morePicsBlanks));
+  };
+
   useEffect(() => {
-    setMainPic([...dummyMainPic]);
-    setMorePics([...dummyMorePics]);
-    setInfo({ ...dummyInfo });
+    // GET the profile by id
+    api
+      .getDogById(dogId)
+      .then((profile) => {
+        setInfo({ ...profile.data });
+        setMainPic([profile.data.mainImageUrl]);
+        setMorePics([...profile.data.imageUrls]);
+      })
+      .catch((err) => console.error(err));
   }, [profileChanged]);
 
   return (
     <>
       <SafeAreaView style={container}>
         <View style={userInfoContainer}>
-          <Text style={{ marginLeft: 10 }}>{dummyInfo.ownerName}</Text>
+          <Text style={{ marginLeft: 10 }}>{info.owner.name}</Text>
           <View style={{ width: 50, height: 50, marginLeft: 20 }}>
             <Image
               style={userPicContainer}
-              source={{ uri: dummyInfo.ownerPic }}
+              source={{ uri: info.owner.imageUrl }}
             />
           </View>
           <View style={editButton}>
@@ -97,6 +113,7 @@ export default function Profile({ dogId }) {
         </View>
         <View style={mainPicContainer}>{renderPics(mainPic, true)}</View>
         <View style={morePicsAndNavContainer}>
+          {morePics.length < 5 && addImgBlanks(5 - morePics.length)}
           {renderPics(morePics, false)}
         </View>
         <View style={dogInfoContainer}>

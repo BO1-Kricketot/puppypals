@@ -1,5 +1,6 @@
 const DogModel = require('../models/DogModel');
 const debug = require('../utils/debug');
+const api = require('../api');
 
 module.exports = {
   /**
@@ -51,7 +52,10 @@ module.exports = {
    * TODO: Implement
    */
   getDogById(req, res) {
-    throw new Error('getDogById not implemented yet!');
+    const id = req.params;
+    DogModel.findById(id)
+      .then((profile) => res.status(200).send(profile))
+      .catch((err) => res.status(500).send(err));
   },
 
   /**
@@ -61,8 +65,15 @@ module.exports = {
    *
    * TODO: Implement
    */
-  updateDogById(req, res) {
-    throw new Error('updateDogById not implemented yet!');
+  async updateDogById(req, res) {
+    const id = req.params;
+    const update = req.body;
+    const coordinates = await api.getCoordinates(update.location);
+    update.location.coordinates = coordinates;
+
+    DogModel.findByIdAndUpdate(id, update)
+      .then(() => res.sendStatus(204))
+      .catch((err) => res.status(500).send(err));
   },
 
   /**
