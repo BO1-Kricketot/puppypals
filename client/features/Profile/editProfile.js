@@ -33,7 +33,7 @@ export default function ModalContainer({
   const [morePicsCopy, setMorePicsCopy] = useState([...morePics]);
   const [city, setCity] = useState(info.location.city);
   const [state, setState] = useState(info.location.state);
-  const [dogBioCopy, setDogBioCopy] = useState(info.dogBio);
+  const [dogBioCopy, setDogBioCopy] = useState(info.bio);
 
   const handleSaveAndClose = () => {
     const infoCopy = { ...info };
@@ -42,7 +42,7 @@ export default function ModalContainer({
 
     infoCopy.location.city = city;
     infoCopy.location.state = state;
-    infoCopy.dogBio = dogBioCopy;
+    infoCopy.bio = dogBioCopy;
 
     // do a big old put (or patch) request in real life
     api
