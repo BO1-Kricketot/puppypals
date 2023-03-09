@@ -31,12 +31,12 @@ export default function InvitedTile({ event, dog }) {
               source={{ uri: event.host_meta.mainImgPath }}
             />
           </View>
-          <Text>{event.host_meta.name}</Text>
+          <Text style={styles.hostName}>{event.host_meta.name}</Text>
         </View>
         <View style={styles.eventDetails}>
           <Text>{formattedDate}</Text>
-          <Text>{event.title}</Text>
-          <Text>{`${event.location.city}, ${event.location.state}`}</Text>
+          <Text style={styles.eventTitle}>{event.title}</Text>
+          <Text style={styles.eventLocation}>{`${event.location.city}, ${event.location.state}`}</Text>
         </View>
       </TouchableOpacity>
       {modal && (
@@ -53,8 +53,8 @@ export default function InvitedTile({ event, dog }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: '2%',
-    backgroundColor: 'red',
+    marginTop: '3%',
+    backgroundColor: 'white',
     flex: 1,
     // height: 115,
   },
@@ -62,24 +62,43 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   hostContainer: {
-    backgroundColor: 'lightslategray',
+    // backgroundColor: 'lightslategray',
+    // backgroundColor: 'white',
     flex: 1,
     alignItems: 'center',
+    paddingVertical: 10,
+    marginLeft: 10,
   },
   eventDetails: {
-    backgroundColor: 'pink',
+    // backgroundColor: 'pink',
+    // backgroundColor: 'white',
     flex: 3,
     justifyContent: 'center',
+    marginLeft: 10,
   },
   imageContainer: {
-    width: 60,
-    height: 60,
+    width: 52,
+    height: 52,
     justifyContent: 'center',
+    margin: '1%',
   },
   image: {
     flex: 1,
     margin: '2%',
-    borderRadius: 25,
+    borderRadius: 30,
     width: '100%',
+  },
+  eventTitle: {
+    // backgroundColor: 'white',
+    fontSize: 17,
+    marginTop: 3,
+    marginBottom: 3,
+  },
+  eventLocation: {
+    // backgroundColor: 'white',
+    fontSize: 12,
+  },
+  hostName: {
+    fontSize: 12,
   },
 });
