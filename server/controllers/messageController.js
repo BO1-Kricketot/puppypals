@@ -14,7 +14,7 @@ module.exports = {
   createDialogue(req, res) {
     const messageLog = new MessagesModel({
       _id: new Date().getTime(),
-      req.body.members,
+      members: req.body.members,
       messages: [],
     });
     messageLog.save((err) => {

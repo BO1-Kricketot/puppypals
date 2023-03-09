@@ -1,10 +1,72 @@
 import React from 'react';
-import { View } from 'react-native';
-import ChatList from './components/ChatList';
-
+import { View, Platform, StatusBar } from 'react-native';
+import ChatList from './ChatList';
+import HeaderBar from './HeaderBar';
 
 const Messages = () => {
-
+  const styles = {
+    paddingTop: Platform.OS === 'android' && StatusBar.currentHeight,
+    container: {
+      backgroundColor: '#FFFFFF',
+      padding: 16,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    userContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    unseenIndicator: {
+      width: 10,
+      height: 10,
+      borderRadius: 5,
+      marginRight: 8,
+    },
+    unseenIndicatorSeen: {
+      backgroundColor: 'black',
+    },
+    unseenIndicatorUnseen: {
+      backgroundColor: 'green',
+    },
+    name: {
+      color: 'green',
+      fontSize: 16,
+      fontWeight: 'bold',
+      marginRight: 8,
+    },
+    timestamp: {
+      color: 'green',
+      fontSize: 14,
+    },
+    dogContainer: {
+      alignItems: 'center',
+      marginRight: 16,
+    },
+    dogPicture: {
+      width: 50,
+      height: 50,
+      borderRadius: 25,
+      marginBottom: 8,
+    },
+    dogName: {
+      fontSize: 14,
+      fontWeight: 'bold',
+    },
+    pendingText: {
+      fontSize: 12,
+      color: 'grey',
+    },
+    message: {
+      flex: 1,
+      fontSize: 14,
+      color: 'grey',
+    },
+    rightAction: {
+      backgroundColor: '#00C853',
+      justifyContent: 'center',
+    },
+  };
   const exampleData = [
     {
       id: 1,
@@ -36,10 +98,11 @@ const Messages = () => {
   ];
 
   return (
-    <View style={{ flex: 1 }}>
-      <ChatList chatData={exampleChatData} />
+    <View style={styles}>
+      <HeaderBar exampleData={exampleData} styles={styles} />
+      <ChatList exampleData={exampleData} styles={styles} />
     </View>
   );
 };
 
-export default App;
+export default Messages;

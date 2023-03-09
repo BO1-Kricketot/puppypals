@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import styles from './styles';
 
-const OneChat = ({ name, timestamp, dogName, dogImage, pending, onAccept, onReject, styles }) => {
+const OneChat = ({
+  name,
+  timestamp,
+  dogName,
+  dogImage,
+  pending,
+  onAccept,
+  onReject,
+  styles,
+}) => {
   const [seen, setSeen] = useState(false);
 
   const onSwipeLeft = () => {
@@ -65,7 +73,9 @@ const OneChat = ({ name, timestamp, dogName, dogImage, pending, onAccept, onReje
             {pending && <Text style={styles.pending}>Pending</Text>}
           </View>
           <View style={styles.messageContainer}>
-            <Text style={styles.message}>Woof! I would love to be your playmate</Text>
+            <Text style={styles.message}>
+              Woof! I would love to be your playmate
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
