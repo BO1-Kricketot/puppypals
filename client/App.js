@@ -5,8 +5,6 @@ import HomeLanding from './features/Home/HomeLanding.jsx';
 
 import Profile from './features/Profile';
 
-
-
 export default function App() {
   return (
     <><HomeLanding/></>

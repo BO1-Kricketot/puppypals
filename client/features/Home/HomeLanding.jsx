@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
-import { StyleSheet, Text, View, Button,TouchableWithoutFeedback,Image, Modal, SafeAreaView, Dimensions, Platform, StatusBar } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { StyleSheet, Text, View, Button,TouchableWithoutFeedback,Image, Modal, Pressable,  SafeAreaView, Dimensions, Platform, StatusBar, Switch } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
+import Slider from "react-native-sliders";
 import Profile from './ProfileView.jsx'
 import api from '../../api';
+import axios from 'axios';
 
 const {width, height, fontScale} = Dimensions.get('window');
 
@@ -51,10 +53,19 @@ const dummyUsers = [{...dummyInfo, id: 1}, {...dummyInfo, id: 2}, {...dummyInfo,
 
 
 
-const HomeLanding = ({navigation}) => {
+const HomeLanding = ({id}) => {
   const [picClicked, setPicClicked] = useState(false);
   const [filterVisible, setFilterVisible] = useState(false);
 
+  useEffect(()=>{
+    Promise.all([axios.get('http://10.0.0.4:3000/api/dogs/6408d66fec97eb3b6680290f'), axios.get('http://10.0.0.4:3000/api/dogs/6408d66fec97eb3b6680290f/one')])
+    .then((res)=>{
+      console.log(res[1]);
+    })
+    .catch(err=> {
+      console.log(err)
+    })
+  })
 
   return (
     <>
@@ -76,8 +87,49 @@ const HomeLanding = ({navigation}) => {
         >
           <View style= {{flex: 1, justifyContent: 'center', alignItems:'center', backgroundColor:'black', opacity:0.5, }}>
           <View>
-          <View style={{height: '40%', width: '40%', backgroundColor: 'red', opacity: 1}}>
-            <Button title='My lord' onPress={()=>{setFilterVisible(!filterVisible)}}></Button>
+          <View style={{ backgroundColor: 'white', opacity: 1}}>
+          <View>
+            <Text>Distance</Text>
+            <View>
+              <Slider 
+              value={0}
+              maximumValue={50}></Slider>
+            </View>
+          </View>
+          <View>
+          <Text>Size</Text>
+          <Pressable>
+            
+            <Text>S</Text>
+            <Text>M</Text>
+            <Text>L</Text>
+            
+          </Pressable>
+          </View>
+          <View>
+          <Text>Dog Friendliness</Text>
+          <Switch
+        trackColor={{false: '#767577', true: '#81b0ff'}}
+        thumbColor={true ? '#f5dd4b' : '#f4f3f4'}
+        ios_backgroundColor="#3e3e3e"
+        onValueChange={()=>{console.log('witch')}}
+        value={true}
+        />
+        </View>
+        <View>
+          <Text>Human Friendliness</Text>
+          <Switch
+        trackColor={{false: '#767577', true: '#81b0ff'}}
+        thumbColor={true ? '#f5dd4b' : '#f4f3f4'}
+        ios_backgroundColor="#3e3e3e"
+        onValueChange={()=>{console.log('witch')}}
+        value={true}
+        />
+        </View>
+            <Button title='Apply Filter' onPress={()=>{console.log('setting Filter');
+              setFilterVisible(!filterVisible)
+            }}></Button>
+            <Button title='X' onPress={()=>{setFilterVisible(!filterVisible)}}></Button>
           </View>
           </View>
           </View>
@@ -121,7 +173,7 @@ const HomeLanding = ({navigation}) => {
       </View>)
       }/>
       </View>
-    <View style={styles.navBar}>
+    {/* <View style={styles.navBar}>
       <Button
       title="DELETE ME"
       onPress={async () => console.log(await api.getCoordinates({
@@ -131,7 +183,7 @@ const HomeLanding = ({navigation}) => {
         state: 'CA',
         postalCode: '90012',
       }))}></Button>
-    <Text>navBar</Text></View>
+    <Text>navBar</Text></View> */}
   </SafeAreaView>}
     </>
     )
@@ -169,6 +221,9 @@ const styles = StyleSheet.create({
   }
 })
 export default HomeLanding;
+
+
+
 // header: {
 //   width: width,
 //   backgroundColor: 'green',
