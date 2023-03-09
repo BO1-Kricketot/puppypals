@@ -10,6 +10,7 @@ import React, { useState } from 'react';
 import api from '../../../api';
 import Constants from 'expo-constants';
 import InvitedInfo from './InvitedInfo.js';
+import { parseISO, format } from 'date-fns';
 
 export default function InvitedTile({ event, dog }) {
   const [modal, setModal] = useState(false);
@@ -17,6 +18,8 @@ export default function InvitedTile({ event, dog }) {
   const toggleModal = () => {
     setModal(!modal);
   };
+
+  const formattedDate = format(parseISO(event.datetime), 'EEE, MMM d, yyyy h:mm a');
 
   return (
     <View style={styles.container}>
@@ -31,7 +34,7 @@ export default function InvitedTile({ event, dog }) {
           <Text>{event.host_meta.name}</Text>
         </View>
         <View style={styles.eventDetails}>
-          <Text>{event.dateTime}</Text>
+          <Text>{formattedDate}</Text>
           <Text>{event.title}</Text>
           <Text>{`${event.location.city}, ${event.location.state}`}</Text>
         </View>
@@ -52,8 +55,8 @@ const styles = StyleSheet.create({
   container: {
     marginTop: '2%',
     backgroundColor: 'red',
-    // height: 115,
     flex: 1,
+    // height: 115,
   },
   row: {
     flexDirection: 'row',
@@ -66,6 +69,7 @@ const styles = StyleSheet.create({
   eventDetails: {
     backgroundColor: 'pink',
     flex: 3,
+    justifyContent: 'center',
   },
   imageContainer: {
     width: 60,

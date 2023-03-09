@@ -2,7 +2,7 @@ const dummyAttending = [
   {
     _id: 1,
     title: 'Puppies in the Park',
-    dateTime: '2013-10-15T21:26:17Z',
+    datetime: '2013-10-15T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -21,7 +21,7 @@ const dummyAttending = [
   {
     _id: 2,
     title: 'Puppies in the Park',
-    dateTime: '2013-10-17T21:26:17Z',
+    datetime: '2013-10-17T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -40,7 +40,7 @@ const dummyAttending = [
   {
     _id: 3,
     title: 'Puppies in the Park',
-    dateTime: '2013-10-15T21:26:17Z',
+    datetime: '2013-10-15T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -59,7 +59,7 @@ const dummyAttending = [
   {
     _id: 4,
     title: 'Puppies in the Park',
-    dateTime: '2013-10-15T21:26:17Z',
+    datetime: '2013-10-15T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -78,7 +78,7 @@ const dummyAttending = [
   {
     _id: 5,
     title: 'Puppies in the Park',
-    dateTime: '2013-11-22T21:26:17Z',
+    datetime: '2013-11-22T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -97,7 +97,7 @@ const dummyAttending = [
   {
     _id: 6,
     title: 'Puppies in the Park',
-    dateTime: '2013-12-1T21:26:17Z',
+    datetime: '2013-12-1T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -116,7 +116,7 @@ const dummyAttending = [
   {
     _id: 7,
     title: 'Puppies in the Park',
-    dateTime: '2013-12-12T21:26:17Z',
+    datetime: '2013-12-12T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -135,7 +135,7 @@ const dummyAttending = [
   {
     _id: 8,
     title: 'Puppies in the Park',
-    dateTime: '2013-12-30T21:26:17Z',
+    datetime: '2013-12-30T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -154,7 +154,7 @@ const dummyAttending = [
   {
     _id: 9,
     title: 'Puppies in the Park',
-    dateTime: '2013-10-15T21:26:17Z',
+    datetime: '2013-10-15T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -173,7 +173,7 @@ const dummyAttending = [
   {
     _id: 10,
     title: 'Puppies in the Park',
-    dateTime: '2013-10-15T21:26:17Z',
+    datetime: '2013-10-15T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -195,7 +195,7 @@ const dummyInvited = [
   {
     _id: 1,
     title: 'Puppies in the Park',
-    dateTime: '2013-10-15T21:00:17Z',
+    datetime: '2013-10-15T21:00:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -214,7 +214,7 @@ const dummyInvited = [
   {
     _id: 2,
     title: 'Puppies in the Park',
-    dateTime: '2013-10-16T22:00:17Z',
+    datetime: '2013-10-16T22:00:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -232,7 +232,7 @@ const dummyInvited = [
   {
     _id: 3,
     title: 'Puppies in the Park',
-    dateTime: '2023-10-16T22:00:17Z',
+    datetime: '2023-10-16T22:00:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -251,7 +251,7 @@ const dummyInvited = [
   {
     _id: 4,
     title: 'Puppies in the Park',
-    dateTime: '2023-10-22T22:00:17Z',
+    datetime: '2023-10-22T22:00:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -270,7 +270,7 @@ const dummyInvited = [
   {
     _id: 5,
     title: 'Puppies in the Park',
-    dateTime: '2023-11-16T22:00:17Z',
+    datetime: '2023-11-16T22:00:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -289,7 +289,7 @@ const dummyInvited = [
   {
     _id: 6,
     title: 'Puppies in the Park',
-    dateTime: '2023-11-22T09:00:17Z',
+    datetime: '2023-11-22T09:00:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -308,7 +308,7 @@ const dummyInvited = [
   {
     _id: 7,
     title: 'Puppies in the Park',
-    dateTime: '2013-10-15T21:26:17Z',
+    datetime: '2013-10-15T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -327,7 +327,7 @@ const dummyInvited = [
   {
     _id: 8,
     title: 'Puppies in the Park',
-    dateTime: '2013-10-15T21:26:17Z',
+    datetime: '2013-10-15T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -346,7 +346,7 @@ const dummyInvited = [
   {
     _id: 9,
     title: 'Puppies in the Park',
-    dateTime: '2013-10-15T21:26:17Z',
+    datetime: '2013-10-15T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -365,7 +365,7 @@ const dummyInvited = [
   {
     _id: 10,
     title: 'Puppies in the Park',
-    dateTime: '2013-10-15T21:26:17Z',
+    datetime: '2013-10-15T21:26:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],

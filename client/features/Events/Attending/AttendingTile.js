@@ -26,7 +26,7 @@ export default function AttendingTile({ event }) {
           <Text>{event.host_meta.name}</Text>
         </View>
         <View style={styles.eventDetails}>
-          <Text>{event.dateTime}</Text>
+          <Text>{event.datetime}</Text>
           <Text>{event.title}</Text>
           <Text>{`${event.location.city}, ${event.location.state}`}</Text>
         </View>
