@@ -1,5 +1,6 @@
 const DogModel = require('../models/DogModel');
 const EventModel = require('../models/EventModel');
+const api = require('../api');
 const debug = require('../utils/debug');
 
 module.exports = {
@@ -9,6 +10,7 @@ module.exports = {
    */
   createEvent(req, res) {
     const event = req.body;
+    event.location = { ...event.location, coordinates: api.getCoordinates(event.location) };
     return EventModel.create(event)
       .then(result => res.status(201).send(result))
       .catch(err => res.status(500).send(err));
