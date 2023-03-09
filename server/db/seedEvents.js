@@ -38,6 +38,9 @@ function generateRandomEvent() {
   };
 }
 
+// generates random num events with 3 random invitees
+// ! invitees may include the host dog
+// attendees are omitted
 async function main(numEvents) {
   await mongoose
     .connect(`mongodb://${DB_HOST}/${DB_COLL}`)
