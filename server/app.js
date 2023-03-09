@@ -19,7 +19,7 @@ app.use(express.json());
 
 app.use('/api', router);
 io.on('connection', (socket) => {
-  // console.log(socket)
+  console.log('hitting line 22');
   socket.on('post', (message, room) => {
     console.log(message, room);
     socket.to(room).emit('receive-message', message);

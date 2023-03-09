@@ -23,6 +23,7 @@ export default function Chat() {
   const [currentMessage, setCurrentMessage] = useState('');
   const [newMessages, setNewMessages] = useState([]);
   const [currentLog, setCurrentLog] = useState(dummyData)
+  const arr = [];
 
 
   const { dummyCurrentUser1, dummyCurrentUser2 } = currentLog;
@@ -44,6 +45,7 @@ export default function Chat() {
 
   socket.on('receive-message', (message) => {
     console.log(message);
+    arr.push(message);
   });
 
   const handleMessageSend = () => {
@@ -91,12 +93,35 @@ export default function Chat() {
             </View>
           )
         })}
+        {/* {newMessages.map((chat, i) => {
+          return (
+            <View
+              style={chat.userId === dummyCurrentUser1.id ? user1BubbleContainer: user2BubbleContainer}
+              key={i}
+            >
+              <Text
+                style={chat.userId === dummyCurrentUser1.id ? user1Bubble: user2Bubble}
+              >
+                {chat.body}
+              </Text>
+              <Text
+                style={timestamp}
+              >
+                {format(parseISO(chat.timestamp), 'LLLL d, yyyy')}
+              </Text>
+            </View>
+          )
+        })} */}
         <View style={inputContainer}>
           <TextInput
             placeholder='Say Hi!'
             placeholderTextColor='black'
             style={input}
             onChangeText={setCurrentMessage}
+          />
+          <Button
+            title='console'
+            onPress={() => {console.log(arr)}}
           />
           <Button
             title='Send'
@@ -141,7 +166,7 @@ const chatStyle = StyleSheet.create({
     borderRadius: 75,
   },
   input: {
-    width: '88%',
+    width: '50%',
   },
   user1BubbleContainer: {
     alignItems: 'center',
