@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Button,
   StyleSheet,
@@ -15,12 +15,19 @@ import DummyLogo from '../../assets/icon.png';
 import Constants from 'expo-constants';
 const { width, height } = Dimensions.get('window');
 import { useRouter } from 'expo-router';
+import { useAuth } from '../../context/Provider';
 
 const LandingPage = () => {
   const router = useRouter();
 
   const goToLogIn = () => router.push('/login');
   const goToSignUp = () => router.push('/signup');
+
+  const { user } = useAuth();
+
+  useEffect(() => {
+    console.log(user);
+  }, []);
 
   return (
     <View>
