@@ -1,52 +1,54 @@
+import React, { useState, useEffect } from 'react';
+
 import {
   Image,
+  Dimensions,
+  Platform,
+  Pressable,
   SafeAreaView,
+  StatusBar,
   StyleSheet,
   Text,
   View,
-  Platform,
-  StatusBar,
-  Dimensions,
 } from 'react-native';
-const { width, height } = Dimensions.get('window');
-//if you need to use the width and height for some reason
 
-//pass in a dog object
+import api from '../../api';
 
-export default function Profile() {
-  const isAndroid = Platform.OS === 'android';
+import ModalContainer from './editProfile.js';
 
-  const dummyPics = [
-    {
-      default: true,
-      url: 'http://3.bp.blogspot.com/-GfiMn3VSfnc/VigKnxj9x5I/AAAAAAAA9zI/CXLjzRlI2yA/s1600/boo2.jpg',
-    },
-    {
-      default: false,
-      url: 'https://i.ytimg.com/vi/xEDP5N5SNQM/maxresdefault.jpg',
-    },
-    {
-      default: false,
-      url: 'http://2.bp.blogspot.com/-o1Nlm1LBxD0/UKpxdFESiuI/AAAAAAAAKQg/6FynR1gMNqU/s1600/cute-puppy-pictures-901.jpg',
-    },
-    {
-      default: false,
-      url: 'http://3.bp.blogspot.com/-90Yj9zzFtn4/Tp-4Ai23riI/AAAAAAAAAhc/AvNYsJxGuuQ/s1600/Cute-Puppy-Dog.jpg',
-    },
-    {
-      default: false,
-      url: 'https://4.bp.blogspot.com/-f_ubVt0YDqs/VkyD1uolD5I/AAAAAAAAAiA/X2VaFT6cE0M/s1600/Q9.jpg',
-    },
-    {
-      default: false,
-      url: 'https://wallpapercave.com/wp/wp2480956.jpg',
-    },
+export default function Profile({ dogId }) {
+  const [info, setInfo] = useState({});
+  const [mainPic, setMainPic] = useState([]);
+  const [morePics, setMorePics] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [profileChanged, setProfileChanged] = useState(false);
+
+  const dummyMainPic = [
+    'http://3.bp.blogspot.com/-GfiMn3VSfnc/VigKnxj9x5I/AAAAAAAA9zI/CXLjzRlI2yA/s1600/boo2.jpg',
+  ];
+
+  const dummyMorePics = [
+    'https://i.ytimg.com/vi/xEDP5N5SNQM/maxresdefault.jpg',
+    'http://2.bp.blogspot.com/-o1Nlm1LBxD0/UKpxdFESiuI/AAAAAAAAKQg/6FynR1gMNqU/s1600/cute-puppy-pictures-901.jpg',
+    'http://3.bp.blogspot.com/-90Yj9zzFtn4/Tp-4Ai23riI/AAAAAAAAAhc/AvNYsJxGuuQ/s1600/Cute-Puppy-Dog.jpg',
+    'https://4.bp.blogspot.com/-f_ubVt0YDqs/VkyD1uolD5I/AAAAAAAAAiA/X2VaFT6cE0M/s1600/Q9.jpg',
+    'https://wallpapercave.com/wp/wp2480956.jpg',
   ];
 
   const dummyInfo = {
     dogName: 'Billie',
     dogBreed: 'Poodle',
-    location: 'Chicago, IL',
+    location: {
+      // address1,
+      // address2,
+      city: 'Skagway',
+      state: 'AK',
+      // postalCode,
+      // coordinates: {
+      // lat,
+      // lng,
+      // },
+    },
     peopleFriendly: true,
     dogFriendly: true,
     dogBio:
@@ -56,100 +58,128 @@ export default function Profile() {
     ownerName: 'Peppy',
   };
 
-  let dummyNav = [0, 0, 0, 0, 0];
-  dummyNav = dummyNav.fill('https://reactnative.dev/img/tiny_logo.png', 0);
-
-  const mainPhoto = renderPics(dummyPics, true);
-  const otherPhotos = renderPics(dummyPics, false);
   const {
+    container,
+    dogInfoContainer,
+    editButton,
+    friendlyContainer,
+    friendlyItem,
     mainPicContainer,
     morePicsAndNavContainer,
     userInfoContainer,
     userPicContainer,
   } = profileStyles;
 
+  const addImgBlanks = (blanks) => {
+    const noImgPic = '../../assets/noPic1.png';
+    const morePicsCopy = morePics.slice();
+    const morePicsBlanks = Array(blanks).fill(noImgPic);
+    setMorePics(morePicsCopy.concat(morePicsBlanks));
+  };
+
+  useEffect(() => {
+    // GET the profile by id
+    api
+      .getDogById(dogId)
+      .then((profile) => {
+        setInfo({ ...profile.data });
+        setMainPic([profile.data.mainImageUrl]);
+        setMorePics([...profile.data.imageUrls]);
+      })
+      .catch((err) => console.error(err));
+  }, [profileChanged]);
+
   return (
     <>
-      <SafeAreaView style={profileStyles.container}>
+      <SafeAreaView style={container}>
         <View style={userInfoContainer}>
-          <Text style={{ marginLeft: 10 }}>{dummyInfo.ownerName}</Text>
+          <Text style={{ marginLeft: 10 }}>{info.owner.name}</Text>
           <View style={{ width: 50, height: 50, marginLeft: 20 }}>
             <Image
               style={userPicContainer}
-              source={{ uri: dummyInfo.ownerPic }}
+              source={{ uri: info.owner.imageUrl }}
             />
           </View>
-          <View style={{ width: 50, height: 50, marginLeft: 'auto', marginRight: 10 }}>
-          <Image
-              style={userPicContainer}
-              source={{ uri: 'http://cdn.onlinewebfonts.com/svg/img_397968.png'}}
-            />
+          <View style={editButton}>
+            <Pressable onPress={() => setModalVisible(true)}>
+              <Image
+                style={userPicContainer}
+                source={{
+                  uri: 'http://cdn.onlinewebfonts.com/svg/img_397968.png',
+                }}
+              />
+            </Pressable>
           </View>
         </View>
-        <View style={mainPicContainer}>{mainPhoto}</View>
-        <View style={morePicsAndNavContainer}>{otherPhotos}</View>
-        <View style={profileStyles.dogInfoContainer}>
+        <View style={mainPicContainer}>{renderPics(mainPic, true)}</View>
+        <View style={morePicsAndNavContainer}>
+          {morePics.length < 5 && addImgBlanks(5 - morePics.length)}
+          {renderPics(morePics, false)}
+        </View>
+        <View style={dogInfoContainer}>
           <Text>
-            {dummyInfo.dogName}
-            <Text>{dummyInfo.dogBreed}</Text>
+            {dummyInfo.dogName} ({dummyInfo.dogBreed})
           </Text>
-          <Text>{dummyInfo.location}</Text>
+          <Text>
+            {dummyInfo.location.city}, {dummyInfo.location.state}
+          </Text>
           {dummyInfo.peopleFriendly || dummyInfo.dogFriendly ? (
-            <View style={profileStyles.friendlyContainer}>
+            <View style={friendlyContainer}>
               {dummyInfo.peopleFriendly && (
-                <Text style={profileStyles.friendlyItem}>
-                  I'm people friendly!
-                </Text>
+                <Text style={friendlyItem}>I'm people friendly!</Text>
               )}
               {dummyInfo.dogFriendly && (
-                <Text style={profileStyles.friendlyItem}>
-                  I'm dog friendly!
-                </Text>
+                <Text style={friendlyItem}>I'm dog friendly!</Text>
               )}
             </View>
           ) : null}
           <Text>{dummyInfo.dogBio}</Text>
         </View>
-        {isAndroid && (
-          <View style={profileStyles.morePicsAndNavContainer}>
-            {renderNav(dummyNav)}
-          </View>
+        {isAndroid && !modalVisible && (
+          <View style={morePicsAndNavContainer}>{renderNav(dummyNav)}</View>
+        )}
+        {modalVisible && (
+          <ModalContainer
+            info={info}
+            setInfo={setInfo}
+            mainPic={mainPic}
+            setMainPic={setMainPic}
+            morePics={morePics}
+            setMorePics={setMorePics}
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            profileChanged={profileChanged}
+            setProfileChanged={setProfileChanged}
+          />
         )}
       </SafeAreaView>
-      {!isAndroid && ( //conditionally render navbar to be at the bottom for android/ios
-        <View style={profileStyles.morePicsAndNavContainer}>
-          {renderNav(dummyNav)}
-        </View>
+      {!isAndroid && !modalVisible && (
+        <View style={morePicsAndNavContainer}>{renderNav(dummyNav)}</View>
       )}
     </>
   );
 }
 
 const profileStyles = StyleSheet.create({
-  // holds everything else, flex val 1 fills avail space
   container: {
     backgroundColor: 'yellow',
     flex: 1,
     paddingTop: Platform.OS === 'android' && StatusBar.currentHeight,
   },
-  // flex val 4 equates to 'fill 4 something-ths of the available space in (main) container'
   mainPicContainer: {
     backgroundColor: 'darkblue',
     flex: 4,
   },
-  // 'fill the whole container' (which in this case is mainPicContainer)
   mainPic: {
     flex: 1,
     margin: '2%',
     borderRadius: 10,
   },
-  // 'fill 1 something-ths of the available space in (main) container'
   morePicsAndNavContainer: {
     backgroundColor: 'dodgerblue',
     flex: 1,
     flexDirection: 'row',
   },
-  // 'fill the whole container' (which in this case is morePicsContainer)
   morePicsAndNav: {
     flex: 1,
     justifyContent: 'space-evenly',
@@ -157,14 +187,12 @@ const profileStyles = StyleSheet.create({
     margin: '2%',
     borderRadius: 10,
   },
-  // 'fill 2 something-th of the available space in (main) container'
   dogInfoContainer: {
     backgroundColor: 'lightslategray',
     flex: 2,
     marginLeft: '2%',
     marginRight: '2%',
   },
-  // 'fill 1 something-ths of the available space in (main) container'
   userInfoContainer: {
     backgroundColor: 'lightgray',
     flex: 0.6,
@@ -179,10 +207,7 @@ const profileStyles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 75,
   },
-  // 'fill 1 something-ths of the available space in (main) container'
-  // --> except I'm NOT RENDERING it right now so it's NOT counted re: line 126-127
   friendlyContainer: {
-    // padding: 2,
     margin: 6,
     display: 'flex',
     flexDirection: 'row',
@@ -200,27 +225,35 @@ const profileStyles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
   },
-  // currently, in the main container, there are I think 8 'something-ths'
-  // e.g. mainPicContainer will fill 4/8ths of the container
+  editButton: {
+    width: 50,
+    height: 50,
+    marginLeft: 'auto',
+    marginRight: 10,
+  },
 });
+
+const dummyNav = Array(5).fill('https://reactnative.dev/img/tiny_logo.png');
+const { width, height } = Dimensions.get('window');
+const isAndroid = Platform.OS === 'android';
 
 const renderPics = (picList, isDefault) => {
   const { mainPic, morePicsAndNav } = profileStyles;
-  return picList
-    .filter((pic) => pic.default === isDefault)
-    .map((pic, i) => {
-      return (
-        <Image
-          key={i}
-          style={isDefault ? mainPic : morePicsAndNav}
-          default={pic.default}
-          src={pic.url}
-        />
-      );
-    });
+  return picList.map((url, i) => {
+    return (
+      <Image
+        key={i}
+        style={isDefault ? mainPic : morePicsAndNav}
+        default={isDefault}
+        src={url}
+      />
+    );
+  });
 };
 
 const renderNav = (icons) => {
   const { morePicsAndNav } = profileStyles;
-  return icons.map((icon, i) => <Image key={i} src={icon} style={morePicsAndNav} />);
+  return icons.map((icon, i) => (
+    <Image key={i} src={icon} style={morePicsAndNav} />
+  ));
 };
