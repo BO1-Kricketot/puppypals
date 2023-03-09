@@ -16,10 +16,11 @@ import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 const { width, height } = Dimensions.get('window');
 import axios from 'axios';
+import Constants from 'expo-constants';
 
 const CreateProfile = () => {
-  const [dogName, setDogName] = useState('');
-  const [dogBreed, setDogBreed] = useState('');
+  const [dogName, setDogName] = useState();
+  const [dogBreed, setDogBreed] = useState();
   const [dogProfPic, setDogProfPic] = useState();
   const [dogProfPic64, setDogProfPic64] = useState();
   const [dogPics, setDogPics] = useState([]);
@@ -28,15 +29,16 @@ const CreateProfile = () => {
   const [size, setSize] = useState();
   const [dogFriendliness, setDogFriendliness] = useState();
   const [humanFriendliness, setHumanFriendliness] = useState();
-  const [bio, setBio] = useState('');
-  const [ownerName, setOwnerName] = useState('');
+  const [bio, setBio] = useState();
+  const [ownerName, setOwnerName] = useState();
   const [ownerPic, setOwnerPic] = useState();
   const [ownerPic64, setOwnerPic64] = useState();
-  const [add1, setAdd1] = useState('');
+  const [add1, setAdd1] = useState();
   const [add2, setAdd2] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
+  const [city, setCity] = useState();
+  const [state, setState] = useState();
   const [zip, setZip] = useState();
+  const baseUrl = Constants.expoConfig.extra.apiUrl;
 
   const pickOwnerImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -88,46 +90,45 @@ const CreateProfile = () => {
   const pressCreateProfile = () => {
     console.log('hit');
     if (
-      dogName === '' ||
-      dogBreed === '' ||
+      !dogName ||
+      !dogBreed ||
       !dogProfPic ||
-      !energyLvl ||
-      !size ||
-      !dogFriendliness ||
-      !humanFriendliness ||
-      bio === '' ||
-      ownerName === '' ||
+      !bio ||
+      !ownerName ||
       !ownerPic ||
-      add1 === '' ||
-      city === '' ||
-      state === '' ||
+      !add1 ||
+      !city ||
+      !state ||
       zip.length !== 5
     ) {
       Alert.alert('Please fill all fields');
     } else {
       let dogInfo = {
+        dogId: 'bababababa',
         name: dogName,
         breed: dogBreed,
-        mainImageUrl: dogProfPic64,
-        imageUrls: dogPics64,
+        mainImage: dogProfPic64,
+        images: dogPics64,
         energy: energyLvl,
         size: size,
         isDogFriendly: dogFriendliness,
         isHumanFriendly: humanFriendliness,
         bio: bio,
-        ownerName: ownerName,
-        ownerPic: ownerPic64,
-        locationInfo: {
+        location: {
           address1: add1,
           address2: add2,
           city: city,
           state: state,
           postalCode: zip,
         },
+        owner: {
+          name: ownerName,
+          image: ownerPic64,
+        },
       };
       axios
-        .post('/api/dogs', dogInfo)
-        .then((res) => console.log(res))
+        .post(`${baseUrl}/api/dogs`, dogInfo)
+        .then((res) => null) // console.log(res))
         .catch((e) => console.log(e));
     }
   };
@@ -153,6 +154,7 @@ const CreateProfile = () => {
           <Button
             title="Pick an image from camera roll"
             onPress={pickDogProfImage}
+            color="#7371FC"
           />
           {dogProfPic && (
             <Image
@@ -164,6 +166,7 @@ const CreateProfile = () => {
           <Button
             title="Pick an image from camera roll"
             onPress={pickDogImages}
+            color="#7371FC"
           />
           <View style={styles.picArrContainer}>
             {dogPics.length
@@ -217,6 +220,7 @@ const CreateProfile = () => {
           <Button
             title="Pick an image from camera roll"
             onPress={pickOwnerImage}
+            color="#7371FC"
           />
           {ownerPic && (
             <Image
@@ -271,10 +275,11 @@ const CreateProfile = () => {
 
 const styles = StyleSheet.create({
   root: {
-    // alignItems: 'center',
+    alignItems: 'center',
     width: width,
     flex: 1,
     paddingTop: Platform.OS === 'android' && StatusBar.currentHeight,
+    // paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   logo: {
     width: '50%',
@@ -282,9 +287,10 @@ const styles = StyleSheet.create({
     maxHeight: 200,
   },
   inputs: {
-    width: '80%',
+    // width: '80%',
     borderWidth: 1,
     borderRadius: 5,
+    borderColor: '#7371FC',
     padding: 3,
     margin: 3,
     alignItems: 'center',

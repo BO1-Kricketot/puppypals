@@ -29,7 +29,7 @@ const LogIn = () => {
     };
     axios
       .post(`${baseUrl}/api/user/login`, logInData)
-      .then((res) => console.log(res))
+      .then((res) => console.log(res)) // use navigator to send user to app or alert w/ message if not
       .catch((e) => console.log(e));
   };
 
@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     width: '80%',
     borderWidth: 1,
     borderRadius: 5,
+    borderColor: '#7371FC',
     padding: 3,
     marginVertical: 3,
     paddingHorizontal: 10,

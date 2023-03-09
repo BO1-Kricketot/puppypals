@@ -16,7 +16,6 @@ import Constants from 'expo-constants';
 const { width, height } = Dimensions.get('window');
 
 const LandingPage = () => {
-  const { height } = Dimensions();
   const goToLogIn = () => {
     console.log('go to log in');
   };

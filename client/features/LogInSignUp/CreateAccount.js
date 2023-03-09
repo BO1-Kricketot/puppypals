@@ -13,7 +13,6 @@ import React, { useState } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 const { width, height } = Dimensions.get('window');
-// import api from '../../api';
 import Constants from 'expo-constants';
 
 const CreateAccount = () => {
@@ -117,6 +116,7 @@ const styles = StyleSheet.create({
     width: '80%',
     borderWidth: 1,
     borderRadius: 5,
+    borderColor: '#7371FC',
     padding: 3,
     marginVertical: 3,
     paddingHorizontal: 10,

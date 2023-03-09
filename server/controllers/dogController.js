@@ -1,4 +1,6 @@
 const DogModel = require('../models/DogModel');
+// maybe need to import locationSchema?
+const dogFormatter = require('../utils/formatDog');
 const debug = require('../utils/debug');
 
 module.exports = {
@@ -11,8 +13,12 @@ module.exports = {
    * TODO: Implement
    */
   registerDog(req, res) {
-    console.log(req);
-    throw new Error('registerDog not implemented yet!');
+    const dogInfo = JSON.parse(JSON.stringify(req.body));
+    delete dogInfo.dogId;
+    console.log(dogInfo);
+    const newDog = DogModel.findOneAndUpdate({_id: req.body.dogId}, dogFormatter(dogInfo))
+    console.log(newDog)
+    // newDog.save()
   },
 
   /**
