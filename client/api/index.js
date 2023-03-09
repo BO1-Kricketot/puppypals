@@ -7,7 +7,7 @@ export default {
   getUserProfile(userId) {
     return axios({
       method: 'get',
-      url: `${baseUrl}api/dogs/${userId}/one`,
+      url: `${baseUrl}/api/dogs/${userId}/one`,
     })
       .then((res) => {
         console.log(
@@ -21,7 +21,7 @@ export default {
   patchUserProfile(userId, data) {
     return axios({
       method: 'patch',
-      url: `${baseUrl}api/dogs/${userId}`,
+      url: `${baseUrl}/api/dogs/${userId}`,
       data,
     })
       .then((res) => {

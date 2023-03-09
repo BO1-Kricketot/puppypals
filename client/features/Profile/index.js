@@ -80,11 +80,11 @@ export default function Profile({ dogId }) {
   useEffect(() => {
     // GET the profile by id
     api
-      .getDogById(dogId)
+      .getUserProfile(dogId)
       .then((profile) => {
-        setInfo({ ...profile.data });
-        setMainPic([profile.data.mainImageUrl]);
-        setMorePics([...profile.data.imageUrls]);
+        setInfo({ ...profile });
+        setMainPic([profile.mainImageUrl]);
+        setMorePics([...profile.imageUrls]);
       })
       .catch((err) => console.error(err));
   }, [profileChanged]);
@@ -93,11 +93,11 @@ export default function Profile({ dogId }) {
     <>
       <SafeAreaView style={container}>
         <View style={userInfoContainer}>
-          <Text style={{ marginLeft: 10 }}>{info.owner.name}</Text>
+          <Text style={{ marginLeft: 10 }}>{info?.owner?.name}</Text>
           <View style={{ width: 50, height: 50, marginLeft: 20 }}>
             <Image
               style={userPicContainer}
-              source={{ uri: info.owner.imageUrl }}
+              source={{ uri: info?.owner?.imageUrl }}
             />
           </View>
           <View style={editButton}>
