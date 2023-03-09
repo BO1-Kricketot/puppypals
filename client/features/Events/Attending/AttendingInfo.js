@@ -7,7 +7,11 @@ export default function AttendingInfo({ modal, toggleModal, event }) {
   return (
     <Modal animationType="slide">
       <SafeAreaView style={styles.modalContainer}>
+        <View style={styles.headerContainer}>
         <Text style={styles.infoHeader}>Event Info</Text>
+        </View>
+
+        <View style={styles.infoContainer}>
           <Text>{event.title}</Text>
           <Text>{`${event.location.city}, ${event.location.state}`}</Text>
           <Text>{event.dateTime}</Text>
@@ -15,6 +19,7 @@ export default function AttendingInfo({ modal, toggleModal, event }) {
           <TouchableOpacity onPress={toggleModal}>
             <Text>Close</Text>
           </TouchableOpacity>
+        </View>
       </SafeAreaView>
     </Modal>
   );

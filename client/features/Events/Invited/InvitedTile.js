@@ -36,7 +36,9 @@ export default function InvitedTile({ event, dog }) {
         <View style={styles.eventDetails}>
           <Text>{formattedDate}</Text>
           <Text style={styles.eventTitle}>{event.title}</Text>
-          <Text style={styles.eventLocation}>{`${event.location.city}, ${event.location.state}`}</Text>
+          <Text style={styles.eventLocation}>
+            {`${event.location.city}, ${event.location.state}`}
+          </Text>
         </View>
       </TouchableOpacity>
       {modal && (
@@ -74,6 +76,7 @@ const styles = StyleSheet.create({
     // backgroundColor: 'white',
     flex: 3,
     justifyContent: 'center',
+    paddingVertical: 10,
     marginLeft: 10,
   },
   imageContainer: {
@@ -91,8 +94,8 @@ const styles = StyleSheet.create({
   eventTitle: {
     // backgroundColor: 'white',
     fontSize: 17,
-    marginTop: 3,
-    marginBottom: 3,
+    marginTop: 4,
+    marginBottom: 4,
   },
   eventLocation: {
     // backgroundColor: 'white',
