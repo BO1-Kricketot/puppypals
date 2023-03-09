@@ -1,15 +1,14 @@
-
-const CurrentUser1 = {
+const dummyCurrentUser1 = {
   _id: 63,
   name: 'Josh',
 };
 
-const CurrentUser2 = {
+const dummyCurrentUser2 = {
   _id: 201,
   name: 'Aimee',
 }
 
-const Chats = {
+const dummyChats = {
   _id: 5,
   members: [63,201],
   messages: [
@@ -52,15 +51,15 @@ const Chats = {
 }
 
 export default {
-  CurrentUser1: {
-    _id: 63,
+  dummyCurrentUser1: {
     name: 'Josh',
+    id: 63,
   },
-  CurrentUser2: {
-    _id: 201,
+  dummyCurrentUser2: {
     name: 'Aimee',
+    id: 201,
   },
-  Chats: {
+  dummyChats: {
     _id: 5,
     members: [63,201],
     messages: [

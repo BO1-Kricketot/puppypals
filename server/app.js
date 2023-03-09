@@ -19,15 +19,18 @@ app.use(express.json());
 
 app.use('/api', router);
 io.on('connection', (socket) => {
-  console.log('hitting line 22');
+  // console.log('hitting line 22');
   socket.on('post', (message, room) => {
     console.log(message, room);
     socket.to(room).emit('receive-message', message);
   });
+  socket.on('josh', (message) => {
+    console.log(message);
+  });
   socket.on('join-room', (room, cb) => {
     socket.join(room);
     cb(`you have joined room ${room}`)
-  })
+  });
 });
 
 httpServer.listen(3000, () => {
