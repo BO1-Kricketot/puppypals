@@ -37,7 +37,12 @@ export default function InvitedTile({ event, dog }) {
         </View>
       </TouchableOpacity>
       {modal && (
-        <InvitedInfo modal={modal} toggleModal={toggleModal} event={event} dog={dog} />
+        <InvitedInfo
+          modal={modal}
+          toggleModal={toggleModal}
+          event={event}
+          dog={dog}
+        />
       )}
     </View>
   );
@@ -47,7 +52,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: '1%',
     backgroundColor: 'red',
-    height: 100,
+    height: 115,
   },
   hostContainer: {
     backgroundColor: 'lightslategray',

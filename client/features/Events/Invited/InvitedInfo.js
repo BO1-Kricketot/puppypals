@@ -11,6 +11,7 @@ import React from 'react';
 import api from '../../../api';
 import Constants from 'expo-constants';
 import axios from 'axios';
+
 import { dummyDogFriends } from '../sampleData.js';
 // console.log(dummyDogFriends[0].mainImageUrl);
 
@@ -40,9 +41,11 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
   };
 
   return (
-    <Modal>
+    <Modal animationType="slide">
       <View style={styles.modalContainer}>
         <Text>{event.title}</Text>
+        <Text>{`${event.location.city}, ${event.location.state}`}</Text>
+        <Text>{event.dateTime}</Text>
         <Text>{event.description}</Text>
         <Text>Invited</Text>
         <View style={styles.imageContainer}>

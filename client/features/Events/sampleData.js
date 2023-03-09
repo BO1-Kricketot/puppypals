@@ -195,7 +195,7 @@ const dummyInvited = [
   {
     _id: 1,
     title: 'Puppies in the Park',
-    dateTime: '2012-10-15T21:26:17Z',
+    dateTime: '2013-10-15T21:00:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -214,7 +214,7 @@ const dummyInvited = [
   {
     _id: 2,
     title: 'Puppies in the Park',
-    dateTime: '2013-10-15T21:26:17Z',
+    dateTime: '2013-10-16T22:00:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -232,7 +232,7 @@ const dummyInvited = [
   {
     _id: 3,
     title: 'Puppies in the Park',
-    dateTime: 'May 6, 2023',
+    dateTime: '2023-10-16T22:00:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -251,7 +251,7 @@ const dummyInvited = [
   {
     _id: 4,
     title: 'Puppies in the Park',
-    dateTime: 'May 6, 2023',
+    dateTime: '2023-10-22T22:00:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -270,7 +270,7 @@ const dummyInvited = [
   {
     _id: 5,
     title: 'Puppies in the Park',
-    dateTime: 'May 6, 2023',
+    dateTime: '2023-11-16T22:00:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],
@@ -289,7 +289,7 @@ const dummyInvited = [
   {
     _id: 6,
     title: 'Puppies in the Park',
-    dateTime: 'May 6, 2023',
+    dateTime: '2023-11-22T09:00:17Z',
     description:
       'A meet-up of the puppies in the area! We can run around on the grass, or swim around in the water. Make sure your owners are prepared!',
     invitees: ['kiwi', 'bella', 'finn', 'dax', 'shepherd'],

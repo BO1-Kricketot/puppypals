@@ -38,9 +38,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
 
   const [form, setForm] = useState(initial);
   const [selectedDate, setSelectedDate] = useState(new Date());
-
-  const [startTime, setStartTime] = useState(new Date());
-  const [showStartTimePicker, setShowStartTimePicker] = useState(false);
+  const [time, setTime] = useState(new Date());
 
   const resetForm = () => {
     setForm(initial);
@@ -75,9 +73,24 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
     });
   };
 
+  const handleTimeChange = (event, selectedTime) => {
+    if (selectedTime) {
+      setTime(selectedTime);
+      const formattedTime = selectedTime.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+      setForm({
+        ...form,
+        datetime: `${form.datetime} ${formattedTime}`,
+      });
+    }
+  };
+
   const handleCreateEvent = () => {
     console.log('data saved');
     toggleModal();
+    resetForm();
     // axios
     //   .post('/', form) // update endpoint here
     //   .then((result) => {
@@ -106,6 +119,14 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
           mode="date"
           display="default"
           onChange={handleDateChange}
+        />
+
+        <Text>Event start time</Text>
+        <DateTimePicker
+          value={time}
+          mode="time"
+          display="default"
+          onChange={handleTimeChange}
         />
         <Text>Event location</Text>
         <TextInput
@@ -167,6 +188,9 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
         </TouchableOpacity>
 
         <TouchableOpacity onPress={handleCreateEvent}>
+          <Text>Create event</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={toggleModal}>
           <Text>Close</Text>
         </TouchableOpacity>
       </SafeAreaView>
@@ -180,7 +204,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   formTitle: {
-    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    height: 50,
+    backgroundColor: '#FFFFFF',
   },
   imageContainer: {
     width: 50,
