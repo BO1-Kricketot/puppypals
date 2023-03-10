@@ -27,7 +27,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
     datetime: '',
     description: '',
     invitees: [],
-    attendees: [],
+    attendees: [user._id],
     hostMeta: {
       dogId: user._id,
       name: user.name, // to update to dog.name
