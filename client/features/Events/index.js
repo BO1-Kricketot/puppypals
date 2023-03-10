@@ -76,13 +76,17 @@ export default function Events() {
           <TouchableOpacity
             onPress={handleInvitedTab}
             style={[invited ? styles.activeTab : styles.inactiveTab]}>
-            <Text style={[invited ? styles.activeText : styles.inactiveText]}>Invited</Text>
+            <Text style={[invited ? styles.activeText : styles.inactiveText]}>
+              Invited
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             onPress={handleAttendingTab}
             style={[!invited ? styles.activeTab : styles.inactiveTab]}>
-            <Text style={[!invited ? styles.activeText : styles.inactiveText]}>Attending</Text>
+            <Text style={[!invited ? styles.activeText : styles.inactiveText]}>
+              Attending
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -135,24 +139,26 @@ const styles = StyleSheet.create({
   },
   activeTab: {
     flex: 1,
-    flexBasis: 0,
     backgroundColor: '#7371FC',
-    padding: 2,
+    borderColor: '#7371FC',
+    borderWidth: 2,
+    padding: 1,
   },
   inactiveTab: {
     flex: 1,
-    flexBasis: 0,
     borderColor: '#7371FC',
     borderWidth: 2,
-    padding: 2,
+    padding: 1,
   },
   activeText: {
     color: '#FFFFFF',
     textAlign: 'center',
+    padding: 2,
   },
   inactiveText: {
     color: '#7371FC',
     textAlign: 'center',
+    padding: 2,
   },
   plusText: {
     fontSize: 40,
