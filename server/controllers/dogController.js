@@ -17,8 +17,11 @@ module.exports = {
     const dogInfo = JSON.parse(JSON.stringify(req.body));
     delete dogInfo.dogId;
     console.log(dogInfo);
-    const newDog = DogModel.findOneAndUpdate({_id: req.body.dogId}, dogFormatter(dogInfo))
-    console.log(newDog)
+    const newDog = DogModel.findOneAndUpdate(
+      { _id: req.body.dogId },
+      dogFormatter(dogInfo),
+    );
+    console.log(newDog);
     // newDog.save()
   },
 
@@ -74,13 +77,38 @@ module.exports = {
    */
   async updateDogById(req, res) {
     const id = req.params;
-    const update = req.body;
-    const coordinates = await api.getCoordinates(update.location);
-    update.location.coordinates = coordinates;
+    const update = { ...req.body };
+    const isLink = /^https:\/\//g;
+    const { mainImageUrl, imageUrls, location } = update;
+
+    if (!isLink.test(mainImageUrl)) {
+      const newPic = await api.uploadPhotoNoPrefix(mainImageUrl);
+      update.mainImageUrl = newPic;
+    }
+
+    const promises = [];
+    const urls = [];
+
+    imageUrls.forEach((url) => {
+      if (!isLink.test(url)) {
+        promises.push(api.uploadPhotoNoPrefix(url));
+      } else {
+        urls.push(url);
+      }
+    });
+
+    const result = await Promise.all(promises);
+    update.imageUrls = urls.concat(result);
+
+    const coordinates = await api.getCoordinates(location);
+    location.coordinates = coordinates;
 
     DogModel.findByIdAndUpdate(id, update)
       .then(() => res.sendStatus(204))
-      .catch((err) => res.status(500).send(err));
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send(err)
+      });
   },
 
   /**
