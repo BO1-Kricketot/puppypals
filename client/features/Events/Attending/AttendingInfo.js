@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, TouchableOpacity, Modal, SafeAreaView } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Modal,
+  SafeAreaView,
+} from 'react-native';
 import React from 'react';
 import api from '../../../api';
 import Constants from 'expo-constants';
@@ -8,7 +15,7 @@ export default function AttendingInfo({ modal, toggleModal, event }) {
     <Modal animationType="slide">
       <SafeAreaView style={styles.modalContainer}>
         <View style={styles.headerContainer}>
-        <Text style={styles.infoHeader}>Event Info</Text>
+          <Text style={styles.infoHeader}>Event Info</Text>
         </View>
 
         <View style={styles.infoContainer}>

@@ -9,10 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 export default function AttendingTile({ event }) {
   const [modal, setModal] = useState(false);
 
-  const formattedDate = format(
-    parseISO(event.datetime),
-    'EEE, MMM d, yyyy h:mm a',
-  );
+  const formattedDate = format(parseISO(event.datetime), 'EEE, MMM d, yyyy h:mm a');
 
   const toggleModal = () => {
     setModal(!modal);
@@ -37,16 +34,16 @@ export default function AttendingTile({ event }) {
           </View>
           {event.hostMeta.dogId === 1 ? (
             <View style={styles.hostDesignation}>
-              <Ionicons name="ios-paw" size={12} color="#7371FC" />
+              <Ionicons name="ios-paw" size={10} color="#7371FC" />
               <Text style={styles.userHost}>HOST</Text>
-              <Ionicons name="ios-paw" size={12} color="#7371FC" />
+              <Ionicons name="ios-paw" size={10} color="#7371FC" />
             </View>
           ) : (
             <Text style={styles.hostName}>{event.hostMeta.name}</Text>
           )}
         </View>
         <View style={styles.eventDetails}>
-          <Text>{formattedDate}</Text>
+          <Text style={styles.eventTime}>{formattedDate}</Text>
           <Text style={styles.eventTitle}>{event.title}</Text>
           <Text style={styles.eventLocation}>
             {`${event.location.city}, ${event.location.state}`}
@@ -100,21 +97,32 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: '#7371FC',
   },
+  eventTime: {
+    fontSize: 13,
+    color: '#66666E',
+    fontWeight: 500,
+  },
   eventTitle: {
     fontSize: 17,
-    fontWeight: 450,
+    fontWeight: 500,
     marginTop: 4,
     marginBottom: 4,
+    color: '#474747',
   },
   eventLocation: {
     fontSize: 12,
+    color: '#66666E',
   },
   hostName: {
     fontSize: 12,
+    color: '#66666E',
   },
   hostDesignation: {
     flex: 1,
     flexDirection: 'row',
+    padding: 2,
+    alignItems: 'center',
+    justifyItems: 'center',
   },
   userHost: {
     fontSize: 12,

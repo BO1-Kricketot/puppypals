@@ -34,7 +34,7 @@ export default function InvitedTile({ event, dog }) {
           <Text style={styles.hostName}>{event.hostMeta.name}</Text>
         </View>
         <View style={styles.eventDetails}>
-          <Text>{formattedDate}</Text>
+          <Text style={styles.eventTime}>{formattedDate}</Text>
           <Text style={styles.eventTitle}>{event.title}</Text>
           <Text style={styles.eventLocation}>
             {`${event.location.city}, ${event.location.state}`}
@@ -89,16 +89,21 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     width: '100%',
   },
+  eventTime: {
+    fontSize: 13,
+    color: '#66666E',
+    fontWeight: 500,
+  },
   eventTitle: {
-    // backgroundColor: 'white',
     fontSize: 17,
-    fontWeight: 450,
+    fontWeight: 500,
     marginTop: 4,
     marginBottom: 4,
+    color: '#474747',
   },
   eventLocation: {
-    // backgroundColor: 'white',
     fontSize: 12,
+    color: '#66666E',
   },
   hostName: {
     fontSize: 12,

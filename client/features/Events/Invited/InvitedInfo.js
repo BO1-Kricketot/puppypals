@@ -149,7 +149,8 @@ const styles = StyleSheet.create({
   closeButton: {
     textAlign: 'center',
     fontWeight: 'bold',
-    color: '#474747',
+    color: '#7371FC',
+    marginBottom: 20,
   },
   // imageContainer: {
   //   width: 50,
