@@ -15,12 +15,14 @@ import axios from 'axios';
 import { API_URL } from '@env';
 import { parseISO, format } from 'date-fns';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useAuth } from '../../../context/Provider';
 // TO DELETE: dummy data
 // import { dummyDogFriends } from '../sampleData.js';
 
 export default function InvitedInfo({ modal, toggleModal, event, dog }) {
   // TO DELETE: dummy data
   // let friends = dummyDogFriends; // dog.friends
+  const { user } = useAuth();
 
   const formattedDate = format(
     parseISO(event.datetime),
@@ -29,14 +31,14 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
 
   const handleAttendanceYes = async () => {
     const eventId = event._id;
-    await axios.delete(`${API_URL}/einvites/${eventId}`);
-    await axios.patch(`${API_URL}/events/attend/${eventId}/${dog._id}`);
+    await axios.delete(`${API_URL}/api/einvites/${eventId}`);
+    await axios.patch(`${API_URL}/api/events/attend/${eventId}/${user._id}`);
   };
 
   const handleAttendanceNo = async () => {
     const eventId = event._id;
-    await axios.delete(`${API_URL}/einvites/${eventId}`);
-    await axios.patch(`${API_URL}/events/reject/${eventId}/${dog._id}`);
+    await axios.delete(`${API_URL}/api/einvites/${eventId}`);
+    await axios.patch(`${API_URL}/api/events/reject/${eventId}/${user._id}`);
   };
 
   return (
