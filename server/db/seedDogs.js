@@ -66,6 +66,12 @@ async function main(size) {
   for (let i = 0; i < size; i += 1) {
     promises.push(registerGeneratedDog());
   }
+  if (ReadyData.length) {
+    console.log(`also seeding ${ReadyData?.length} ready made dogs...`);
+    for (let i = 0; i < ReadyData.length; i += 1) {
+      promises.push(DogModel.create(formatDog(ReadyData[i])));
+    }
+  }
   await Promise.all(promises);
   console.log('done! press ctrl+c to exit.');
 }
