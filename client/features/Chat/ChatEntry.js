@@ -42,7 +42,7 @@ export default function ChatEntry ({chat, addReaction}) {
           >
             {chat.body}
           </Text>
-          <Text>{displayTime(chat.timestamp)}</Text>
+          <Text>{'sometime ago'}</Text>
           {chat.reactions.map((reaction, i) => {
             if (reaction === 'heart') {
               return (
@@ -216,5 +216,5 @@ const displayTime = (timestamp) => {
   // if minutes ago
   // if hours ago
   // if days ago
-  return format(parseISO(timestamp),'LLLL d, yyyy')
+  return null;
 }
