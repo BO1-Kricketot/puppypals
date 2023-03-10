@@ -61,6 +61,18 @@ module.exports = {
       .catch((err) => res.status(500).send(err));
   },
 
+  getInvitedEventsByDogId(req, res) {
+    const { dogId } = req.params;
+
+    return EventModel.find({ invitees: dogId })
+      .exec()
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => res.status(500).send(err));
+  },
+
+
   /**
    * Updates one Event by (Event)_id with new information
    * Expects: body containing new Event information
