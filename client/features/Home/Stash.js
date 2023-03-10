@@ -44,3 +44,127 @@ const dummyUsers = [
   { ...dummyInfo, id: 3 },
   { ...dummyInfo, id: 4 },
 ];
+{/* <View style={{ display: 'flex', flexDirection: 'row' }}>
+                    <Pressable
+                      style={{
+                        width: 50,
+                        height: 30,
+                        backgroundColor: '#7371FC',
+                        borderWidth: 2,
+                        borderColor: '#7371FC',
+                        borderRadius: 10,
+                        margin: 10,
+                      }}>
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          marginTop: 'auto',
+                          marginBottom: 'auto',
+                        }}>
+                        S
+                      </Text>
+                    </Pressable>
+                    <Pressable
+                      style={{
+                        width: 50,
+                        height: 30,
+                        backgroundColor: '#7371FC',
+                        borderWidth: 2,
+                        borderColor: '#7371FC',
+                        borderRadius: 10,
+                        margin: 10,
+                      }}>
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          marginTop: 'auto',
+                          marginBottom: 'auto',
+                        }}>
+                        M
+                      </Text>
+                    </Pressable>
+                    <Pressable
+                      style={{
+                        width: 50,
+                        height: 30,
+                        backgroundColor: '#7371FC',
+                        borderWidth: 2,
+                        borderColor: '#7371FC',
+                        borderRadius: 10,
+                        margin: 10,
+                      }}>
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          marginTop: 'auto',
+                          marginBottom: 'auto',
+                        }}>
+                        L
+                      </Text>
+                    </Pressable>
+                  </View> */}
+                  {/* making the selection process too complicated
+                  <View style={{ display: 'flex', flexDirection: 'row' }}>
+                    <Pressable
+                      style={{
+                        width: 50,
+                        height: 30,
+                        backgroundColor: '#7371FC',
+                        borderWidth: 2,
+                        borderColor: '#7371FC',
+                        borderRadius: 10,
+                        margin: 10,
+                      }}>
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          marginTop: 'auto',
+                          marginBottom: 'auto',
+                        }}>
+                        Low
+                      </Text>
+                    </Pressable>
+                    <Pressable
+                      style={{
+                        width: 50,
+                        height: 30,
+                        backgroundColor: '#7371FC',
+                        borderWidth: 2,
+                        borderColor: '#7371FC',
+                        borderRadius: 10,
+                        margin: 10,
+                      }}>
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          marginTop: 'auto',
+                          marginBottom: 'auto',
+                        }}>
+                        Med
+                      </Text>
+                    </Pressable>
+                    <Pressable
+                      style={{
+                        width: 50,
+                        height: 30,
+                        backgroundColor: '#7371FC',
+                        borderWidth: 2,
+                        borderColor: '#7371FC',
+                        borderRadius: 10,
+                        margin: 10,
+                      }}
+                      onPress={(value)=> {
+                        console.log(value.currentTarget.children.length)
+                        setButtonPressed(()=> {buttonPressed + 1})
+                      }}>
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          marginTop: 'auto',
+                          marginBottom: 'auto',
+                        }}>
+                        High
+                      </Text>
+                    </Pressable>
+                     
+                  </View>*/}

@@ -94,6 +94,7 @@ module.exports = {
             }
           }
         });
+
         const resultDogs = dogsNearMe.map((dog, index) => {
           let modObj = {
             ...dog,
@@ -101,8 +102,36 @@ module.exports = {
           };
           return modObj._doc;
         });
+        if (
+          Object.keys(req.query).length > 0 &&
+          Object.keys(req.query)[0] !== dist
+        ) {
+          // console.log(Object.keys(req.query)[0])
+          const filterProp = Object.keys(req.query)[0];
+          const filterValue = req.query[filterProp];
+          // console.log(filterValue)
+          const filteredResult = resultDogs.filter((dog) => {
+            // console.log(filterProp)
+            // console.log(dog[filterProp])
+            // console.log(filterValue)
+            // console.log(typeof filterValue)
+            console.log(
+              dog[filterProp],
+              filterValue,
+              typeof filterValue,
+              typeof dog[filterProp],
+            );
+            return dog[filterProp] === filterValue;
+          });
+          console.log(filteredResult);
 
-        res.status(200).send(resultDogs);
+          res.status(200).send(filteredResult);
+        } else {
+          // res.status(200).send(resultDogs);
+          res.status(200).send(resultDogs);
+        }
+
+        // console.log(Object.keys(req.query))
       })
       .catch((err) => {
         console.log(err);
@@ -137,7 +166,12 @@ module.exports = {
    * TODO: Implement
    */
   updateDogById(req, res) {
-    const updateObj = { pendingDogs: req.body.pendingDogs };
+    let updateObj = {};
+    if (req.body.pendingDogs) {
+      updateObj = { pendingDogs: req.body.pendingDogs };
+    } else if (req.body.friendsList) {
+      updateObj = { friendsList: req.body.friendsList };
+    }
     DogModel.findByIdAndUpdate(req.params['_id'], updateObj)
       .exec()
       .then((result) => {
