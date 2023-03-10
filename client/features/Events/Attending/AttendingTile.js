@@ -22,7 +22,7 @@ export default function AttendingTile({ event }) {
               source={{ uri: event.hostMeta.mainImgPath }}
             />
           </View>
-          {event.hosMeta.dogId === 1 && <Text>HOST</Text>}
+          {event.hostMeta.dogId === 1 && <Text>HOST</Text>}
           <Text>{event.hostMeta.name}</Text>
         </View>
         <View style={styles.eventDetails}>

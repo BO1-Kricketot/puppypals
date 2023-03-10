@@ -73,13 +73,27 @@ export default function Events() {
     <SafeAreaView style={styles.container}>
       <View style={styles.eventHeader}>
         <View style={styles.headerTabs}>
-          <TouchableOpacity onPress={handleInvitedTab}>
-            <Text style={styles.text}>Invited</Text>
+          <View style={styles.invitedTab}>
+          <TouchableOpacity
+            onPress={handleInvitedTab}
+            style={[
+              invited ? styles.activeTab : styles.inactiveTab,
+            ]}>
+            <Text style={styles.toggleText}>Invited</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleAttendingTab}>
-            <Text style={styles.text}>Attending</Text>
+          </View>
+
+          <TouchableOpacity
+            onPress={handleAttendingTab}
+            styles={[
+              styles.AttendingTab,
+              !invited ? styles.activeTab : styles.inactiveTab,
+            ]}>
+            <Text style={styles.toggleText}>Attending</Text>
           </TouchableOpacity>
+
         </View>
+
         <TouchableOpacity onPress={toggleModal}>
           <Text style={styles.addEventText}>+</Text>
         </TouchableOpacity>
@@ -121,16 +135,21 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   headerTabs: {
-    backgroundColor: 'purple',
+    backgroundColor: '#FFFFFF',
+    borderColor: '#7371FC',
+    borderWidth: 1.5,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     padding: 5,
     borderRadius: 20,
-    width: '40%',
+    width: '50%',
   },
-  headerText: {
-    fontSize: 24,
+  activeTab: {
+    // backgroundColor: '#7371FC',
+  },
+  toggleText: {
+    color: '#7371FC',
   },
   plusText: {
     fontSize: 40,
