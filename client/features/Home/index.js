@@ -594,7 +594,7 @@ const Home = ({ navigation }) => {
                     textAlign: 'center',
                     color: '#E6E6E9',
                   }}>
-                  You and {currentUser.name} are a pawfect match
+                  You and {currentUser?.name} are a pawfect match
                 </Text>
                 <View
                   style={{
@@ -622,7 +622,7 @@ const Home = ({ navigation }) => {
                       borderWidth: 1,
                       borderRadius: 80,
                     }}
-                    source={{ uri: currentUser.mainImageUrl }}
+                    source={{ uri: currentUser?.mainImageUrl }}
                   />
                 </View>
               </View>
