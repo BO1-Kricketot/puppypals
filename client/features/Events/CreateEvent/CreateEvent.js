@@ -41,7 +41,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
   const [form, setForm] = useState(initial);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
-  // const [time, setTime] = useState(new Date());
+  const [selectedTime, setSelectedTime] = useState(new Date());
   const [showTimePicker, setShowTimePicker] = useState(false);
 
   const resetForm = () => {
@@ -78,10 +78,11 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
     });
   };
 
-  const handleTimeChange = (event, selectedTime) => {
-    if (selectedTime) {
-      setTime(selectedTime);
-      const formattedTime = selectedTime.toLocaleTimeString([], {
+  const handleTimeChange = (event, newTime) => {
+    setShowTimePicker(false);
+    if (newTime) {
+      setSelectedTime(newTime);
+      const formattedTime = newTime.toLocaleTimeString([], {
         hour: '2-digit',
         minute: '2-digit',
       });
@@ -139,13 +140,26 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
           />
         )}
 
-        {/* <Text>Event start time</Text>
-        <DateTimePicker
-          value={time}
-          mode="time"
-          display="default"
-          onChange={handleTimeChange}
-        /> */}
+        <Text>Event start time</Text>
+        <TouchableOpacity onPress={() => setShowTimePicker(true)}>
+          <TextInput
+            style={styles.input}
+            placeholder="Event start time"
+            value={form.datetime}
+            editable={false}
+            onTouchStart={() => setShowTimePicker(true)}
+          />
+        </TouchableOpacity>
+
+        {showTimePicker && (
+          <DateTimePicker
+            value={selectedTime}
+            mode="time"
+            display="default"
+            onChange={handleTimeChange}
+          />
+        )}
+
         <Text>Event location</Text>
         <TextInput
           style={styles.input}
@@ -186,7 +200,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
           value={form.description}
         />
         <Text>Add Friends: </Text>
-        <TouchableOpacity style={styles.imageContainer}>
+        {/* <TouchableOpacity style={styles.imageContainer}>
           <Image
             style={styles.image}
             source={{ uri: dummyDogFriends[0].mainImageUrl }}
@@ -203,24 +217,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
             style={styles.image}
             source={{ uri: dummyDogFriends[2].mainImageUrl }}
           />
-        </TouchableOpacity>
-
-        {/* <TouchableOpacity onPress={() => setShowDatePicker(true)}>
-          <Text>Select Date</Text>
-        </TouchableOpacity>
-        {showDatePicker && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={selectedDate}
-            mode="date"
-            is24Hour={true}
-            display="default"
-            onChange={handleDateChange}
-          />
-        )} */}
-
-
-
+        </TouchableOpacity> */}
         <TouchableOpacity onPress={handleCreateEvent}>
           <Text>Create event</Text>
         </TouchableOpacity>
