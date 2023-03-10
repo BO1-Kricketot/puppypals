@@ -17,16 +17,17 @@ const HeaderBar = ({ styles, oneChat, exampleData, onSort }) => {
     }
   });
 
+  //[styles, { justifyContent: 'center', alignItems: 'center' }]
   return (
     <View style={[styles, { justifyContent: 'center', alignItems: 'center' }]}>
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: 'row', marginBottom: 20}}>
         <View
           style={{
-            backgroundColor: sortOption === 'pending' ? 'lightgray' : 'white',
+            backgroundColor: sortOption === 'pending' ? '#7371FC' : 'white',
             padding: 5,
           }}>
           <TouchableOpacity onPress={() => handleSort('pending')}>
-            <Text style={{ color: sortOption === 'pending' ? 'red' : 'black' }}>
+            <Text style={{ color: sortOption === 'pending' ? 'white' : 'black' }}>
               Pending
             </Text>
           </TouchableOpacity>
@@ -34,20 +35,17 @@ const HeaderBar = ({ styles, oneChat, exampleData, onSort }) => {
         <View style={{ width: 10 }}></View>
         <View
           style={{
-            backgroundColor: sortOption === 'accepted' ? 'lightgray' : 'white',
+            backgroundColor: sortOption === 'accepted' ? '#7371FC' : 'white',
             padding: 5,
           }}>
           <TouchableOpacity onPress={() => handleSort('accepted')}>
             <Text
-              style={{ color: sortOption === 'accepted' ? 'red' : 'black' }}>
+              style={{ color: sortOption === 'accepted' ? 'white' : 'black' }}>
               Accepted
             </Text>
           </TouchableOpacity>
         </View>
       </View>
-      {sortedData.map((data) => (
-        <Text>{data.title}</Text>
-      ))}
     </View>
   );
 };

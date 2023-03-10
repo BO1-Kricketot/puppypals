@@ -48,8 +48,8 @@ const OneChat = ({
 
   return (
     <Swipeable
-      renderLeftActions={renderRightActions}
-      renderRightActions={renderLeftActions}
+      renderLeftActions={status === 'pending' ? renderRightActions : null }
+      renderRightActions={status === 'pending' ? renderLeftActions : null }
       onSwipeableLeftOpen={onSwipeRight}
       onSwipeableRightOpen={onSwipeLeft}
       onSwipeableOpen={onOpen}>
@@ -70,11 +70,11 @@ const OneChat = ({
           <View style={styles.dogContainer}>
             <Image style={styles.dogImage} source={{ uri: dogImage }} />
             <Text style={styles.dogName}>{dogName}</Text>
-            {status && <Text style={styles.status}>Pending</Text>}
+            {status === 'pending' && <Text style={styles.status}>Pending</Text>}
           </View>
           <View style={styles.messageContainer}>
             <Text style={styles.message}>
-              Woof! I would love to be your playmate
+              Woof! I would love to bork @ u
             </Text>
           </View>
         </View>
