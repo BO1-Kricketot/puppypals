@@ -31,9 +31,9 @@ export default function CreateEvent({
     datetime: '',
     description: '',
     invitees: [],
-    attendees: [user._id],
+    attendees: [user?._id],
     hostMeta: {
-      dogId: user._id,
+      dogId: user?._id,
       name: user.name, // to update to dog.name
       mainImgPath: user.mainImageUrl, // to update to dog.mainImagePath
     },
