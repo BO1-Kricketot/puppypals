@@ -69,7 +69,7 @@ async function main(size) {
   if (ReadyData.length) {
     console.log(`also seeding ${ReadyData?.length} ready made dogs...`);
     for (let i = 0; i < ReadyData.length; i += 1) {
-      promises.push(DogModel.create(formatDog(ReadyData[i])));
+      promises.push(DogModel.create(ReadyData[i]));
     }
   }
   await Promise.all(promises);
