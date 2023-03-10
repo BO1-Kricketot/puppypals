@@ -12,6 +12,7 @@ module.exports = {
       ...event.location,
       coordinates: await api.getCoordinates(event.location),
     };
+    console.log('check event', event);
     return EventModel.create(event)
       .then((result) => {
         console.log(result);

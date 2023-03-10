@@ -102,11 +102,11 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
 
     const formData = {
       ...form,
-      date: formattedDate,
+      datetime: formattedDate,
     };
 
     axios
-      .post(`${API_URL}/events`, formData)
+      .post(`${API_URL}/api/events`, formData)
       .then((result) => {
         // const eventId = result._id;
         // axios
