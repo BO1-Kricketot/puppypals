@@ -15,6 +15,7 @@ import axios from 'axios';
 import InvitedList from './Invited/InvitedList.js';
 import AttendingList from './Attending/AttendingList.js';
 import CreateEvent from './CreateEvent/CreateEvent.js';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { API_URL } from '@env';
 import { dummyAttending, dummyInvited, dummyDog } from './sampleData.js';
 import { useAuth } from '../../context/Provider.js';
@@ -89,10 +90,11 @@ export default function Events() {
             </Text>
           </TouchableOpacity>
         </View>
-
-        <TouchableOpacity onPress={toggleModal}>
-          <Text style={styles.addEventText}>+</Text>
-        </TouchableOpacity>
+        <View styles={styles.iconStyle}>
+          <TouchableOpacity onPress={toggleModal}>
+            <Ionicons name="add-circle-outline" size={30} color="#7371FC" />
+          </TouchableOpacity>
+        </View>
       </View>
       {modal && (
         <CreateEvent modal={modal} toggleModal={toggleModal} dog={dog} />
@@ -129,6 +131,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.5,
     shadowRadius: 4,
+    position: 'relative',
   },
   headerTabs: {
     flexDirection: 'row',
@@ -160,7 +163,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 2,
   },
-  plusText: {
-    fontSize: 40,
+  iconStyle: {
+    position: 'absolute',
+    right: 0,
   },
 });

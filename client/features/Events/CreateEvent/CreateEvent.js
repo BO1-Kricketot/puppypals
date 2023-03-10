@@ -25,7 +25,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
     invitees: [],
     attendees: [],
     hostMeta: {
-      _id: "1",
+      dogId: '1',
       name: 'Kiwi', // to update to dog.name
       mainImgPath: 'thiswillbeaURL', // to update to dog.mainImagePath
     },
@@ -40,7 +40,9 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
 
   const [form, setForm] = useState(initial);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [time, setTime] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  // const [time, setTime] = useState(new Date());
+  const [showTimePicker, setShowTimePicker] = useState(false);
 
   const resetForm = () => {
     setForm(initial);
@@ -67,6 +69,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
 
   const handleDateChange = (event, newDate) => {
     const currentDate = newDate || selectedDate;
+    setShowDatePicker(false);
     setSelectedDate(currentDate);
     const formattedDate = currentDate.toLocaleDateString();
     setForm({
@@ -118,20 +121,31 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
         />
 
         <Text>Event date</Text>
-        <DateTimePicker
-          value={selectedDate}
-          mode="date"
-          display="default"
-          onChange={handleDateChange}
-        />
+        <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+          <TextInput
+            style={styles.input}
+            placeholder="Event date"
+            value={form.datetime}
+            editable={false}
+            onTouchStart={() => setShowDatePicker(true)}
+          />
+        </TouchableOpacity>
+        {showDatePicker && (
+          <DateTimePicker
+            value={selectedDate}
+            mode="date"
+            display="default"
+            onChange={handleDateChange}
+          />
+        )}
 
-        <Text>Event start time</Text>
+        {/* <Text>Event start time</Text>
         <DateTimePicker
           value={time}
           mode="time"
           display="default"
           onChange={handleTimeChange}
-        />
+        /> */}
         <Text>Event location</Text>
         <TextInput
           style={styles.input}
@@ -190,6 +204,22 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
             source={{ uri: dummyDogFriends[2].mainImageUrl }}
           />
         </TouchableOpacity>
+
+        {/* <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+          <Text>Select Date</Text>
+        </TouchableOpacity>
+        {showDatePicker && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={selectedDate}
+            mode="date"
+            is24Hour={true}
+            display="default"
+            onChange={handleDateChange}
+          />
+        )} */}
+
+
 
         <TouchableOpacity onPress={handleCreateEvent}>
           <Text>Create event</Text>
