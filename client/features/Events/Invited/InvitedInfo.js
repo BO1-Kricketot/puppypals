@@ -39,37 +39,37 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
   return (
     <Modal animationType="slide">
       <SafeAreaView style={styles.modalContainer}>
-        <View style={styles.headerContainer}>
-          <Text style={styles.infoHeader}>Event Info</Text>
-        </View>
+        <Text style={styles.infoHeader}>Event Info</Text>
 
         <View style={styles.infoContainer}>
-          <Text style={styles.eventTitle}>{event.title}</Text>
-          <Text style={styles.dateText}>{formattedDate}</Text>
-          <View style={styles.locationDetails}>
-            <Text>{event.location.address1}</Text>
-            <Text>{`${event.location.city}, ${event.location.state}`}</Text>
+          <View>
+            <Text style={styles.eventTitle}>{event.title}</Text>
+            <Text style={styles.dateText}>{formattedDate}</Text>
+            <View style={styles.locationDetails}>
+              <Text>{event.location.address1}</Text>
+              <Text>{`${event.location.city}, ${event.location.state}`}</Text>
+            </View>
+            <View style={styles.attendanceText}>
+              <Text>{`${event.invitees.length} Invited  · `} </Text>
+              <Text>{`${event.attendees.length} Attending`}</Text>
+            </View>
+            <Text style={styles.descriptionText}>{event.description}</Text>
           </View>
 
-          <View style={styles.attendanceText}>
-            <Text>{`${event.invitees.length} Invited  · `} </Text>
-            <Text>{`${event.attendees.length} Attending`}</Text>
-          </View>
-
-          <Text style={styles.descriptionText}>{event.description}</Text>
-
-          <Text>Paw-lease RSVP!</Text>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={handleAttendanceYes} >
-              <Text style={styles.buttonText}>YES</Text>
+          <View>
+            <Text style={styles.rsvpHeader}>Paw-lease RSVP!</Text>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.button} onPress={handleAttendanceYes} >
+                <Text style={styles.buttonText}>YES</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress={handleAttendanceNo} >
+                <Text style={styles.buttonText}>NO</Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity onPress={toggleModal}>
+              <Text style={styles.closeButton}>Close</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={handleAttendanceNo} >
-              <Text style={styles.buttonText}>NO</Text>
-            </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={toggleModal}>
-            <Text>Close</Text>
-          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </Modal>
@@ -78,39 +78,42 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
 
 const styles = StyleSheet.create({
   modalContainer: {
-    backgroundColor: 'purple',
+    backgroundColor: 'white',
     flex: 1,
   },
-  // headerContainer: {
-  //   backgroundColor: 'purple',
-  // },
+  infoContainer: {
+    flex: 1,
+    padding: 30,
+  },
   infoHeader: {
     flexDirection: 'row',
     width: '100%',
-    height: 50,
+    height: 60,
     justifyContent: 'space-between',
-    paddingLeft: 15,
-    paddingTop: 18,
+    padding: 15,
     backgroundColor: 'white',
     fontSize: 20,
     fontWeight: 600,
     color: '#474747',
-  },
-  infoContainer: {
-    backgroundColor: 'pink',
-    flex: 1,
-    padding: 15,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
   },
   eventTitle: {
     fontSize: 17,
     marginBottom: 10,
     fontWeight: 'bold',
+    color: '#474747',
   },
   dateText: {
     marginBottom: 10,
   },
   locationDetails: {
-    backgroundColor: 'white',
     marginBottom: 10,
   },
   attendanceText: {
@@ -118,38 +121,46 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   descriptionText: {
+    marginBottom: 30,
+  },
+  rsvpHeader: {
+    textAlign: 'center',
     marginBottom: 10,
   },
   buttonContainer: {
     flexDirection: 'row',
-    // justifyContent: 'space-between',
     alignItems: 'center',
     justifyContent: 'center',
-    // marginTop: 20,
+    marginBottom: 10,
   },
   button: {
-    width: '25%',
-    borderRadius: 10,
+    width: '40%',
+    borderRadius: 20,
     backgroundColor: '#7371FC',
     paddingHorizontal: 20,
-    paddingVertical: 10,
-    margin: 10,
+    paddingVertical: 8,
+    margin: 5,
   },
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  imageContainer: {
-    width: 50,
-    height: 50,
-    marginLeft: 'auto',
-    marginRight: 10,
+  closeButton: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#474747',
   },
-  image: {
-    flex: 1,
-    margin: '2%',
-    borderRadius: 25,
-    width: '100%',
-  },
+  // imageContainer: {
+  //   width: 50,
+  //   height: 50,
+  //   marginLeft: 'auto',
+  //   marginRight: 10,
+  // },
+  // image: {
+  //   flex: 1,
+  //   margin: '2%',
+  //   borderRadius: 25,
+  //   width: '100%',
+  // },
 });

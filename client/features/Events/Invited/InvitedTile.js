@@ -55,7 +55,7 @@ export default function InvitedTile({ event, dog }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: '3%',
+    marginTop: '2%',
     backgroundColor: 'white',
     flex: 1,
     // height: 115,

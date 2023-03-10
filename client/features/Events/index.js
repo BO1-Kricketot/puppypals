@@ -27,7 +27,6 @@ export default function Events() {
   const [modal, setModal] = useState(false);
   const { user } = useAuth();
 
-
   // TO DELETE: dummy data
 
   const dog = dummyDog;
@@ -73,12 +72,14 @@ export default function Events() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.eventHeader}>
-        <TouchableOpacity onPress={handleInvitedTab}>
-          <Text style={styles.text}>Invited</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleAttendingTab}>
-          <Text style={styles.text}>Attending</Text>
-        </TouchableOpacity>
+        <View style={styles.headerTabs}>
+          <TouchableOpacity onPress={handleInvitedTab}>
+            <Text style={styles.text}>Invited</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleAttendingTab}>
+            <Text style={styles.text}>Attending</Text>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity onPress={toggleModal}>
           <Text style={styles.addEventText}>+</Text>
         </TouchableOpacity>
@@ -105,10 +106,28 @@ const styles = StyleSheet.create({
   },
   eventHeader: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'center',
+    justifyContent: 'center',
     width: '100%',
-    height: 50,
+    height: 60,
     backgroundColor: '#FFFFFF',
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+  },
+  headerTabs: {
+    backgroundColor: 'purple',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 5,
+    borderRadius: 20,
+    width: '40%',
   },
   headerText: {
     fontSize: 24,
