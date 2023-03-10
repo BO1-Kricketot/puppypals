@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 
 import api from '../../api';
-
+import { useAuth } from '../../context/Provider.js';
 import ModalContainer from './editProfile.js';
 
 export default function Profile() {
@@ -25,8 +25,8 @@ export default function Profile() {
   const [profileChanged, setProfileChanged] = useState(false);
 
   // for testing dogs explicitly
-  // const dogId = '640953de8561912677bd1167';
-  const dogId = '640953de8561912677bd115b';
+  const dogId = '640953de8561912677bd1167';
+  // const dogId = '640953de8561912677bd115b';
 
   // for reals
   // const { user } = useAuth();
@@ -44,7 +44,7 @@ export default function Profile() {
   } = profileStyles;
 
   const addImgBlanks = (blanks) => {
-    const noImgPic = '../assets/noPic1.png';
+    const noImgPic = '../../assets/noPic1.png';
     const morePicsCopy = morePics.slice();
     const morePicsBlanks = Array(blanks).fill(noImgPic);
     setMorePics(morePicsCopy.concat(morePicsBlanks));
@@ -52,7 +52,7 @@ export default function Profile() {
 
   useEffect(() => {
     api
-      .getUserProfile(dogId)
+      .getUserProfile(dogId) //dogId for explicit testing, user for 'real'
       .then((profile) => {
         setInfo({ ...profile });
         setMainPic([profile?.mainImageUrl]);
@@ -160,12 +160,14 @@ export default function Profile() {
             setModalVisible={setModalVisible}
             profileChanged={profileChanged}
             setProfileChanged={setProfileChanged}
+            profileStyles={profileStyles}
           />
         )}
       </SafeAreaView>
     </>
   );
 }
+
 const themeWhite = '#FFF';
 const themeOffWhite = '#F4F4F6';
 const themeNoPic = '#D9D9D9';

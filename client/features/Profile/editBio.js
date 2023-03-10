@@ -15,26 +15,39 @@ export default function BioEditor({ dogBioCopy, setDogBioCopy }) {
           onChangeText={(text) => setDogBioCopy(text)}
           value={dogBioCopy}
           placeholder={dogBioCopy}
-          style={{ margin: '2%' }}
+          style={{
+            margin: '2%',
+            textAlignVertical: 'top',
+            color: themeLtGrayText,
+          }}
         />
       </View>
     </View>
   );
 }
 
+const themeWhite = '#FFF';
+const themeLtGrayText = '#66666E';
+
 const bioStyles = StyleSheet.create({
   container: {
-    backgroundColor: 'darkcyan',
     flex: 2,
+    marginLeft: '2%',
+    marginRight: '2%',
+    marginBottom: '2%',
+    borderRadius: 10,
+    backgroundColor: themeWhite,
   },
   bioTitle: {
+    marginLeft: '2%',
+    marginTop: '2%',
     fontStyle: 'italic',
     fontWeight: 600,
-    marginLeft: '2%',
+    fontSize: 15,
+    color: themeLtGrayText,
   },
   bioInput: {
-    backgroundColor: 'lightgray',
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
+    borderRadius: 10,
+    backgroundColor: themeWhite,
   },
 });

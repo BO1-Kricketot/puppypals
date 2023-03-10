@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Image, StyleSheet, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
 export default function MoreImgsEditor({
@@ -31,7 +31,25 @@ export default function MoreImgsEditor({
 
   return (
     <View style={imageStyles.container}>
-      <Button title="Edit Pic" onPress={pickImage} />
+      <Pressable
+        style={{
+          borderRadius: 10,
+          margin: '2%',
+          padding: 4,
+          elevation: 2,
+          backgroundColor: themePurple,
+        }}
+        onPress={pickImage}>
+        <Text
+          style={{
+            color: themeOffWhite,
+            fontWeight: 'bold',
+            textAlign: 'center',
+          }}>
+          Edit Pic
+        </Text>
+      </Pressable>
+
       {morePicsCopy && (
         <Image
           source={{ uri: morePicsCopy[imgKey] }}
@@ -41,6 +59,10 @@ export default function MoreImgsEditor({
     </View>
   );
 }
+
+const themeOffWhite = '#F4F4F6';
+// const themeNoPic = '#D9D9D9'; // eventually
+const themePurple = '#7371FC';
 
 const imageStyles = StyleSheet.create({
   container: {

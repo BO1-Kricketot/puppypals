@@ -18,33 +18,46 @@ export default function LocationEditor({ city, setCity, state, setState }) {
         rowTextForSelection={(rowState) => rowState}
         defaultButtonText={'Choose State'}
         buttonStyle={locationStyles.stateButton}
-        buttonTextStyle={{ color: 'white' }}
+        buttonTextStyle={{ color: themeOffWhite }}
       />
     </View>
   );
 }
 
+const themeWhite = '#FFF';
+const themeOffWhite = '#F4F4F6';
+const themeViolet = '#E5D9F2';
+const themePurple = '#7371FC';
+const themeDkGrayText = '#474747';
+
 const locationStyles = StyleSheet.create({
   container: {
-    backgroundColor: 'darkorange',
     flex: 1,
+    marginLeft: '2%',
+    marginRight: '2%',
+    marginBottom: '2%',
+    paddingBottom: 10,
+    borderRadius: 10,
+    backgroundColor: themeWhite,
   },
   cityInput: {
     marginTop: '2%',
     marginLeft: '4%',
-    width: '66%',
+    paddingLeft: 6,
+    width: '50%',
     borderRadius: 5,
     borderWidth: 1,
-    backgroundColor: 'white',
-    borderColor: 'black',
+    color: themeDkGrayText,
+    borderColor: themeDkGrayText,
+    backgroundColor: themeViolet,
   },
   stateButton: {
     marginTop: '1%',
-    marginRight: '4%',
+    marginRight: '6%',
     height: 30,
     width: 160,
     borderRadius: 20,
-    backgroundColor: '#2196F3',
+    backgroundColor: themePurple,
   },
 });
 

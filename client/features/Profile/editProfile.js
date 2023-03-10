@@ -27,6 +27,7 @@ export default function ModalContainer({
   modalVisible,
   setModalVisible,
   profileChanged,
+  profileStyles,
   setProfileChanged,
 }) {
   const [mainPicCopy, setMainPicCopy] = useState([...mainPic]);
@@ -37,6 +38,17 @@ export default function ModalContainer({
   const [state, setState] = useState(info.location.state);
   const [dogBioCopy, setDogBioCopy] = useState(info.bio);
 
+  const handleGoBack = () => {
+    setMainPicCopy([...mainPic]);
+    setMainPicBase64('');
+    setMorePicsCopy([...morePics]);
+    setMorePicsBase64([]);
+    setCity(info.location.city);
+    setState(info.location.state);
+    setDogBioCopy(info.bio);
+    setModalVisible(!modalVisible);
+  };
+
   const handleSaveAndClose = () => {
     const infoCopy = { ...info };
     infoCopy.location.coordinates = { ...info.location.coordinates };
@@ -45,10 +57,6 @@ export default function ModalContainer({
     mainPicBase64 === ''
       ? (infoCopy.mainImageUrl = mainPicCopy[0])
       : (infoCopy.mainImageUrl = mainPicBase64);
-
-    // morePicsBase64.length
-    //   ? (infoCopy.imageUrls = [...morePicsCopy, ...morePicsBase64])
-    //   : (infoCopy.imageUrls = [...morePicsCopy]);
 
     const arrayCopy = [...morePicsCopy];
     if (morePicsBase64.length) {
@@ -102,7 +110,16 @@ export default function ModalContainer({
               setMainPicCopy={setMainPicCopy}
               setMainPicBase64={setMainPicBase64}
             />
-            <View style={{ flex: 1, flexDirection: 'row' }}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                marginBottom: '2%',
+                marginLeft: '2%',
+                marginRight: '2%',
+                borderRadius: 10,
+                backgroundColor: themeWhite,
+              }}>
               {morePicsCopy.map((slot, i) => (
                 <MoreImgsEditor
                   key={i}
@@ -121,11 +138,29 @@ export default function ModalContainer({
               setState={setState}
             />
             <BioEditor dogBioCopy={dogBioCopy} setDogBioCopy={setDogBioCopy} />
-            <Pressable
-              style={[editProfileStyles.button, editProfileStyles.buttonClose]}
-              onPress={handleSaveAndClose}>
-              <Text style={editProfileStyles.textStyle}>Save & Close</Text>
-            </Pressable>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+              }}>
+              <Pressable
+                style={[
+                  editProfileStyles.button,
+                  editProfileStyles.buttonClose,
+                ]}
+                onPress={handleGoBack}>
+                <Text style={editProfileStyles.textStyle}>Go Back</Text>
+              </Pressable>
+              <Pressable
+                style={[
+                  editProfileStyles.button,
+                  editProfileStyles.buttonClose,
+                ]}
+                onPress={handleSaveAndClose}>
+                <Text style={editProfileStyles.textStyle}>Save & Close</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
       </Modal>
@@ -133,9 +168,14 @@ export default function ModalContainer({
   );
 }
 
+const themeWhite = '#FFF';
+const themeOffWhite = '#F4F4F6';
+// const themeNoPic = '#D9D9D9'; // eventually
+const themePurple = '#7371FC';
+
 const editProfileStyles = StyleSheet.create({
   editContainer: {
-    backgroundColor: 'yellow',
+    backgroundColor: themeOffWhite,
     flex: 1,
     paddingTop: Platform.OS === 'android' && StatusBar.currentHeight,
   },
@@ -148,7 +188,7 @@ const editProfileStyles = StyleSheet.create({
     height: '90%',
     width: '90%',
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: themeOffWhite,
     borderRadius: 20,
     shadowColor: '#000',
     shadowOffset: {
@@ -163,17 +203,18 @@ const editProfileStyles = StyleSheet.create({
     borderRadius: 20,
     marginLeft: '33%',
     marginRight: '33%',
+    marginBottom: '6%',
     padding: 10,
     elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: '#F194FF',
+    backgroundColor: themePurple,
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: themePurple,
   },
   textStyle: {
-    color: 'white',
+    color: themeOffWhite,
     fontWeight: 'bold',
     textAlign: 'center',
   },
