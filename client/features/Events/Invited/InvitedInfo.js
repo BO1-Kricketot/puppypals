@@ -13,12 +13,16 @@ import api from '../../../api';
 import Constants from 'expo-constants';
 import axios from 'axios';
 import { API_URL } from '@env';
+import { parseISO, format } from 'date-fns';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 // TO DELETE: dummy data
-import { dummyDogFriends } from '../sampleData.js';
+// import { dummyDogFriends } from '../sampleData.js';
 
 export default function InvitedInfo({ modal, toggleModal, event, dog }) {
   // TO DELETE: dummy data
-  let friends = dummyDogFriends; // dog.friends
+  // let friends = dummyDogFriends; // dog.friends
+
+  const formattedDate = format(parseISO(event.datetime), 'EEEE, MMMM dd, yyyy, ha');
 
   const handleAttendanceYes = async () => {
     const eventId = event._id;
@@ -40,60 +44,28 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
         </View>
 
         <View style={styles.infoContainer}>
-          <Text>{event.title}</Text>
-          <Text>{`${event.location.city}, ${event.location.state}`}</Text>
-          <Text>{event.dateTime}</Text>
-          <Text>{event.description}</Text>
-          <Text>Invited</Text>
-          <View style={styles.imageContainer}>
-            <Image
-              style={styles.image}
-              source={{ uri: dummyDogFriends[0].mainImageUrl }}
-            />
+          <Text style={styles.eventTitle}>{event.title}</Text>
+          <Text style={styles.dateText}>{formattedDate}</Text>
+          <View style={styles.locationDetails}>
+            <Text>{event.location.address1}</Text>
+            <Text>{`${event.location.city}, ${event.location.state}`}</Text>
           </View>
-          <View style={styles.imageContainer}>
-            <Image
-              style={styles.image}
-              source={{ uri: dummyDogFriends[1].mainImageUrl }}
-            />
+
+          <View style={styles.attendanceText}>
+            <Text>{`${event.invitees.length} Invited  · `} </Text>
+            <Text>{`${event.attendees.length} Attending`}</Text>
           </View>
-          <View style={styles.imageContainer}>
-            <Image
-              style={styles.image}
-              source={{ uri: dummyDogFriends[2].mainImageUrl }}
-            />
-          </View>
-          <Text>Attending</Text>
-          <View style={styles.imageContainer}>
-            <Image
-              style={styles.image}
-              source={{ uri: dummyDogFriends[0].mainImageUrl }}
-            />
-          </View>
-          <View style={styles.imageContainer}>
-            <Image
-              style={styles.image}
-              source={{ uri: dummyDogFriends[1].mainImageUrl }}
-            />
-          </View>
-          <View style={styles.imageContainer}>
-            <Image
-              style={styles.image}
-              source={{ uri: dummyDogFriends[2].mainImageUrl }}
-            />
-          </View>
-          <Text>Are you joining, pal?</Text>
+
+          <Text style={styles.descriptionText}>{event.description}</Text>
+
+          <Text>Paw-lease RSVP!</Text>
           <View style={styles.buttonContainer}>
-            <Button
-              title="Yes"
-              style={styles.button}
-              onPress={handleAttendanceYes}
-            />
-            <Button
-              title="No"
-              style={styles.button}
-              onPress={handleAttendanceNo}
-            />
+            <TouchableOpacity style={styles.button} onPress={handleAttendanceYes} >
+              <Text style={styles.buttonText}>YES</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handleAttendanceNo} >
+              <Text style={styles.buttonText}>NO</Text>
+            </TouchableOpacity>
           </View>
           <TouchableOpacity onPress={toggleModal}>
             <Text>Close</Text>
@@ -129,13 +101,44 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 15,
   },
+  eventTitle: {
+    fontSize: 17,
+    marginBottom: 10,
+    fontWeight: 'bold',
+  },
+  dateText: {
+    marginBottom: 10,
+  },
+  locationDetails: {
+    backgroundColor: 'white',
+    marginBottom: 10,
+  },
+  attendanceText: {
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  descriptionText: {
+    marginBottom: 10,
+  },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
+    // justifyContent: 'space-between',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // marginTop: 20,
   },
   button: {
-    width: '40%',
+    width: '25%',
+    borderRadius: 10,
+    backgroundColor: '#7371FC',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    margin: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   imageContainer: {
     width: 50,

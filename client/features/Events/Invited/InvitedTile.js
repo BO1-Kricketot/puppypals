@@ -15,11 +15,11 @@ import { parseISO, format } from 'date-fns';
 export default function InvitedTile({ event, dog }) {
   const [modal, setModal] = useState(false);
 
+  const formattedDate = format(parseISO(event.datetime), 'EEE, MMM d, yyyy h:mm a');
+
   const toggleModal = () => {
     setModal(!modal);
   };
-
-  const formattedDate = format(parseISO(event.datetime), 'EEE, MMM d, yyyy h:mm a');
 
   return (
     <View style={styles.container}>
@@ -28,10 +28,10 @@ export default function InvitedTile({ event, dog }) {
           <View style={styles.imageContainer}>
             <Image
               style={styles.image}
-              source={{ uri: event.host_meta.mainImgPath }}
+              source={{ uri: event.hostMeta.mainImgPath }}
             />
           </View>
-          <Text style={styles.hostName}>{event.host_meta.name}</Text>
+          <Text style={styles.hostName}>{event.hostMeta.name}</Text>
         </View>
         <View style={styles.eventDetails}>
           <Text>{formattedDate}</Text>

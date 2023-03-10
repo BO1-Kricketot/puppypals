@@ -81,4 +81,4 @@ async function main(numEvents) {
   Promise.all(promises).then(() => console.log('done! press ctrl+c to exit'));
 }
 
-main(50);
+main(30);

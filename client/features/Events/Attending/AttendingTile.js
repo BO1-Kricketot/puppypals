@@ -19,11 +19,11 @@ export default function AttendingTile({ event }) {
           <View style={styles.imageContainer}>
             <Image
               style={styles.image}
-              source={{ uri: event.host_meta.mainImgPath }}
+              source={{ uri: event.hostMeta.mainImgPath }}
             />
           </View>
-          {event.host_meta._id === 1 && <Text>HOST</Text>}
-          <Text>{event.host_meta.name}</Text>
+          {event.hosMeta.dogId === 1 && <Text>HOST</Text>}
+          <Text>{event.hostMeta.name}</Text>
         </View>
         <View style={styles.eventDetails}>
           <Text>{event.datetime}</Text>

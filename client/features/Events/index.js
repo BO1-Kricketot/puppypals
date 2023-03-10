@@ -17,6 +17,7 @@ import AttendingList from './Attending/AttendingList.js';
 import CreateEvent from './CreateEvent/CreateEvent.js';
 import { API_URL } from '@env';
 import { dummyAttending, dummyInvited, dummyDog } from './sampleData.js';
+import { useAuth } from '../../context/Provider.js';
 
 export default function Events() {
   // to be ({ dog })
@@ -24,10 +25,15 @@ export default function Events() {
   const [invitedEvents, setInvitedEvents] = useState(dummyInvited);
   const [attendingEvents, setAttendingEvents] = useState(dummyAttending);
   const [modal, setModal] = useState(false);
+  const { user } = useAuth();
+
 
   // TO DELETE: dummy data
+
   const dog = dummyDog;
 
+  // get event invites for the dog // getEventInvitesById returns array of event ids
+  // then make request to getEventById?
   const updateInvitedList = () => {
     axios
       .get(`${API_URL}/einvites/${dog._id}`)
@@ -38,7 +44,10 @@ export default function Events() {
   const updateAttendingList = () => {
     axios
       .get(`${API_URL}/events/dog/${dog._id}`)
-      .then((results) => setAttendingEvents(results.data))
+      .then((results) => {
+        setAttendingEvents(results.data);
+        console.log('results', results.data);
+      })
       .catch((err) => console.error('Error getting attending events: ', err));
   };
 
