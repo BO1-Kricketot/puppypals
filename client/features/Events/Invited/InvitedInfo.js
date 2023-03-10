@@ -52,8 +52,8 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
             <Text style={styles.eventTitle}>{event.title}</Text>
             <Text style={styles.dateText}>{formattedDate}</Text>
             <View style={styles.locationDetails}>
-              <Text>{event.location.address1}</Text>
-              <Text>{`${event.location.city}, ${event.location.state}`}</Text>
+              {/* <Text>{event.location.address1}</Text> */}
+              <Text>{`${event.location.address1}, ${event.location.city}, ${event.location.state}`}</Text>
             </View>
             <Text style={styles.descriptionText}>{event.description}</Text>
             <View style={styles.attendanceText}>
