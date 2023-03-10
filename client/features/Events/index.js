@@ -32,18 +32,17 @@ export default function Events() {
 
   const dog = dummyDog;
 
-  // get event invites for the dog // getEventInvitesById returns array of event ids
-  // then make request to getEventById?
   const updateInvitedList = () => {
     axios
-      .get(`${API_URL}/einvites/${dog._id}`)
+      // .get(`${API_URL}/api/einvites/${dog._id}`)
+      .get(`${API_URL}/api/events/dog/${dog._id}/invited`)
       .then((result) => setInvitedEvents(result.data))
       .catch((err) => console.error('Error getting invited events: ', err));
   };
 
   const updateAttendingList = () => {
     axios
-      .get(`${API_URL}/events/dog/${dog._id}`)
+      .get(`${API_URL}/api/events/dog/${dog._id}/attending`)
       .then((results) => {
         setAttendingEvents(results.data);
         console.log('results', results.data);
