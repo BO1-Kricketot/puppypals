@@ -15,6 +15,7 @@ import AttendingList from './Attending/AttendingList.js';
 import CreateEvent from './CreateEvent/CreateEvent.js';
 import { API_URL } from '@env';
 import { dummyAttending, dummyInvited, dummyDog } from './sampleData.js';
+// console.log('dummyInvited', dummyInvited);
 
 export default function Events() {
   // to be ({ dog })
