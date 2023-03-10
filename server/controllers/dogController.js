@@ -101,7 +101,7 @@ module.exports = {
     // get location (user)
     // DogModel .find all dogs
     // filter out pending dogs rejected dogs and dogs outside radius
-    
+
   },
 
   /**
@@ -137,7 +137,7 @@ module.exports = {
     .then((result)=>{
       res.status(200).send(result);
     })
-    
+
 
   },
 

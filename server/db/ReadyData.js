@@ -47,6 +47,10 @@ module.exports = [
       city: 'San Francisco',
       state: 'CA',
       postalCode: '94109',
+      coordinates: {
+        lat: 37.7917,
+        lng: -122.4186
+      }
     },
     owner: {
       name: 'Heyme',
