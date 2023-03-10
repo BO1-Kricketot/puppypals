@@ -17,19 +17,18 @@ import AttendingList from './Attending/AttendingList.js';
 import CreateEvent from './CreateEvent/CreateEvent.js';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { API_URL } from '@env';
-import { dummyAttending, dummyInvited, dummyDog } from './sampleData.js';
+import { dummyAttending, dummyDog } from './sampleData.js';
 import { useAuth } from '../../context/Provider.js';
 
 export default function Events() {
   // to be ({ dog })
   const [invited, setInvited] = useState(true);
-  const [invitedEvents, setInvitedEvents] = useState(dummyInvited);
+  const [invitedEvents, setInvitedEvents] = useState([]);
   const [attendingEvents, setAttendingEvents] = useState(dummyAttending);
   const [modal, setModal] = useState(false);
   const { user } = useAuth();
 
   // TO DELETE: dummy data
-
   const dog = dummyDog;
 
   const updateInvitedList = () => {

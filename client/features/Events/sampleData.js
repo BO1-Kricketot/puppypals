@@ -559,7 +559,7 @@ const dummyAttending = [
 ];
 
 const dummyDog = {
-  _id: '1',
+  _id: '6408d8bf86d58cca24571b2a',
   __v: 0,
   bio: "Yip yip! I'm a small dog with a big personality. I'm always the life of the party, making everyone laugh and smile. I'm outgoing, vivacious, and always ready to have a good time!",
   breed: 'Lhasa Apso',
