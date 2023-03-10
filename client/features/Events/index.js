@@ -34,14 +34,14 @@ export default function Events() {
   const updateInvitedList = () => {
     axios
       // .get(`${API_URL}/api/einvites/${dog._id}`)
-      .get(`${API_URL}/api/events/dog/${dog._id}/invited`)
+      .get(`${API_URL}/api/events/dog/${user._id}/invited`)
       .then((result) => setInvitedEvents(result.data))
       .catch((err) => console.error('Error getting invited events: ', err));
   };
 
   const updateAttendingList = () => {
     axios
-      .get(`${API_URL}/api/events/dog/${dog._id}/attending`)
+      .get(`${API_URL}/api/events/dog/${user._id}/attending`)
       .then((results) => {
         setAttendingEvents(results.data);
         console.log('results', results.data);
