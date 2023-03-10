@@ -18,11 +18,13 @@ export default function Layout() {
             } else if (route.name === 'profile') {
               iconName = focused ? 'ios-paw' : 'ios-paw-outline';
             } else if (route.name === 'messages') {
+              iconName = focused ? 'ios-mail' : 'ios-mail-outline';
+            } else if (route.name === 'events') {
+              iconName = focused ? 'ios-calendar' : 'ios-calendar-outline';
+            } else if (route.name === 'chat') {
               iconName = focused
                 ? 'ios-chatbubble-ellipses'
                 : 'ios-chatbubble-ellipses-outline';
-            } else if (route.name === 'events') {
-              iconName = focused ? 'ios-calendar' : 'ios-calendar-outline';
             }
 
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -54,6 +56,7 @@ export default function Layout() {
           options={{ href: null, tabBarStyle: { display: 'none' } }}
         />
         <Tabs.Screen name="messages" options={{ href: '/messages' }} />
+        <Tabs.Screen name="chat" options={{ href: '/chat' }} />
         <Tabs.Screen name="events" options={{ href: '/events' }} />
         <Tabs.Screen name="profile" options={{ href: '/profile' }} />
       </Tabs>
