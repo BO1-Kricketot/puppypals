@@ -23,7 +23,7 @@ export default function Profile() {
   const [modalVisible, setModalVisible] = useState(false);
   const [profileChanged, setProfileChanged] = useState(false);
 
-  // for testing 'simba'
+  // for testing dogs explicitly
   // const dogId = '640953de8561912677bd1167';
   const dogId = '640953de8561912677bd115b';
 
@@ -51,7 +51,7 @@ export default function Profile() {
       .getUserProfile(dogId)
       .then((profile) => {
         setInfo({ ...profile });
-        setMainPic([profile.mainImageUrl]);
+        setMainPic([profile?.mainImageUrl]);
         setMorePics([...profile.imageUrls]);
       })
       .catch((err) => console.error(err));
@@ -61,7 +61,9 @@ export default function Profile() {
     <>
       <SafeAreaView style={container}>
         <View style={userInfoContainer}>
-          <Text style={{ marginLeft: 10 }}>{info?.owner?.name}</Text>
+          <Text style={{ marginLeft: 10, fontSize: 20, color: '#FAFAFA' }}>
+            {info?.owner?.name}
+          </Text>
           <View style={{ width: 50, height: 50, marginLeft: 20 }}>
             <Image
               style={userPicContainer}
@@ -91,7 +93,7 @@ export default function Profile() {
           <Text>
             {info?.location?.city}, {info?.location?.state}
           </Text>
-          {info.isHumanFriendly || info.isDogFriendly ? (
+          {info?.isHumanFriendly || info?.isDogFriendly ? (
             <View style={friendlyContainer}>
               {info.isHumanFriendly && (
                 <Text style={friendlyItem}>I'm people friendly!</Text>
@@ -101,7 +103,7 @@ export default function Profile() {
               )}
             </View>
           ) : null}
-          <Text>{info.bio}</Text>
+          <Text>{info?.bio}</Text>
         </View>
         {modalVisible && (
           <ModalContainer
@@ -129,7 +131,7 @@ const profileStyles = StyleSheet.create({
     paddingTop: Platform.OS === 'android' && StatusBar.currentHeight,
   },
   mainPicContainer: {
-    backgroundColor: 'darkblue',
+    backgroundColor: '#F4F4F6',
     flex: 4,
   },
   mainPic: {
