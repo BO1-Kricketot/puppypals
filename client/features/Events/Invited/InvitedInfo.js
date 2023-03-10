@@ -55,6 +55,7 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
               <Text>{event.location.address1}</Text>
               <Text>{`${event.location.city}, ${event.location.state}`}</Text>
             </View>
+            <Text style={styles.descriptionText}>{event.description}</Text>
             <View style={styles.attendanceText}>
               {event.invitees !== undefined && (
                 <Text>{`${event.invitees.length} Invited`} </Text>
@@ -66,7 +67,6 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
               )}
             </View>
             {/* <Text>De-Tails</Text> */}
-            <Text style={styles.descriptionText}>{event.description}</Text>
           </View>
 
           <View style={styles.rsvpCard}>
