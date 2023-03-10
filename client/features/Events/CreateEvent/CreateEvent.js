@@ -113,99 +113,109 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
 
   return (
     <Modal animationType="slide">
-      <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
       <SafeAreaView style={styles.modalContainer}>
         <Text style={styles.formHeader}>Create Event</Text>
-
-        <View style={styles.formContainer}>
-          <Text style={styles.formText}>Event name</Text>
-          <TextInput
-            style={styles.inputs}
-            placeholder="  Event name"
-            onChange={(text) => handleChange('title', text)}
-            value={form.title}
-          />
-
-          <Text style={styles.formText}>Event date</Text>
-          <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.scrollContent}>
+          <View style={styles.formContainer}>
+            <Text style={styles.formText}>Event name</Text>
             <TextInput
               style={styles.inputs}
-              placeholder="  Event date"
-              value={form.datetime}
-              editable={false}
-              onTouchStart={() => setShowDatePicker(true)}
+              selectionColor="#7371FC"
+              placeholder="Event name"
+              onChange={(text) => handleChange('title', text)}
+              value={form.title}
             />
-          </TouchableOpacity>
-          {showDatePicker && (
-            <DateTimePicker
-              value={selectedDate}
-              mode="date"
-              display="default"
-              onChange={handleDateChange}
-            />
-          )}
 
-          <Text style={styles.formText}>Event start time</Text>
-          <TouchableOpacity onPress={() => setShowTimePicker(true)}>
+            <Text style={styles.formText}>Event date</Text>
+            <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+              <TextInput
+                style={styles.inputs}
+                selectionColor="#7371FC"
+                placeholder="Event date"
+                value={form.datetime}
+                editable={false}
+                onTouchStart={() => setShowDatePicker(true)}
+              />
+            </TouchableOpacity>
+            {showDatePicker && (
+              <DateTimePicker
+                value={selectedDate}
+                mode="date"
+                display="default"
+                onChange={handleDateChange}
+              />
+            )}
+
+            <Text style={styles.formText}>Event start time</Text>
+            <TouchableOpacity onPress={() => setShowTimePicker(true)}>
+              <TextInput
+                style={styles.inputs}
+                selectionColor="#7371FC"
+                placeholder="Event start time"
+                value={form.datetime}
+                editable={false}
+                onTouchStart={() => setShowTimePicker(true)}
+              />
+            </TouchableOpacity>
+
+            {showTimePicker && (
+              <DateTimePicker
+                value={selectedTime}
+                mode="time"
+                display="default"
+                onChange={handleTimeChange}
+              />
+            )}
+
+            <Text style={styles.formText}>Event location</Text>
             <TextInput
               style={styles.inputs}
-              placeholder="  Event start time"
-              value={form.datetime}
-              editable={false}
-              onTouchStart={() => setShowTimePicker(true)}
+              selectionColor="#7371FC"
+              placeholder="Address 1"
+              onChange={(text) => handleLocationChange('address1', text)}
+              value={form.location.address1}
             />
-          </TouchableOpacity>
-
-          {showTimePicker && (
-            <DateTimePicker
-              value={selectedTime}
-              mode="time"
-              display="default"
-              onChange={handleTimeChange}
+            <TextInput
+              style={styles.inputs}
+              selectionColor="#7371FC"
+              placeholder="Address 2"
+              onChange={(text) => handleLocationChange('address2', text)}
+              value={form.location.address2}
             />
-          )}
+            <TextInput
+              style={styles.inputs}
+              selectionColor="#7371FC"
+              placeholder="City"
+              onChange={(text) => handleLocationChange('city', text)}
+              value={form.location.city}
+            />
+            <TextInput
+              style={styles.inputs}
+              selectionColor="#7371FC"
+              placeholder="State"
+              onChange={(text) => handleLocationChange('state', text)}
+              value={form.location.state}
+            />
+            <TextInput
+              style={styles.inputs}
+              selectionColor="#7371FC"
+              placeholder="Zip Code"
+              onChange={(text) => handleLocationChange('postalCode', text)}
+              value={form.location.postalCode}
+            />
 
-          <Text style={styles.formText}>Event location</Text>
-          <TextInput
-            style={styles.inputs}
-            placeholder="  Address 1"
-            onChange={(text) => handleLocationChange('address1', text)}
-            value={form.location.address1}
-          />
-          {/* <TextInput
-            style={styles.inputs}
-            placeholder="  Address 2"
-            onChange={(text) => handleLocationChange('address2', text)}
-            value={form.location.address2}
-          /> */}
-          <TextInput
-            style={styles.inputs}
-            placeholder="  City"
-            onChange={(text) => handleLocationChange('city', text)}
-            value={form.location.city}
-          />
-          <TextInput
-            style={styles.inputs}
-            placeholder="  State"
-            onChange={(text) => handleLocationChange('state', text)}
-            value={form.location.state}
-          />
-          <TextInput
-            style={styles.inputs}
-            placeholder="  Zip Code"
-            onChange={(text) => handleLocationChange('postalCode', text)}
-            value={form.location.postalCode}
-          />
-
-          <Text style={styles.formText}>Event description</Text>
-          <TextInput
-            style={styles.inputs}
-            placeholder="  Event description"
-            onChange={(text) => handleChange('description', text)}
-            value={form.description}
-          />
-          {/* <Text>Add Friends: </Text> */}
-          {/* <TouchableOpacity style={styles.imageContainer}>
+            <Text style={styles.formText}>Event description</Text>
+            <TextInput
+              style={[styles.inputs, styles.descriptionInput]}
+              selectionColor="#7371FC"
+              placeholder="Event description"
+              onChange={(text) => handleChange('description', text)}
+              value={form.description}
+            />
+            {/* <Text>Add Friends: </Text> */}
+            {/* <TouchableOpacity style={styles.imageContainer}>
           <Image
             style={styles.image}
             source={{ uri: dummyDogFriends[0].mainImageUrl }}
@@ -223,17 +233,19 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
             source={{ uri: dummyDogFriends[2].mainImageUrl }}
           />
         </TouchableOpacity> */}
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={handleCreateEvent}>
-              <Text style={styles.buttonText}>Create event</Text>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleCreateEvent}>
+                <Text style={styles.buttonText}>Create event</Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity onPress={toggleModal}>
+              <Text style={styles.closeButton}>Close</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={toggleModal}>
-            <Text style={styles.closeButton}>Close</Text>
-          </TouchableOpacity>
-        </View>
+        </ScrollView>
       </SafeAreaView>
-      </ScrollView>
     </Modal>
   );
 }
@@ -246,15 +258,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
   },
-  scrollContent: {
-    paddingHorizontal: 30,
-    paddingVertical: 15,
-  },
   formContainer: {
     flex: 1,
-    paddingLeft: 30,
-    paddingRight: 30,
-    paddingTop: 15,
+    paddingLeft: 40,
+    paddingRight: 40,
+    // paddingTop: 15,
   },
   formHeader: {
     flexDirection: 'row',
@@ -276,9 +284,10 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   formText: {
-    margin: 3,
+    marginBottom: 2,
     marginLeft: 5,
     color: '#474747',
+    marginTop: 12,
   },
   inputs: {
     borderWidth: 1,
@@ -288,6 +297,12 @@ const styles = StyleSheet.create({
     padding: 3,
     margin: 3,
     alignItems: 'center',
+    paddingLeft: 10,
+  },
+  descriptionInput: {
+    height: 150,
+    paddingTop: 10,
+    textAlignVertical: 'top',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -313,6 +328,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     color: '#7371FC',
+    marginBottom: 20,
   },
   imageContainer: {
     width: 50,
