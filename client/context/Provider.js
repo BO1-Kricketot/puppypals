@@ -66,7 +66,8 @@ const dummyDog = {
 };
 
 export function Provider(props) {
-  const [user, setUser] = React.useState(null);
+  // const [user, setUser] = React.useState(null);
+  const [user, setUser] = React.useState(dummyDog);
 
   // useProtectedRoute(user);
 
