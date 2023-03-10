@@ -6,6 +6,7 @@ import {
   Platform,
   Pressable,
   SafeAreaView,
+  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -26,6 +27,9 @@ export default function Profile() {
   // for testing dogs explicitly
   // const dogId = '640953de8561912677bd1167';
   const dogId = '640953de8561912677bd115b';
+
+  // for reals
+  // const { user } = useAuth();
 
   const {
     container,
@@ -61,15 +65,15 @@ export default function Profile() {
     <>
       <SafeAreaView style={container}>
         <View style={userInfoContainer}>
-          <Text style={{ marginLeft: 10, fontSize: 20, color: '#FAFAFA' }}>
-            {info?.owner?.name}
-          </Text>
-          <View style={{ width: 50, height: 50, marginLeft: 20 }}>
+          <View style={{ width: 50, height: 50, marginLeft: 10 }}>
             <Image
               style={userPicContainer}
               source={{ uri: info?.owner?.imageUrl }}
             />
           </View>
+          <Text style={{ marginLeft: 5, fontSize: 20, color: themeOffWhite }}>
+            {info?.owner?.name}
+          </Text>
           <View style={editButton}>
             <Pressable onPress={() => setModalVisible(!modalVisible)}>
               <Image
@@ -87,23 +91,62 @@ export default function Profile() {
           {renderPics(morePics, false)}
         </View>
         <View style={dogInfoContainer}>
-          <Text>
-            {info.name} ({info.breed})
-          </Text>
-          <Text>
-            {info?.location?.city}, {info?.location?.state}
-          </Text>
-          {info?.isHumanFriendly || info?.isDogFriendly ? (
-            <View style={friendlyContainer}>
-              {info.isHumanFriendly && (
-                <Text style={friendlyItem}>I'm people friendly!</Text>
-              )}
-              {info.isDogFriendly && (
-                <Text style={friendlyItem}>I'm dog friendly!</Text>
-              )}
-            </View>
-          ) : null}
-          <Text>{info?.bio}</Text>
+          <ScrollView
+            persistentScrollbar={true}
+            style={{ marginTop: 12 }}
+            removeClippedSubviews={true}>
+            <Text
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                paddingLeft: 10,
+                paddingBottom: 6,
+                fontWeight: 600,
+                fontSize: 30,
+                color: themePurple,
+              }}>
+              {info.name}{' '}
+              <Text
+                style={{
+                  paddingTop: 10,
+                  fontWeight: 500,
+                  fontSize: 20,
+                  color: themeDkGrayText,
+                }}>
+                ({info.breed})
+              </Text>
+            </Text>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: 500,
+                paddingLeft: 10,
+                paddingBottom: 6,
+                color: themeLtGrayText,
+              }}>
+              {info?.location?.city}, {info?.location?.state}
+            </Text>
+            {info?.isHumanFriendly || info?.isDogFriendly ? (
+              <View style={friendlyContainer}>
+                {info.isHumanFriendly && (
+                  <Text style={friendlyItem}>PEOPLE FRIENDLY</Text>
+                )}
+                {info.isDogFriendly && (
+                  <Text style={friendlyItem}>DOG FRIENDLY</Text>
+                )}
+              </View>
+            ) : null}
+            <Text
+              style={{
+                fontSize: 15,
+                paddingLeft: 10,
+                paddingRight: 10,
+                paddingTop: 6,
+                color: themeLtGrayText,
+              }}>
+              {info?.bio}
+            </Text>
+          </ScrollView>
         </View>
         {modalVisible && (
           <ModalContainer
@@ -123,16 +166,27 @@ export default function Profile() {
     </>
   );
 }
+const themeWhite = '#FFF';
+const themeOffWhite = '#F4F4F6';
+const themeNoPic = '#D9D9D9';
+const themeViolet = '#E5D9F2';
+const themePurple = '#7371FC';
+const themeLtGrayText = '#66666E';
+const themeDkGrayText = '#474747';
 
 const profileStyles = StyleSheet.create({
   container: {
-    backgroundColor: 'yellow',
+    backgroundColor: themeOffWhite,
     flex: 1,
     paddingTop: Platform.OS === 'android' && StatusBar.currentHeight,
   },
   mainPicContainer: {
-    backgroundColor: '#F4F4F6',
     flex: 4,
+    marginTop: '2%',
+    marginLeft: '2%',
+    marginRight: '2%',
+    borderRadius: 10,
+    backgroundColor: themeWhite,
   },
   mainPic: {
     flex: 1,
@@ -140,9 +194,13 @@ const profileStyles = StyleSheet.create({
     borderRadius: 10,
   },
   morePicsContainer: {
-    backgroundColor: 'dodgerblue',
     flex: 1,
     flexDirection: 'row',
+    marginTop: '2%',
+    marginLeft: '2%',
+    marginRight: '2%',
+    borderRadius: 10,
+    backgroundColor: themeWhite,
   },
   morePics: {
     flex: 1,
@@ -152,24 +210,29 @@ const profileStyles = StyleSheet.create({
     borderRadius: 10,
   },
   dogInfoContainer: {
-    backgroundColor: 'lightslategray',
     flex: 2,
-    marginLeft: '2%',
-    marginRight: '2%',
+    margin: '2%',
+    borderRadius: 10,
+    backgroundColor: themeWhite,
   },
   userInfoContainer: {
-    backgroundColor: 'lightgray',
-    flex: 0.6,
+    flex: 0.75,
     flexDirection: 'row',
     alignItems: 'center',
     height: '20%',
+    backgroundColor: themePurple,
   },
   userPicContainer: {
-    width: '100%',
-    height: '100%',
-    borderColor: 'black',
-    borderWidth: 2,
+    width: '95%',
+    height: '95%',
     borderRadius: 75,
+    marginTop: 1.5,
+  },
+  editButton: {
+    width: 50,
+    height: 50,
+    marginLeft: 'auto',
+    marginRight: 10,
   },
   friendlyContainer: {
     margin: 6,
@@ -181,19 +244,13 @@ const profileStyles = StyleSheet.create({
     padding: 4,
     width: '40%',
     textAlign: 'center',
-    backgroundColor: 'white',
+    backgroundColor: themeViolet,
     borderRadius: 8,
   },
   phNavContainer: {
     backgroundColor: 'violet',
     flex: 1,
     flexDirection: 'row',
-  },
-  editButton: {
-    width: 50,
-    height: 50,
-    marginLeft: 'auto',
-    marginRight: 10,
   },
 });
 
