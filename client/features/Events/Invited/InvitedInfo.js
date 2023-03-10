@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   eventTitle: {
     fontSize: 18,
     marginBottom: 10,
-    fontWeight: 'bold',
+    fontWeight: 600,
     color: '#474747',
   },
   dateText: {
@@ -171,6 +171,8 @@ const styles = StyleSheet.create({
   },
   hostName: {
     marginLeft: 8,
+    color: '#66666E',
+    fontWeight: '600',
   },
   imageContainer: {
     width: 52,
@@ -194,7 +196,8 @@ const styles = StyleSheet.create({
   rsvpHeader: {
     textAlign: 'center',
     margin: 10,
-    fontSize: 15,
+    marginTop: 20,
+    fontSize: 18,
     fontWeight: 600,
     color: '#474747',
   },

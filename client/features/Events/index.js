@@ -89,7 +89,15 @@ export default function Events() {
         </View>
         <View styles={styles.iconStyle}>
           <TouchableOpacity onPress={toggleModal}>
-            <Ionicons name="add-circle-outline" size={27} color="#7371FC" />
+            <Ionicons
+              name="add-circle-outline"
+              size={27}
+              color="#7371FC"
+              // display="flex"
+              // flexDirection="row-reverse"
+              marginLeft={styles.headerTabs.marginLeft}
+              // marginRight={10}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -141,6 +149,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 20,
     width: '50%',
+    marginLeft: 65,
   },
   activeTab: {
     flex: 1,
@@ -164,9 +173,5 @@ const styles = StyleSheet.create({
     color: '#7371FC',
     textAlign: 'center',
     padding: 2,
-  },
-  iconStyle: {
-    position: 'absolute',
-    right: 0,
   },
 });
