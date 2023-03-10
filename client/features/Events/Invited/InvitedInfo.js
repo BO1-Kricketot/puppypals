@@ -65,7 +65,20 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
                 <Text>{`· ${event.attendees.length} Attending`}</Text>
               )}
             </View>
+            <Text>De-Tails</Text>
             <Text style={styles.descriptionText}>{event.description}</Text>
+          </View>
+
+          <View style={styles.hostDetails}>
+          <View style={styles.hostCard}>
+            <View style={styles.imageContainer}>
+              <Image
+                style={styles.image}
+                source={{ uri: event.hostMeta.mainImgPath }}
+              />
+            </View>
+            <Text style={styles.hostName}>{`${event.hostMeta.name} invited you`}</Text>
+          </View>
           </View>
 
           <View>
@@ -131,6 +144,33 @@ const styles = StyleSheet.create({
   },
   locationDetails: {
     marginBottom: 10,
+  },
+  hostCard: {
+    backgroundColor: '#E5D9F2',
+    flexDirection: 'row',
+    width: '60%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
+    paddingVertical: 10,
+    borderRadius: 15,
+    marginBottom: 10,
+    alignSelf: 'center',
+  },
+  hostName: {
+    marginLeft: 8,
+  },
+  imageContainer: {
+    width: 52,
+    height: 52,
+    justifyContent: 'center',
+    margin: '1%',
+  },
+  image: {
+    flex: 1,
+    margin: '2%',
+    borderRadius: 30,
+    width: '100%',
   },
   attendanceText: {
     flexDirection: 'row',
