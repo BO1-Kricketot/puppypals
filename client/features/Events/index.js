@@ -84,7 +84,6 @@ export default function Events() {
             style={[!invited ? styles.activeTab : styles.inactiveTab]}>
             <Text style={[!invited ? styles.activeText : styles.inactiveText]}>Attending</Text>
           </TouchableOpacity>
-
         </View>
 
         <TouchableOpacity onPress={toggleModal}>
@@ -138,12 +137,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexBasis: 0,
     backgroundColor: '#7371FC',
+    padding: 2,
   },
   inactiveTab: {
     flex: 1,
     flexBasis: 0,
     borderColor: '#7371FC',
-    borderWith: 3,
+    borderWidth: 2,
+    padding: 2,
   },
   activeText: {
     color: '#FFFFFF',
