@@ -48,7 +48,7 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
         <Text style={styles.infoHeader}>Event Info</Text>
 
         <View style={styles.infoContainer}>
-          <View>
+          <View style={styles.eventDetails}>
             <Text style={styles.eventTitle}>{event.title}</Text>
             <Text style={styles.dateText}>{formattedDate}</Text>
             <View style={styles.locationDetails}>
@@ -65,24 +65,26 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
                 <Text>{`· ${event.attendees.length} Attending`}</Text>
               )}
             </View>
-            <Text>De-Tails</Text>
+            {/* <Text>De-Tails</Text> */}
             <Text style={styles.descriptionText}>{event.description}</Text>
           </View>
 
-          <View style={styles.hostDetails}>
-          <View style={styles.hostCard}>
-            <View style={styles.imageContainer}>
-              <Image
-                style={styles.image}
-                source={{ uri: event.hostMeta.mainImgPath }}
-              />
-            </View>
-            <Text style={styles.hostName}>{`${event.hostMeta.name} invited you`}</Text>
-          </View>
-          </View>
-
-          <View>
+          <View style={styles.rsvpCard}>
             <Text style={styles.rsvpHeader}>Paw-lease RSVP!</Text>
+            <View style={styles.hostDetails}>
+              <View style={styles.hostCard}>
+                <View style={styles.imageContainer}>
+                  <Image
+                    style={styles.image}
+                    source={{ uri: event.hostMeta.mainImgPath }}
+                  />
+                </View>
+                <Text
+                  style={
+                    styles.hostName
+                  }>{`${event.hostMeta.name} invited you`}</Text>
+              </View>
+            </View>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.button}
@@ -107,12 +109,12 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
 
 const styles = StyleSheet.create({
   modalContainer: {
-    backgroundColor: 'white',
+    backgroundColor: '#E6E6E9',
     flex: 1,
   },
   infoContainer: {
     flex: 1,
-    padding: 30,
+    padding: 20,
   },
   infoHeader: {
     flexDirection: 'row',
@@ -133,8 +135,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 4,
   },
+  eventDetails: {
+    backgroundColor: 'white',
+    borderRadius: 12,
+    padding: 20,
+    marginBottom: 15,
+  },
+  rsvpCard: {
+    backgroundColor: 'white',
+    borderRadius: 12,
+  },
   eventTitle: {
-    fontSize: 17,
+    fontSize: 18,
     marginBottom: 10,
     fontWeight: 'bold',
     color: '#474747',
@@ -177,11 +189,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   descriptionText: {
-    marginBottom: 30,
+    marginBottom: 10,
   },
   rsvpHeader: {
     textAlign: 'center',
-    marginBottom: 10,
+    margin: 10,
+    fontSize: 15,
+    fontWeight: 600,
+    color: '#474747',
   },
   buttonContainer: {
     flexDirection: 'row',
