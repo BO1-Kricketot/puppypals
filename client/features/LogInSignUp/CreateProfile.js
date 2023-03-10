@@ -183,66 +183,82 @@ const CreateProfile = (props) => {
           <Text style={{ fontSize: 16 }}>
             Select your dog's profile picture
           </Text>
-          <Button
-            title="Pick an image from camera roll"
-            onPress={pickDogProfImage}
-            color="#7371FC"
-          />
-          {dogProfPic && (
-            <Image
-              source={{ uri: dogProfPic.toString() }}
-              style={{ width: 140, height: 200 }}
+          <View style={{ height: 3 }} />
+          {dogProfPic ? (
+            <>
+              <View style={{ height: 3 }} />
+              <Image
+                source={{ uri: dogProfPic.toString() }}
+                style={{ width: 140, height: 200, alignSelf: 'center' }}
+                onPress={pickDogProfImage}
+              />
+            </>
+          ) : (
+            <Button
+              title="Pick an image from camera roll"
+              onPress={pickDogProfImage}
+              color="#7371FC"
             />
           )}
           <View style={{ height: 10 }} />
           <Text style={{ fontSize: 16 }}>
             Select up to 5 other pictures of your dog
           </Text>
+          <View style={{ height: 3 }} />
           <Button
             title="Pick an image from camera roll"
             onPress={pickDogImages}
             color="#7371FC"
           />
+          <View style={{ height: 3 }} />
           <View style={styles.picArrContainer}>
             {dogPics.length
               ? dogPics.map((pic, idx) => (
                   <Image
                     source={{ uri: pic.toString() }}
-                    style={styles.picArr}
+                    style={[styles.picArr, { alignSelf: 'center' }]}
                     key={idx}
                   />
                 ))
               : null}
           </View>
           <View style={{ height: 10 }} />
-          <Text>Energy Level</Text>
-          <Picker
-            selectedValue={energyLvl}
-            onValueChange={(e) => setEnergyLvl(e)}
-            style={styles.dropdown}
-            dropdownIconColor="#7371FC">
-            <Picker.Item label="Low" value="low" />
-            <Picker.Item label="Medium" value="medium" />
-            <Picker.Item label="High" value="high" />
-          </Picker>
-          <Text>Size</Text>
-          <Picker
-            selectedValue={size}
-            onValueChange={(s) => setSize(s)}
-            style={styles.dropdown}
-            dropdownIconColor="#7371FC">
-            <Picker.Item label="Small" value="small" />
-            <Picker.Item label="Medium" value="medium" />
-            <Picker.Item label="Large" value="large" />
-          </Picker>
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text>Energy Level</Text>
+            <Text>Size</Text>
+          </View>
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Picker
+              selectedValue={energyLvl}
+              onValueChange={(e) => setEnergyLvl(e)}
+              style={[styles.dropdown, { width: 125 }]}
+              dropdownIconColor="#7371FC">
+              <Picker.Item label="Low" value="low" />
+              <Picker.Item label="Medium" value="medium" />
+              <Picker.Item label="High" value="high" />
+            </Picker>
+            <Picker
+              selectedValue={size}
+              onValueChange={(s) => setSize(s)}
+              style={[styles.dropdown, { width: 125 }]}
+              dropdownIconColor="#7371FC">
+              <Picker.Item label="Small" value="small" />
+              <Picker.Item label="Medium" value="medium" />
+              <Picker.Item label="Large" value="large" />
+            </Picker>
+          </View>
+          <View style={{ height: 5 }} />
           <Text>Is your dog friendly with other dogs?</Text>
           <Picker
             selectedValue={dogFriendliness}
             onValueChange={(e) => setDogFriendliness(e)}
-            style={styles.dropdown}>
+            style={[styles.dropdown]}>
             <Picker.Item label="Not Friendly" value={false} />
             <Picker.Item label="Friendly" value={true} />
           </Picker>
+          <View style={{ height: 5 }} />
           <Text>Is your dog friendly with people?</Text>
           <Picker
             selectedValue={humanFriendliness}
@@ -251,26 +267,31 @@ const CreateProfile = (props) => {
             <Picker.Item label="Not Friendly" value={false} />
             <Picker.Item label="Friendly" value={true} />
           </Picker>
-          <View style={{ height: 25 }}></View>
+          <View style={{ height: 25 }} />
           <Text style={styles.text}>Enter your Information</Text>
-          <View style={{ height: 25 }}></View>
+          <View style={{ height: 25 }} />
           <TextInput
             value={ownerName}
             onChangeText={setOwnerName}
             placeholder="Your Name"
             style={styles.inputs}
           />
-          <View style={{ height: 10 }} />
+          <View style={{ height: 5 }} />
           <Text>Select your profile picture</Text>
-          <Button
-            title="Pick an image from camera roll"
-            onPress={pickOwnerImage}
-            color="#7371FC"
-          />
-          {ownerPic && (
-            <Image
-              source={{ uri: ownerPic.toString() }}
-              style={{ width: 140, height: 200, alignItems: 'center' }}
+          <View style={{ height: 3 }} />
+          {ownerPic ? (
+            <>
+              <View style={{ height: 3 }} />
+              <Image
+                source={{ uri: ownerPic.toString() }}
+                style={{ width: 140, height: 200, alignSelf: 'center' }}
+              />
+            </>
+          ) : (
+            <Button
+              title="Pick an image from camera roll"
+              onPress={pickOwnerImage}
+              color="#7371FC"
             />
           )}
           <View style={{ height: 25 }}></View>
