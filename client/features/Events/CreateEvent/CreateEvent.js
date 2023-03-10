@@ -27,7 +27,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
     invitees: [],
     attendees: [],
     hostMeta: {
-      dogId: '1',
+      dogId: '640a4f8c3747a59c304539da',
       name: 'Kiwi', // to update to dog.name
       mainImgPath: 'thiswillbeaURL', // to update to dog.mainImagePath
     },
@@ -214,7 +214,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
               onChange={(text) => handleChange('description', text)}
               value={form.description}
             />
-            {/* <Text>Add Friends: </Text> */}
+            <Text style={styles.formText}>Add Friends</Text>
             {/* <TouchableOpacity style={styles.imageContainer}>
           <Image
             style={styles.image}
@@ -262,7 +262,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 40,
     paddingRight: 40,
-    // paddingTop: 15,
   },
   formHeader: {
     flexDirection: 'row',

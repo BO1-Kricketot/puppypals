@@ -152,16 +152,4 @@ const styles = StyleSheet.create({
     color: '#7371FC',
     marginBottom: 20,
   },
-  // imageContainer: {
-  //   width: 50,
-  //   height: 50,
-  //   marginLeft: 'auto',
-  //   marginRight: 10,
-  // },
-  // image: {
-  //   flex: 1,
-  //   margin: '2%',
-  //   borderRadius: 25,
-  //   width: '100%',
-  // },
 });
