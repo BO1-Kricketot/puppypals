@@ -140,7 +140,10 @@ const CreateProfile = (props) => {
   return (
     <ScrollView>
       <View style={styles.root}>
-        <View>
+        <View style={styles.inputContainer}>
+          <View style={{ height: 50}}></View>
+          <Text style={styles.text}>Enter your Dog's Information</Text>
+          <View style={{ height: 25}}></View>
           <TextInput
             value={dogName}
             onChangeText={setDogName}
@@ -151,6 +154,15 @@ const CreateProfile = (props) => {
             value={dogBreed}
             onChangeText={setDogBreed}
             placeholder="Enter Dog Breed"
+            style={styles.inputs}
+          />
+          <TextInput
+            // editable
+            multiline
+            numberOfLines={3}
+            value={bio}
+            onChangeText={setBio}
+            placeholder="Enter Dog Bio"
             style={styles.inputs}
           />
           {/* insert pic upload here after finding out how */}
@@ -185,12 +197,18 @@ const CreateProfile = (props) => {
           </View>
           <Picker
             selectedValue={energyLvl}
-            onValueChange={(e) => setEnergyLvl(e)}>
+            onValueChange={(e) => setEnergyLvl(e)}
+            // style={styles.dropdown}
+          >
             <Picker.Item label="Low" value="low" />
             <Picker.Item label="Medium" value="medium" />
             <Picker.Item label="High" value="high" />
           </Picker>
-          <Picker selectedValue={size} onValueChange={(s) => setSize(s)}>
+          <Picker
+            selectedValue={size}
+            onValueChange={(s) => setSize(s)}
+            // style={styles.dropdown}
+          >
             <Picker.Item label="Small" value="small" />
             <Picker.Item label="Medium" value="medium" />
             <Picker.Item label="Large" value="large" />
@@ -198,22 +216,19 @@ const CreateProfile = (props) => {
           <Picker
             selectedValue={dogFriendliness}
             onValueChange={(e) => setDogFriendliness(e)}
-            style={styles.dropdown}>
+            // style={styles.dropdown}
+          >
             <Picker.Item label="Not Friendly" value={false} />
             <Picker.Item label="Friendly" value={true} />
           </Picker>
           <Picker
             selectedValue={humanFriendliness}
-            onValueChange={(e) => setHumanFriendliness(e)}>
+            onValueChange={(e) => setHumanFriendliness(e)}
+            // style={styles.dropdown}
+          >
             <Picker.Item label="Not Friendly" value={false} />
             <Picker.Item label="Friendly" value={true} />
           </Picker>
-          <TextInput
-            value={bio}
-            onChangeText={setBio}
-            placeholder="Enter Dog Bio"
-            style={styles.inputs}
-          />
           <TextInput
             value={ownerName}
             onChangeText={setOwnerName}
@@ -229,10 +244,12 @@ const CreateProfile = (props) => {
           {ownerPic && (
             <Image
               source={{ uri: ownerPic.toString() }}
-              style={{ width: 140, height: 200 }}
+              style={{ width: 140, height: 200, alignItems: 'center' }}
             />
           )}
-          <Text>Enter Address Information</Text>
+          <View style={{ height: 25 }}></View>
+          <Text style={styles.text}>Enter Address Information</Text>
+          <View style={{ height: 25 }}></View>
           <TextInput
             value={add1}
             onChangeText={setAdd1}
@@ -260,6 +277,7 @@ const CreateProfile = (props) => {
           <TextInput
             value={zip}
             onChangeText={setZip}
+            maxLength={5}
             placeholder="Enter Zip Code"
             keyboardType="number-pad"
             style={styles.inputs}
@@ -280,10 +298,12 @@ const CreateProfile = (props) => {
 const styles = StyleSheet.create({
   root: {
     alignItems: 'center',
+    backgroundColor: '#F4F4F6',
     width: width,
     flex: 1,
+    justifyContent: 'space-around',
     paddingTop: Platform.OS === 'android' && StatusBar.currentHeight,
-    // paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    // justifyContent: 'space-around',
   },
   logo: {
     width: '50%',
@@ -293,14 +313,20 @@ const styles = StyleSheet.create({
   inputs: {
     // width: '80%',
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 7,
     borderColor: '#7371FC',
     padding: 3,
-    margin: 3,
+    margin: 2,
     alignItems: 'center',
+    backgroundColor: 'white',
+  },
+  inputContainer: {
+    width: '80%',
+    justifyContent: 'space-between',
   },
   dropdown: {
     // width: 'auto',
+    backgroundColor: 'white',
   },
   picArr: {
     flexDirection: 'row',
@@ -314,6 +340,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     padding: 3,
+  },
+  text: {
+    fontSize: 20,
+    textAlign: 'center',
   },
 });
 

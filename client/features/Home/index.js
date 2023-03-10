@@ -64,7 +64,7 @@ const dummyUsers = [
   { ...dummyInfo, id: 4 },
 ];
 
-import { useAuth } from '../../context/Provider';
+import { useAuth, Provider } from '../../context/Provider';
 
 const Home = ({ navigation }) => {
   const [picClicked, setPicClicked] = useState(false);
