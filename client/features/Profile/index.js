@@ -1,188 +1,242 @@
+import React, { useState, useEffect } from 'react';
+
 import {
   Image,
+  Dimensions,
+  Platform,
+  Pressable,
   SafeAreaView,
+  ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   View,
-  Platform,
-  StatusBar,
-  Dimensions,
 } from 'react-native';
-const { width, height } = Dimensions.get('window');
-//if you need to use the width and height for some reason
 
-//pass in a dog object
+import api from '../../api';
+import { useAuth } from '../../context/Provider.js';
+import ModalContainer from './editProfile.js';
 
 export default function Profile() {
-  const isAndroid = Platform.OS === 'android';
+  const [info, setInfo] = useState({});
+  const [mainPic, setMainPic] = useState([]);
+  const [morePics, setMorePics] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [profileChanged, setProfileChanged] = useState(false);
 
-  const dummyPics = [
-    {
-      default: true,
-      url: 'http://3.bp.blogspot.com/-GfiMn3VSfnc/VigKnxj9x5I/AAAAAAAA9zI/CXLjzRlI2yA/s1600/boo2.jpg',
-    },
-    {
-      default: false,
-      url: 'https://i.ytimg.com/vi/xEDP5N5SNQM/maxresdefault.jpg',
-    },
-    {
-      default: false,
-      url: 'http://2.bp.blogspot.com/-o1Nlm1LBxD0/UKpxdFESiuI/AAAAAAAAKQg/6FynR1gMNqU/s1600/cute-puppy-pictures-901.jpg',
-    },
-    {
-      default: false,
-      url: 'http://3.bp.blogspot.com/-90Yj9zzFtn4/Tp-4Ai23riI/AAAAAAAAAhc/AvNYsJxGuuQ/s1600/Cute-Puppy-Dog.jpg',
-    },
-    {
-      default: false,
-      url: 'https://4.bp.blogspot.com/-f_ubVt0YDqs/VkyD1uolD5I/AAAAAAAAAiA/X2VaFT6cE0M/s1600/Q9.jpg',
-    },
-    {
-      default: false,
-      url: 'https://wallpapercave.com/wp/wp2480956.jpg',
-    },
-  ];
+  // for testing dogs explicitly
+  const dogId = '640953de8561912677bd1167';
+  // const dogId = '640953de8561912677bd115b';
 
-  const dummyInfo = {
-    dogName: 'Billie',
-    dogBreed: 'Poodle',
-    location: 'Chicago, IL',
-    peopleFriendly: true,
-    dogFriendly: true,
-    dogBio:
-      "Billie is a sweety little snookums that loves to sniff butts and stuff. Yay! Billie is a poodle and likes long walks on the beach. Or the treadmill. Billie is a silly billie, lulz. Do you like Billie's bio? Billie likes your bio, too!",
-    ownerPic:
-      'https://www.essence.com/wp-content/uploads/2014/01/images/2013/11/11/steve-harvey-show.jpg',
-    ownerName: 'Peppy',
-  };
+  // for reals
+  // const { user } = useAuth();
 
-  let dummyNav = [0, 0, 0, 0, 0];
-  dummyNav = dummyNav.fill('https://reactnative.dev/img/tiny_logo.png', 0);
-
-  const mainPhoto = renderPics(dummyPics, true);
-  const otherPhotos = renderPics(dummyPics, false);
   const {
+    container,
+    dogInfoContainer,
+    editButton,
+    friendlyContainer,
+    friendlyItem,
     mainPicContainer,
-    morePicsAndNavContainer,
+    morePicsContainer,
     userInfoContainer,
     userPicContainer,
   } = profileStyles;
 
+  const addImgBlanks = (blanks) => {
+    const noImgPic = '../../assets/noPic1.png';
+    const morePicsCopy = morePics.slice();
+    const morePicsBlanks = Array(blanks).fill(noImgPic);
+    setMorePics(morePicsCopy.concat(morePicsBlanks));
+  };
+
+  useEffect(() => {
+    api
+      .getUserProfile(dogId) //dogId for explicit testing, user for 'real'
+      .then((profile) => {
+        setInfo({ ...profile });
+        setMainPic([profile?.mainImageUrl]);
+        setMorePics([...profile.imageUrls]);
+      })
+      .catch((err) => console.error(err));
+  }, [profileChanged]);
+
   return (
     <>
-      <SafeAreaView style={profileStyles.container}>
+      <SafeAreaView style={container}>
         <View style={userInfoContainer}>
-          <Text style={{ marginLeft: 10 }}>{dummyInfo.ownerName}</Text>
-          <View style={{ width: 50, height: 50, marginLeft: 20 }}>
+          <View style={{ width: 50, height: 50, marginLeft: 10 }}>
             <Image
               style={userPicContainer}
-              source={{ uri: dummyInfo.ownerPic }}
+              source={{ uri: info?.owner?.imageUrl }}
             />
           </View>
-          <View style={{ width: 50, height: 50, marginLeft: 'auto', marginRight: 10 }}>
-          <Image
-              style={userPicContainer}
-              source={{ uri: 'http://cdn.onlinewebfonts.com/svg/img_397968.png'}}
-            />
-          </View>
-        </View>
-        <View style={mainPicContainer}>{mainPhoto}</View>
-        <View style={morePicsAndNavContainer}>{otherPhotos}</View>
-        <View style={profileStyles.dogInfoContainer}>
-          <Text>
-            {dummyInfo.dogName}
-            <Text>{dummyInfo.dogBreed}</Text>
+          <Text style={{ marginLeft: 5, fontSize: 20, color: themeOffWhite }}>
+            {info?.owner?.name}
           </Text>
-          <Text>{dummyInfo.location}</Text>
-          {dummyInfo.peopleFriendly || dummyInfo.dogFriendly ? (
-            <View style={profileStyles.friendlyContainer}>
-              {dummyInfo.peopleFriendly && (
-                <Text style={profileStyles.friendlyItem}>
-                  I'm people friendly!
-                </Text>
-              )}
-              {dummyInfo.dogFriendly && (
-                <Text style={profileStyles.friendlyItem}>
-                  I'm dog friendly!
-                </Text>
-              )}
-            </View>
-          ) : null}
-          <Text>{dummyInfo.dogBio}</Text>
-        </View>
-        {isAndroid && (
-          <View style={profileStyles.morePicsAndNavContainer}>
-            {renderNav(dummyNav)}
+          <View style={editButton}>
+            <Pressable onPress={() => setModalVisible(!modalVisible)}>
+              <Image
+                style={userPicContainer}
+                source={{
+                  uri: 'http://cdn.onlinewebfonts.com/svg/img_397968.png',
+                }}
+              />
+            </Pressable>
           </View>
+        </View>
+        <View style={mainPicContainer}>{renderPics(mainPic, true)}</View>
+        <View style={morePicsContainer}>
+          {morePics.length < 5 && addImgBlanks(5 - morePics.length)}
+          {renderPics(morePics, false)}
+        </View>
+        <View style={dogInfoContainer}>
+          <ScrollView
+            persistentScrollbar={true}
+            style={{ marginTop: 12 }}
+            removeClippedSubviews={true}>
+            <Text
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                paddingLeft: 10,
+                paddingBottom: 6,
+                fontWeight: 600,
+                fontSize: 30,
+                color: themePurple,
+              }}>
+              {info.name}{' '}
+              <Text
+                style={{
+                  paddingTop: 10,
+                  fontWeight: 500,
+                  fontSize: 20,
+                  color: themeDkGrayText,
+                }}>
+                ({info.breed})
+              </Text>
+            </Text>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: 500,
+                paddingLeft: 10,
+                paddingBottom: 6,
+                color: themeLtGrayText,
+              }}>
+              {info?.location?.city}, {info?.location?.state}
+            </Text>
+            {info?.isHumanFriendly || info?.isDogFriendly ? (
+              <View style={friendlyContainer}>
+                {info.isHumanFriendly && (
+                  <Text style={friendlyItem}>PEOPLE FRIENDLY</Text>
+                )}
+                {info.isDogFriendly && (
+                  <Text style={friendlyItem}>DOG FRIENDLY</Text>
+                )}
+              </View>
+            ) : null}
+            <Text
+              style={{
+                fontSize: 15,
+                paddingLeft: 10,
+                paddingRight: 10,
+                paddingTop: 6,
+                color: themeLtGrayText,
+              }}>
+              {info?.bio}
+            </Text>
+          </ScrollView>
+        </View>
+        {modalVisible && (
+          <ModalContainer
+            info={info}
+            setInfo={setInfo}
+            mainPic={mainPic}
+            setMainPic={setMainPic}
+            morePics={morePics}
+            setMorePics={setMorePics}
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            profileChanged={profileChanged}
+            setProfileChanged={setProfileChanged}
+            profileStyles={profileStyles}
+          />
         )}
       </SafeAreaView>
-      {!isAndroid && ( //conditionally render navbar to be at the bottom for android/ios
-        <View style={profileStyles.morePicsAndNavContainer}>
-          {renderNav(dummyNav)}
-        </View>
-      )}
     </>
   );
 }
 
+const themeWhite = '#FFF';
+const themeOffWhite = '#F4F4F6';
+const themeNoPic = '#D9D9D9';
+const themeViolet = '#E5D9F2';
+const themePurple = '#7371FC';
+const themeLtGrayText = '#66666E';
+const themeDkGrayText = '#474747';
+
 const profileStyles = StyleSheet.create({
-  // holds everything else, flex val 1 fills avail space
   container: {
-    backgroundColor: 'yellow',
+    backgroundColor: themeOffWhite,
     flex: 1,
     paddingTop: Platform.OS === 'android' && StatusBar.currentHeight,
   },
-  // flex val 4 equates to 'fill 4 something-ths of the available space in (main) container'
   mainPicContainer: {
-    backgroundColor: 'darkblue',
     flex: 4,
+    marginTop: '2%',
+    marginLeft: '2%',
+    marginRight: '2%',
+    borderRadius: 10,
+    backgroundColor: themeWhite,
   },
-  // 'fill the whole container' (which in this case is mainPicContainer)
   mainPic: {
     flex: 1,
     margin: '2%',
     borderRadius: 10,
   },
-  // 'fill 1 something-ths of the available space in (main) container'
-  morePicsAndNavContainer: {
-    backgroundColor: 'dodgerblue',
+  morePicsContainer: {
     flex: 1,
     flexDirection: 'row',
+    marginTop: '2%',
+    marginLeft: '2%',
+    marginRight: '2%',
+    borderRadius: 10,
+    backgroundColor: themeWhite,
   },
-  // 'fill the whole container' (which in this case is morePicsContainer)
-  morePicsAndNav: {
+  morePics: {
     flex: 1,
     justifyContent: 'space-evenly',
     alignItems: 'center',
     margin: '2%',
     borderRadius: 10,
   },
-  // 'fill 2 something-th of the available space in (main) container'
   dogInfoContainer: {
-    backgroundColor: 'lightslategray',
     flex: 2,
-    marginLeft: '2%',
-    marginRight: '2%',
+    margin: '2%',
+    borderRadius: 10,
+    backgroundColor: themeWhite,
   },
-  // 'fill 1 something-ths of the available space in (main) container'
   userInfoContainer: {
-    backgroundColor: 'lightgray',
-    flex: 0.6,
+    flex: 0.75,
     flexDirection: 'row',
     alignItems: 'center',
     height: '20%',
+    backgroundColor: themePurple,
   },
   userPicContainer: {
-    width: '100%',
-    height: '100%',
-    borderColor: 'black',
-    borderWidth: 2,
+    width: '95%',
+    height: '95%',
     borderRadius: 75,
+    marginTop: 1.5,
   },
-  // 'fill 1 something-ths of the available space in (main) container'
-  // --> except I'm NOT RENDERING it right now so it's NOT counted re: line 126-127
+  editButton: {
+    width: 50,
+    height: 50,
+    marginLeft: 'auto',
+    marginRight: 10,
+  },
   friendlyContainer: {
-    // padding: 2,
     margin: 6,
     display: 'flex',
     flexDirection: 'row',
@@ -192,7 +246,7 @@ const profileStyles = StyleSheet.create({
     padding: 4,
     width: '40%',
     textAlign: 'center',
-    backgroundColor: 'white',
+    backgroundColor: themeViolet,
     borderRadius: 8,
   },
   phNavContainer: {
@@ -200,27 +254,49 @@ const profileStyles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
   },
-  // currently, in the main container, there are I think 8 'something-ths'
-  // e.g. mainPicContainer will fill 4/8ths of the container
 });
 
+const { width, height } = Dimensions.get('window');
+const isAndroid = Platform.OS === 'android';
+
 const renderPics = (picList, isDefault) => {
-  const { mainPic, morePicsAndNav } = profileStyles;
-  return picList
-    .filter((pic) => pic.default === isDefault)
-    .map((pic, i) => {
-      return (
-        <Image
-          key={i}
-          style={isDefault ? mainPic : morePicsAndNav}
-          default={pic.default}
-          src={pic.url}
-        />
-      );
-    });
+  const { mainPic, morePics } = profileStyles;
+  return picList.map((url, i) => {
+    return (
+      <Image
+        key={i}
+        style={isDefault ? mainPic : morePics}
+        default={isDefault}
+        src={url}
+      />
+    );
+  });
 };
 
-const renderNav = (icons) => {
-  const { morePicsAndNav } = profileStyles;
-  return icons.map((icon, i) => <Image key={i} src={icon} style={morePicsAndNav} />);
+const dummies = {
+  dummyMainPic: [
+    'http://3.bp.blogspot.com/-GfiMn3VSfnc/VigKnxj9x5I/AAAAAAAA9zI/CXLjzRlI2yA/s1600/boo2.jpg',
+  ],
+  dummyMorePics: [
+    'https://i.ytimg.com/vi/xEDP5N5SNQM/maxresdefault.jpg',
+    'http://2.bp.blogspot.com/-o1Nlm1LBxD0/UKpxdFESiuI/AAAAAAAAKQg/6FynR1gMNqU/s1600/cute-puppy-pictures-901.jpg',
+    'http://3.bp.blogspot.com/-90Yj9zzFtn4/Tp-4Ai23riI/AAAAAAAAAhc/AvNYsJxGuuQ/s1600/Cute-Puppy-Dog.jpg',
+    'https://4.bp.blogspot.com/-f_ubVt0YDqs/VkyD1uolD5I/AAAAAAAAAiA/X2VaFT6cE0M/s1600/Q9.jpg',
+    'https://wallpapercave.com/wp/wp2480956.jpg',
+  ],
+  dummyInfo: {
+    dogName: 'Billie',
+    dogBreed: 'Poodle',
+    location: {
+      // address1,
+      // address2,
+      city: 'Skagway',
+      state: 'AK',
+      // postalCode,
+      // coordinates: {
+      // lat,
+      // lng,
+      // },
+    },
+  },
 };

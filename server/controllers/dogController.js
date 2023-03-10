@@ -1,5 +1,7 @@
 const DogModel = require('../models/DogModel');
 const dogFormatter = require('../utils/formatDog');
+const debug = require('../utils/debug');
+const api = require('../api');
 
 module.exports = {
   /**
@@ -14,7 +16,10 @@ module.exports = {
     const dogInfo = JSON.parse(JSON.stringify(req.body));
     delete dogInfo.dogId;
     // console.log(dogInfo);
-    DogModel.findOneAndUpdate({ _id: req.body.dogId }, await dogFormatter(dogInfo))
+    DogModel.findOneAndUpdate(
+      { _id: req.body.dogId },
+      await dogFormatter(dogInfo),
+    )
       .then((result) => res.status(200).send(result))
       .catch((e) => console.log(e));
   },
@@ -118,14 +123,10 @@ module.exports = {
    * TODO: Implement
    */
   getDogById(req, res) {
-    DogModel.findById(req.params['_id'])
-      .exec()
-      .then((result) => {
-        res.status(200).send(result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const id = req.params;
+    DogModel.findById(id)
+      .then((profile) => res.status(200).send(profile))
+      .catch((err) => res.status(500).send(err));
   },
 
   /**
@@ -141,6 +142,42 @@ module.exports = {
       .exec()
       .then((result) => {
         res.status(200).send(result);
+      });
+  },
+
+  async updateDogProfile(req, res) {
+    const id = req.params;
+    const update = { ...req.body };
+    const isLink = /^https:\/\//g;
+    const { mainImageUrl, imageUrls, location } = update;
+
+    if (!isLink.test(mainImageUrl)) {
+      const newPic = await api.uploadPhotoNoPrefix(mainImageUrl);
+      update.mainImageUrl = newPic;
+    }
+
+    const promises = [];
+    const urls = [];
+
+    imageUrls.forEach((url) => {
+      if (!isLink.test(url)) {
+        promises.push(api.uploadPhotoNoPrefix(url));
+      } else {
+        urls.push(url);
+      }
+    });
+
+    const result = await Promise.all(promises);
+    update.imageUrls = urls.concat(result);
+
+    const coordinates = await api.getCoordinates(location);
+    location.coordinates = coordinates;
+
+    DogModel.findByIdAndUpdate(id, update)
+      .then(() => res.sendStatus(204))
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send(err);
       });
   },
 

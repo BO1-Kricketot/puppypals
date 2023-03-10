@@ -59,4 +59,39 @@ module.exports = {
       .then((results) => results.map((result) => result.data.data.url))
       .catch((err) => console.error(err));
   },
+
+  uploadPhotoNoPrefix(base64Image) {
+    if (base64Image === '') return '';
+    const formData = new FormData();
+    formData.append('image', base64Image);
+    const options = {
+      url: 'https://api.imgbb.com/1/upload',
+      method: 'post',
+      headers: { 'content-type': 'multipart/form-data' },
+      params: { key: process.env.IMGBB_KEY },
+      data: formData,
+    };
+    return axios(options)
+      .then(({ data }) => data.data.url)
+      .catch((err) => console.error(err));
+  },
+
+  uploadPhotosNoPrefix(base64Images) {
+    if (!base64Images.length) return [];
+    const options = base64Images.map((base64Image) => {
+      const formData = new FormData();
+      formData.append('image', base64Image);
+      return {
+        url: 'https://api.imgbb.com/1/upload',
+        method: 'post',
+        headers: { 'content-type': 'multipart/form-data' },
+        params: { key: process.env.IMGBB_KEY },
+        data: formData,
+      };
+    });
+    return axios
+      .all(options.map((config) => axios(config)))
+      .then((results) => results.map((result) => result.data.data.url))
+      .catch((err) => console.error(err));
+  },
 };
