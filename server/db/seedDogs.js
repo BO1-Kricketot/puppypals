@@ -76,4 +76,4 @@ async function main(size) {
   console.log('done! press ctrl+c to exit.');
 }
 
-main(30);
+main(50);

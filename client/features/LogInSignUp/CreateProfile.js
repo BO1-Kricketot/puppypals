@@ -140,33 +140,41 @@ const CreateProfile = (props) => {
   return (
     <ScrollView>
       <View style={styles.root}>
+        <StatusBar
+          backgroundColor="#F4F4F6"
+          // barStyle="light-content"
+        />
         <View style={styles.inputContainer}>
-          <View style={{ height: 50}}></View>
+          <View style={{ height: 30 }} />
           <Text style={styles.text}>Enter your Dog's Information</Text>
-          <View style={{ height: 25}}></View>
-          <TextInput
-            value={dogName}
-            onChangeText={setDogName}
-            placeholder="Enter Dog Name"
-            style={styles.inputs}
-          />
-          <TextInput
-            value={dogBreed}
-            onChangeText={setDogBreed}
-            placeholder="Enter Dog Breed"
-            style={styles.inputs}
-          />
+          <View style={{ height: 25 }} />
+          <View style={styles.inputSplit}>
+            <TextInput
+              value={dogName}
+              onChangeText={setDogName}
+              placeholder="Dog Name"
+              style={[styles.inputs, { width: 150 }]}
+            />
+            <TextInput
+              value={dogBreed}
+              onChangeText={setDogBreed}
+              placeholder="Dog Breed"
+              style={[styles.inputs, { width: 150 }]}
+            />
+          </View>
           <TextInput
             // editable
             multiline
             numberOfLines={3}
             value={bio}
             onChangeText={setBio}
-            placeholder="Enter Dog Bio"
-            style={styles.inputs}
+            placeholder="Dog Bio"
+            style={[styles.inputs, { textAlignVertical: 'top' }]}
           />
-          {/* insert pic upload here after finding out how */}
-          <Text>Select your dog's profile picture</Text>
+          <View style={{ height: 10 }} />
+          <Text style={{ fontSize: 16 }}>
+            Select your dog's profile picture
+          </Text>
           <Button
             title="Pick an image from camera roll"
             onPress={pickDogProfImage}
@@ -178,7 +186,10 @@ const CreateProfile = (props) => {
               style={{ width: 140, height: 200 }}
             />
           )}
-          <Text>Select up to 5 other pictures of your dog</Text>
+          <View style={{ height: 10 }} />
+          <Text style={{ fontSize: 16 }}>
+            Select up to 5 other pictures of your dog
+          </Text>
           <Button
             title="Pick an image from camera roll"
             onPress={pickDogImages}
@@ -195,46 +206,53 @@ const CreateProfile = (props) => {
                 ))
               : null}
           </View>
+          <View style={{ height: 10 }} />
+          <Text>Energy Level</Text>
           <Picker
             selectedValue={energyLvl}
             onValueChange={(e) => setEnergyLvl(e)}
-            // style={styles.dropdown}
-          >
+            style={styles.dropdown}
+            dropdownIconColor="#7371FC">
             <Picker.Item label="Low" value="low" />
             <Picker.Item label="Medium" value="medium" />
             <Picker.Item label="High" value="high" />
           </Picker>
+          <Text>Size</Text>
           <Picker
             selectedValue={size}
             onValueChange={(s) => setSize(s)}
-            // style={styles.dropdown}
-          >
+            style={styles.dropdown}
+            dropdownIconColor="#7371FC">
             <Picker.Item label="Small" value="small" />
             <Picker.Item label="Medium" value="medium" />
             <Picker.Item label="Large" value="large" />
           </Picker>
+          <Text>Is your dog friendly with other dogs?</Text>
           <Picker
             selectedValue={dogFriendliness}
             onValueChange={(e) => setDogFriendliness(e)}
-            // style={styles.dropdown}
-          >
+            style={styles.dropdown}>
             <Picker.Item label="Not Friendly" value={false} />
             <Picker.Item label="Friendly" value={true} />
           </Picker>
+          <Text>Is your dog friendly with people?</Text>
           <Picker
             selectedValue={humanFriendliness}
             onValueChange={(e) => setHumanFriendliness(e)}
-            // style={styles.dropdown}
-          >
+            style={styles.dropdown}>
             <Picker.Item label="Not Friendly" value={false} />
             <Picker.Item label="Friendly" value={true} />
           </Picker>
+          <View style={{ height: 25 }}></View>
+          <Text style={styles.text}>Enter your Information</Text>
+          <View style={{ height: 25 }}></View>
           <TextInput
             value={ownerName}
             onChangeText={setOwnerName}
-            placeholder="Enter Your Name"
+            placeholder="Your Name"
             style={styles.inputs}
           />
+          <View style={{ height: 10 }} />
           <Text>Select your profile picture</Text>
           <Button
             title="Pick an image from camera roll"
@@ -253,35 +271,38 @@ const CreateProfile = (props) => {
           <TextInput
             value={add1}
             onChangeText={setAdd1}
-            placeholder="Enter Address Line 1"
+            placeholder="Address Line 1"
             style={styles.inputs}
           />
           <TextInput
             value={add2}
             onChangeText={setAdd2}
-            placeholder="Enter Address Line 2"
+            placeholder="Address Line 2"
             style={styles.inputs}
           />
-          <TextInput
-            value={city}
-            onChangeText={setCity}
-            placeholder="Enter City"
-            style={styles.inputs}
-          />
-          <TextInput
-            value={state}
-            onChangeText={setState}
-            placeholder="Enter State"
-            style={styles.inputs}
-          />
-          <TextInput
-            value={zip}
-            onChangeText={setZip}
-            maxLength={5}
-            placeholder="Enter Zip Code"
-            keyboardType="number-pad"
-            style={styles.inputs}
-          />
+          <View style={styles.inputSplit}>
+            <TextInput
+              value={city}
+              onChangeText={setCity}
+              placeholder="City"
+              style={[styles.inputs, { width: 90 }]}
+            />
+            <TextInput
+              value={state}
+              onChangeText={setState}
+              placeholder="State"
+              style={[styles.inputs, { width: 90 }]}
+            />
+            <TextInput
+              value={zip}
+              onChangeText={setZip}
+              maxLength={5}
+              placeholder="Zip Code"
+              keyboardType="number-pad"
+              style={styles.inputs}
+            />
+          </View>
+          <View style={{ height: 30 }} />
           <Button
             onPress={pressCreateProfile}
             style={styles.button}
@@ -289,6 +310,7 @@ const CreateProfile = (props) => {
             color="#7371FC"
             accessibilityLabel="Press here to create your profile"
           />
+          <View style={{ height: 50 }} />
         </View>
       </View>
     </ScrollView>
@@ -319,6 +341,11 @@ const styles = StyleSheet.create({
     margin: 2,
     alignItems: 'center',
     backgroundColor: 'white',
+    paddingLeft: 10,
+  },
+  inputSplit: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   inputContainer: {
     width: '80%',
@@ -326,6 +353,8 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     // width: 'auto',
+    borderWidth: 1,
+    borderRadius: 7,
     backgroundColor: 'white',
   },
   picArr: {
