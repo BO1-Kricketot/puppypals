@@ -1,14 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import Example from './features/Example';
-import { StyleSheet, Text, View } from 'react-native';
-// import Profile from './features/Profile';
-import Events from './features/Events';
+import Profile from './features/Profile';
+import Chat from './features/Chat';
 
 export default function App() {
   return (
-    <Events />
     // <Profile />
+    <Chat />
     // <View style={styles.container}>
     //   <Example />
     //   <Text>Open up App.js to start working on your app!</Text>

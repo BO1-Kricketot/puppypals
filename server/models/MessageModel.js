@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const messageSchema = new mongoose.Schema({
+  _id: Number,
+  userId: Number,
   body: String,
   timestamp: Date,
   reactions: { type: [String], default: undefined },
