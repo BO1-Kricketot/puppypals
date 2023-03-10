@@ -95,7 +95,7 @@ export default function Events() {
               color="#7371FC"
               // display="flex"
               // flexDirection="row-reverse"
-              marginLeft={styles.headerTabs.marginLeft}
+              marginLeft={40}
               // marginRight={10}
             />
           </TouchableOpacity>
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 20,
     width: '50%',
-    marginLeft: 65,
+    marginLeft: 70,
   },
   activeTab: {
     flex: 1,
