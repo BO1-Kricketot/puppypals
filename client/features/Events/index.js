@@ -21,7 +21,6 @@ import { dummyAttending, dummyDog } from './sampleData.js';
 import { useAuth } from '../../context/Provider.js';
 
 export default function Events() {
-  // to be ({ dog })
   const [invited, setInvited] = useState(true);
   const [invitedEvents, setInvitedEvents] = useState([]);
   const [attendingEvents, setAttendingEvents] = useState(dummyAttending);

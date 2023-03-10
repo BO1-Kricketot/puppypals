@@ -29,14 +29,17 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
 
   const handleAttendanceYes = async () => {
     const eventId = event._id;
-    await axios.delete(`${API_URL}/einvites/${eventId}`);
-    await axios.patch(`${API_URL}/events/attend/${eventId}/${dog._id}`);
+    // await axios.delete(`${API_URL}/api/einvites/${eventId}`);
+    await axios.patch(`${API_URL}/api/events/attend/${eventId}/${dog._id}`);
+    toggleModal();
   };
 
+  // event that responded no to is still showing up on list;
   const handleAttendanceNo = async () => {
     const eventId = event._id;
-    await axios.delete(`${API_URL}/einvites/${eventId}`);
-    await axios.patch(`${API_URL}/events/reject/${eventId}/${dog._id}`);
+    // await axios.delete(`${API_URL}/api/einvites/${eventId}`);
+    await axios.patch(`${API_URL}/api/events/reject/${eventId}/${dog._id}`);
+    toggleModal();
   };
 
   return (
