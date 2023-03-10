@@ -15,6 +15,7 @@ module.exports = {
     console.log('check event', event);
     return EventModel.create(event)
       .then((result) => {
+        // need to add the user._id to the attending list
         console.log(result);
         res.status(201).send(result);
       })

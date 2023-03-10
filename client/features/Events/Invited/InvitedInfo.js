@@ -35,6 +35,7 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
     await axios.patch(`${API_URL}/api/events/attend/${eventId}/${user._id}`);
   };
 
+  // event that responded no to is still showing up on list;
   const handleAttendanceNo = async () => {
     const eventId = event._id;
     await axios.delete(`${API_URL}/api/einvites/${eventId}`);
@@ -47,13 +48,15 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
         <Text style={styles.infoHeader}>Event Info</Text>
 
         <View style={styles.infoContainer}>
-          <View>
+          <View style={styles.eventDetails}>
             <Text style={styles.eventTitle}>{event.title}</Text>
             <Text style={styles.dateText}>{formattedDate}</Text>
+            {/* <Fontiso name="map-marker-alt" /> */}
             <View style={styles.locationDetails}>
-              <Text>{event.location.address1}</Text>
-              <Text>{`${event.location.city}, ${event.location.state}`}</Text>
+              {/* <Text>{event.location.address1}</Text> */}
+              <Text>{`${event.location.address1}, ${event.location.city}, ${event.location.state}`}</Text>
             </View>
+            <Text style={styles.descriptionText}>{event.description}</Text>
             <View style={styles.attendanceText}>
               {event.invitees !== undefined && (
                 <Text>{`${event.invitees.length} Invited`} </Text>
@@ -64,11 +67,25 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
                 <Text>{`· ${event.attendees.length} Attending`}</Text>
               )}
             </View>
-            <Text style={styles.descriptionText}>{event.description}</Text>
+            {/* <Text>De-Tails</Text> */}
           </View>
 
-          <View>
+          <View style={styles.rsvpCard}>
             <Text style={styles.rsvpHeader}>Paw-lease RSVP!</Text>
+            <View style={styles.hostDetails}>
+              <View style={styles.hostCard}>
+                <View style={styles.imageContainer}>
+                  <Image
+                    style={styles.image}
+                    source={{ uri: event.hostMeta.mainImgPath }}
+                  />
+                </View>
+                <Text
+                  style={
+                    styles.hostName
+                  }>{`${event.hostMeta.name} invited you`}</Text>
+              </View>
+            </View>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.button}
@@ -93,12 +110,12 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
 
 const styles = StyleSheet.create({
   modalContainer: {
-    backgroundColor: 'white',
+    backgroundColor: '#E6E6E9',
     flex: 1,
   },
   infoContainer: {
     flex: 1,
-    padding: 30,
+    padding: 20,
   },
   infoHeader: {
     flexDirection: 'row',
@@ -119,10 +136,26 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 4,
   },
+  eventDetails: {
+    backgroundColor: 'white',
+    borderRadius: 12,
+    padding: 20,
+    marginBottom: 15,
+    shadowColor: '#66666E',
+    shadowOpacity: 0.5,
+    elevation: 2,
+  },
+  rsvpCard: {
+    backgroundColor: 'white',
+    borderRadius: 12,
+    shadowColor: '#66666E',
+    shadowOpacity: 0.5,
+    elevation: 2,
+  },
   eventTitle: {
-    fontSize: 17,
+    fontSize: 18,
     marginBottom: 10,
-    fontWeight: 'bold',
+    fontWeight: 600,
     color: '#474747',
   },
   dateText: {
@@ -131,16 +164,49 @@ const styles = StyleSheet.create({
   locationDetails: {
     marginBottom: 10,
   },
+  hostCard: {
+    backgroundColor: '#E5D9F2',
+    flexDirection: 'row',
+    width: '60%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
+    paddingVertical: 10,
+    borderRadius: 15,
+    marginBottom: 20,
+    alignSelf: 'center',
+  },
+  hostName: {
+    marginLeft: 8,
+    color: '#66666E',
+    fontWeight: '600',
+  },
+  imageContainer: {
+    width: 52,
+    height: 52,
+    justifyContent: 'center',
+    margin: '1%',
+  },
+  image: {
+    flex: 1,
+    margin: '2%',
+    borderRadius: 30,
+    width: '100%',
+  },
   attendanceText: {
     flexDirection: 'row',
     marginBottom: 10,
   },
   descriptionText: {
-    marginBottom: 30,
+    marginBottom: 10,
   },
   rsvpHeader: {
     textAlign: 'center',
-    marginBottom: 10,
+    margin: 10,
+    marginTop: 20,
+    fontSize: 18,
+    fontWeight: 600,
+    color: '#474747',
   },
   buttonContainer: {
     flexDirection: 'row',

@@ -21,7 +21,6 @@ import { dummyAttending, dummyDog } from './sampleData.js';
 import { useAuth } from '../../context/Provider.js';
 
 export default function Events() {
-  // to be ({ dog })
   const [invited, setInvited] = useState(true);
   const [invitedEvents, setInvitedEvents] = useState([]);
   const [attendingEvents, setAttendingEvents] = useState(dummyAttending);
@@ -90,12 +89,25 @@ export default function Events() {
         </View>
         <View styles={styles.iconStyle}>
           <TouchableOpacity onPress={toggleModal}>
-            <Ionicons name="add-circle-outline" size={27} color="#7371FC" />
+            <Ionicons
+              name="add-circle-outline"
+              size={27}
+              color="#7371FC"
+              // display="flex"
+              // flexDirection="row-reverse"
+              marginLeft={40}
+              // marginRight={10}
+            />
           </TouchableOpacity>
         </View>
       </View>
       {modal && (
-        <CreateEvent modal={modal} toggleModal={toggleModal} dog={dog} />
+        <CreateEvent
+          modal={modal}
+          toggleModal={toggleModal}
+          dog={dog}
+          updateAttendingList={updateAttendingList}
+        />
       )}
       {invited ? (
         <InvitedList invitedEvents={invitedEvents} dog={dog} />
@@ -137,6 +149,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 20,
     width: '50%',
+    marginLeft: 70,
   },
   activeTab: {
     flex: 1,
@@ -160,9 +173,5 @@ const styles = StyleSheet.create({
     color: '#7371FC',
     textAlign: 'center',
     padding: 2,
-  },
-  iconStyle: {
-    position: 'absolute',
-    right: 0,
   },
 });

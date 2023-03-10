@@ -107,5 +107,7 @@ const styles = StyleSheet.create({
   },
   hostName: {
     fontSize: 12,
+    color: '#66666E',
+    fontWeight: 500,
   },
 });

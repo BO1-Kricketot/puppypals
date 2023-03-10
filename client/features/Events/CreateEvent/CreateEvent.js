@@ -20,8 +20,12 @@ import { parseISO, format, parse, formatISO } from 'date-fns';
 import { dummyDogFriends } from '../sampleData.js';
 import { useAuth } from '../../../context/Provider';
 
-export default function CreateEvent({ modal, toggleModal, dog }) {
-  const { user } = useAuth();
+export default function CreateEvent({
+  modal,
+  toggleModal,
+  dog,
+  updateAttendingList,
+}) {
   const initial = {
     title: '',
     datetime: '',
@@ -119,6 +123,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
         //   .then(() => console.info('Event posted'))
         //   .catch((err) => console.error(err));
         toggleModal();
+        // updateAttendingList();
         resetForm();
       })
       .catch((err) => console.error(err));
@@ -227,7 +232,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
               onChange={(text) => handleChange('description', text)}
               value={form.description}
             />
-            <Text style={styles.formText}>Add Friends</Text>
+            <Text style={styles.formText}>Add Furrr-ends +</Text>
             {/* <TouchableOpacity style={styles.imageContainer}>
           <Image
             style={styles.image}
