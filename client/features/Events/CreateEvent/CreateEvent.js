@@ -18,8 +18,10 @@ import axios from 'axios';
 import { API_URL } from '@env';
 import { parseISO, format, parse, formatISO } from 'date-fns';
 import { dummyDogFriends } from '../sampleData.js';
+import { useAuth } from '../../../context/Provider';
 
 export default function CreateEvent({ modal, toggleModal, dog }) {
+  const { user } = useAuth();
   const initial = {
     title: '',
     datetime: '',
@@ -27,9 +29,9 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
     invitees: [],
     attendees: [],
     hostMeta: {
-      dogId: '640a4f8c3747a59c304539da',
-      name: 'Kiwi', // to update to dog.name
-      mainImgPath: "http://3.bp.blogspot.com/-GfiMn3VSfnc/VigKnxj9x5I/AAAAAAAA9zI/CXLjzRlI2yA/s1600/boo2.jpg", // to update to dog.mainImagePath
+      dogId: user._id,
+      name: user.name, // to update to dog.name
+      mainImgPath: user.mainImageUrl, // to update to dog.mainImagePath
     },
     location: {
       address1: '',
@@ -97,7 +99,10 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
   };
 
   const handleCreateEvent = () => {
-    const formattedDate = formatISO(parse(form.datetime, 'M/d/yyyy h:mm a', new Date()), { representation: 'complete' });
+    const formattedDate = formatISO(
+      parse(form.datetime, 'M/d/yyyy h:mm a', new Date()),
+      { representation: 'complete' },
+    );
     console.log('check formattedDate', formattedDate);
 
     const formData = {

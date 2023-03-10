@@ -19,7 +19,7 @@ import { Slider } from '@miblanchard/react-native-slider';
 import Profile from './ProfileView.jsx';
 import api from '../../api';
 import axios from 'axios';
-import { API_URL, USER_ID } from '@env';
+import { API_URL } from '@env';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const { width, height, fontScale } = Dimensions.get('window');
@@ -51,12 +51,12 @@ const Home = ({ navigation }) => {
   const [sizeFilter, setSizeFilter] = useState(false);
   const [totalFilter, setTotalFilter] = useState(0);
   //* */
-  const { doggo } = useAuth();
+  const { user } = useAuth();
 
   useEffect(() => {
     Promise.all([
-      axios.get(`${API_URL}/api/dogs/${USER_ID}`),
-      axios.get(`${API_URL}/api/dogs/${USER_ID}/one`),
+      axios.get(`${API_URL}/api/dogs/${user._id}`),
+      axios.get(`${API_URL}/api/dogs/${user._id}/one`),
     ])
       .then((res) => {
         setUsers(res[0].data);
@@ -68,7 +68,6 @@ const Home = ({ navigation }) => {
       });
   }, [update]);
 
-  const { user } = useAuth();
   //maybe implement it later, since it doesn't matter for the moment
   const onSwipeLeft = (users, currentSwipe) => {
     if (users.rejectedDogs) {

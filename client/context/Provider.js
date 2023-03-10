@@ -35,8 +35,8 @@ const dummyDog = {
   _id: '6408d66fec97eb3b6680290f',
   name: 'Kiwi',
   breed: 'Golden Retriever',
-  mainImage: 'https://i.ibb.co/gSq3C1N/kiwi2.jpg',
-  images: [
+  mainImageUrl: 'https://i.ibb.co/gSq3C1N/kiwi2.jpg',
+  imageUrls: [
     'https://i.ibb.co/9cf7Fwc/kiwi.jpg',
     'https://i.ibb.co/fdrv6wX/kiwi3.jpg',
     'https://i.ibb.co/FxzLxGH/kiwi4.jpg',
@@ -54,10 +54,14 @@ const dummyDog = {
     city: 'San Francisco',
     state: 'CA',
     postalCode: '94109',
+    coordinates: {
+      lat: 37.7917,
+      lng: -122.4186,
+    },
   },
   owner: {
     name: 'Heyme',
-    image: 'https://i.ibb.co/QcRqhYs/4f2f570afa15.jpg',
+    imageUrl: 'https://i.ibb.co/QcRqhYs/4f2f570afa15.jpg',
   },
 };
 
