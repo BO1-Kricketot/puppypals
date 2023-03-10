@@ -19,7 +19,7 @@ import { Slider } from '@miblanchard/react-native-slider';
 import Profile from './ProfileView.jsx';
 import api from '../../api';
 import axios from 'axios';
-import { API_URL } from '@env';
+import { API_URL, USER_ID } from '@env';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const { width, height, fontScale } = Dimensions.get('window');
@@ -55,8 +55,8 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     Promise.all([
-      axios.get(`${API_URL}/api/dogs/6408d66fec97eb3b6680291a`),
-      axios.get(`${API_URL}/api/dogs/6408d66fec97eb3b6680291a/one`),
+      axios.get(`${API_URL}/api/dogs/${USER_ID}`),
+      axios.get(`${API_URL}/api/dogs/${USER_ID}/one`),
     ])
       .then((res) => {
         setUsers(res[0].data);
