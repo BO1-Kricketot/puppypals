@@ -24,12 +24,11 @@ export default function Profile() {
   const [modalVisible, setModalVisible] = useState(false);
   const [profileChanged, setProfileChanged] = useState(false);
 
-  // for testing dogs explicitly
-  const dogId = '640953de8561912677bd1167';
-  // const dogId = '640953de8561912677bd115b';
-
   // for reals
-  // const { user } = useAuth();
+  const { user } = useAuth();
+
+  // for testing dogs explicitly
+  const dogId = user._id;
 
   const {
     container,
