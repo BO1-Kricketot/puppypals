@@ -17,6 +17,7 @@ import { parseISO, format } from 'date-fns';
 import { io } from 'socket.io-client';
 import dummyData from './dummyData.js';
 import Profile from '../Profile';
+import { useAuth } from '../../context/Provider.js';
 
 const socket = io('http://192.168.12.141:3000/');
 
@@ -25,8 +26,11 @@ export default function Chat() {
   const [currentMessage, setCurrentMessage] = useState('');
   const [showProfile, setShowProfile] = useState(false);
   const [messages, setMessages] = useState(dummyData.Chats.messages);
-  const {Chats, CurrentUser1, CurrentUser2} = dummyData;
-  const [currentMessageId, setCurrentMessageId] = useState(Chats.messages[Chats.messages.length - 1]._id);
+  const { Chats, CurrentUser1, CurrentUser2 } = dummyData;
+  const [currentMessageId, setCurrentMessageId] = useState(
+    Chats.messages[Chats.messages.length - 1]._id,
+  );
+  const { user } = useAuth();
 
   useEffect(() => {
     socket.on('connect', () => {
@@ -41,18 +45,18 @@ export default function Chat() {
 
     socket.emit('join-room', Chats._id, (message) => {
       console.log(message);
-    })
-  },[]);
+    });
+  }, []);
 
   useEffect(() => {
     socket.on('receive-message', handleMessageReceive);
-  },[messages]);
+  }, [messages]);
 
   const handleMessageReceive = (message) => {
     const changedMsg = message;
     changedMsg.userId = CurrentUser1._id;
     setMessages([...messages, changedMsg]);
-  }
+  };
 
   const handleMessageSend = () => {
     const newMessage = {
@@ -61,7 +65,7 @@ export default function Chat() {
       body: currentMessage,
       timestamp: new Date(),
       reactions: [],
-    }
+    };
     // socket.emit('post', newMessage, dummyChats._id);
     setCurrentMessageId(currentMessageId + 1);
     socket.emit('post', newMessage, Chats._id);
@@ -74,66 +78,73 @@ export default function Chat() {
   };
 
   if (showProfile) {
-    return (
-      <Profile callback={handleReturn}/>
-    )
+    return <Profile callback={handleReturn} />;
   }
 
   return (
     <>
       <SafeAreaView style={container}>
         <View style={headerContainer}>
-          <Text style={userName}>
-            {CurrentUser2.name}
-          </Text>
-          <View style={{ width: 50, height: 50, marginLeft: 'auto', marginRight: 10 }}>
+          <Text style={userName}>{CurrentUser2.name}</Text>
+          <View
+            style={{
+              width: 50,
+              height: 50,
+              marginLeft: 'auto',
+              marginRight: 10,
+            }}>
             <TouchableOpacity
-              onPress={()=>{setShowProfile(true)}}
-              >
-            <Image
-              style={userPicContainer}
-              source={{ uri: 'https://www.essence.com/wp-content/uploads/2014/01/images/2013/11/11/steve-harvey-show.jpg'}}
+              onPress={() => {
+                setShowProfile(true);
+              }}>
+              <Image
+                style={userPicContainer}
+                source={{
+                  uri: 'https://www.essence.com/wp-content/uploads/2014/01/images/2013/11/11/steve-harvey-show.jpg',
+                }}
               />
-              </TouchableOpacity>
+            </TouchableOpacity>
           </View>
         </View>
         <ScrollView>
           <Image
             source={require('../../assets/heart.png')}
-            style={{width:25, height: 25}}
+            style={{ width: 25, height: 25 }}
           />
-          {messages.map((chat,i) => {
+          {messages.map((chat, i) => {
             return (
               <View
-                style={chat.userId === CurrentUser1._id ? user1BubbleContainer: user2BubbleContainer}
-                key={i}
-              >
+                style={
+                  chat.userId === CurrentUser1._id
+                    ? user1BubbleContainer
+                    : user2BubbleContainer
+                }
+                key={i}>
                 <Text
-                  style={chat.userId === CurrentUser1._id ? user1Bubble: user2Bubble}
-                  onPress={() => {console.log(chat._id)}}
-                >
+                  style={
+                    chat.userId === CurrentUser1._id ? user1Bubble : user2Bubble
+                  }
+                  onPress={() => {
+                    console.log(chat._id);
+                  }}>
                   {chat.body}
                 </Text>
               </View>
-            )
+            );
           })}
         </ScrollView>
         <View style={inputContainer}>
           <TextInput
-            placeholder='Send a message!'
-            placeholderTextColor='black'
+            placeholder="Send a message!"
+            placeholderTextColor="black"
             style={input}
             onChangeText={setCurrentMessage}
           />
-          <Button
-            title='Send'
-            onPress={handleMessageSend}
-            color='#7371fc'
-          />
+          <Button title="Send" onPress={handleMessageSend} color="#7371fc" />
         </View>
       </SafeAreaView>
     </>
-  )
+  );
 }
 
 const chatStyle = StyleSheet.create({
@@ -188,7 +199,7 @@ const chatStyle = StyleSheet.create({
     backgroundColor: '#CDC1FF',
     borderRadius: 10,
     padding: 7,
-    color: 'white'
+    color: 'white',
   },
   user2Bubble: {
     backgroundColor: '#A594F9',
@@ -197,12 +208,20 @@ const chatStyle = StyleSheet.create({
     color: 'white',
   },
   userName: {
-    color: '#474747'
-  }
+    color: '#474747',
+  },
 });
 
 const {
-  container, headerContainer, userPicContainer, inputContainer,
-  input, user1BubbleContainer, user2BubbleContainer, timestamp, userName,
-  user1Bubble, user2Bubble
-} = chatStyle
+  container,
+  headerContainer,
+  userPicContainer,
+  inputContainer,
+  input,
+  user1BubbleContainer,
+  user2BubbleContainer,
+  timestamp,
+  userName,
+  user1Bubble,
+  user2Bubble,
+} = chatStyle;
