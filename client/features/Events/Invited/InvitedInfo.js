@@ -140,10 +140,16 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 20,
     marginBottom: 15,
+    shadowColor: '#66666E',
+    shadowOpacity: 0.5,
+    elevation: 2,
   },
   rsvpCard: {
     backgroundColor: 'white',
     borderRadius: 12,
+    shadowColor: '#66666E',
+    shadowOpacity: 0.5,
+    elevation: 2,
   },
   eventTitle: {
     fontSize: 18,
@@ -166,7 +172,7 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingVertical: 10,
     borderRadius: 15,
-    marginBottom: 10,
+    marginBottom: 20,
     alignSelf: 'center',
   },
   hostName: {
