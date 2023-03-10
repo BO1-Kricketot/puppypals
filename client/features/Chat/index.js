@@ -13,11 +13,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { parseISO, format } from 'date-fns';
 import { io } from 'socket.io-client';
 import dummyData from './dummyData.js';
 import Profile from '../Profile';
 import { useAuth } from '../../context/Provider.js';
+import ChatEntry from './ChatEntry';
 
 const socket = io('http://192.168.12.141:3000/');
 
@@ -73,6 +73,19 @@ export default function Chat() {
     // axios.post(`api/messages/`);
   };
 
+  const addReaction = (reaction, chatId) => {
+    const copy = messages;
+    copy.map((message) => {
+      if (message._id === chatId) {
+        message.reactions.push(reaction);
+        return message;
+      } else {
+        return message;
+      }
+    });
+    setMessages(copy);
+  };
+
   const handleReturn = () => {
     setShowProfile(false);
   };
@@ -107,30 +120,8 @@ export default function Chat() {
           </View>
         </View>
         <ScrollView>
-          <Image
-            source={require('../../assets/heart.png')}
-            style={{ width: 25, height: 25 }}
-          />
           {messages.map((chat, i) => {
-            return (
-              <View
-                style={
-                  chat.userId === CurrentUser1._id
-                    ? user1BubbleContainer
-                    : user2BubbleContainer
-                }
-                key={i}>
-                <Text
-                  style={
-                    chat.userId === CurrentUser1._id ? user1Bubble : user2Bubble
-                  }
-                  onPress={() => {
-                    console.log(chat._id);
-                  }}>
-                  {chat.body}
-                </Text>
-              </View>
-            );
+            return <ChatEntry chat={chat} key={i} addReaction={addReaction} />;
           })}
         </ScrollView>
         <View style={inputContainer}>
@@ -180,33 +171,6 @@ const chatStyle = StyleSheet.create({
   input: {
     width: '88%',
   },
-  user1BubbleContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    height: 40,
-  },
-  user2BubbleContainer: {
-    alignItems: 'center',
-    flexDirection: 'row-reverse',
-    height: 40,
-  },
-  timestamp: {
-    marginRight: '2%',
-    marginLeft: '2%',
-    fontSize: 10,
-  },
-  user1Bubble: {
-    backgroundColor: '#CDC1FF',
-    borderRadius: 10,
-    padding: 7,
-    color: 'white',
-  },
-  user2Bubble: {
-    backgroundColor: '#A594F9',
-    borderRadius: 10,
-    padding: 7,
-    color: 'white',
-  },
   userName: {
     color: '#474747',
   },
@@ -218,10 +182,5 @@ const {
   userPicContainer,
   inputContainer,
   input,
-  user1BubbleContainer,
-  user2BubbleContainer,
-  timestamp,
   userName,
-  user1Bubble,
-  user2Bubble,
 } = chatStyle;
