@@ -92,7 +92,7 @@ export default function Events() {
         </View>
         <View styles={styles.iconStyle}>
           <TouchableOpacity onPress={toggleModal}>
-            <Ionicons name="add-circle-outline" size={30} color="#7371FC" />
+            <Ionicons name="add-circle-outline" size={27} color="#7371FC" />
           </TouchableOpacity>
         </View>
       </View>
@@ -144,13 +144,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#7371FC',
     borderColor: '#7371FC',
-    borderWidth: 2,
+    borderWidth: 1,
     padding: 1,
   },
   inactiveTab: {
     flex: 1,
     borderColor: '#7371FC',
-    borderWidth: 2,
+    borderWidth: 1,
     padding: 1,
   },
   activeText: {

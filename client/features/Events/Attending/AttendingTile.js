@@ -3,10 +3,16 @@ import React, { useState } from 'react';
 import api from '../../../api';
 import Constants from 'expo-constants';
 import AttendingInfo from './AttendingInfo.js';
+import { parseISO, format } from 'date-fns';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function AttendingTile({ event }) {
   const [modal, setModal] = useState(false);
-  const dogID = 2;
+
+  const formattedDate = format(
+    parseISO(event.datetime),
+    'EEE, MMM d, yyyy h:mm a',
+  );
 
   const toggleModal = () => {
     setModal(!modal);
@@ -14,21 +20,37 @@ export default function AttendingTile({ event }) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={toggleModal}>
+      <TouchableOpacity onPress={toggleModal} style={styles.row}>
         <View style={styles.hostContainer}>
           <View style={styles.imageContainer}>
-            <Image
-              style={styles.image}
-              source={{ uri: event.hostMeta.mainImgPath }}
-            />
+            {event.hostMeta.dogId === 1 ? (
+              <Image
+                style={styles.hostImage}
+                source={{ uri: event.hostMeta.mainImgPath }}
+              />
+            ) : (
+              <Image
+                style={styles.image}
+                source={{ uri: event.hostMeta.mainImgPath }}
+              />
+            )}
           </View>
-          {event.hostMeta.dogId === 1 && <Text>HOST</Text>}
-          <Text>{event.hostMeta.name}</Text>
+          {event.hostMeta.dogId === 1 ? (
+            <View style={styles.hostDesignation}>
+              <Ionicons name="ios-paw" size={12} color="#7371FC" />
+              <Text style={styles.userHost}>HOST</Text>
+              <Ionicons name="ios-paw" size={12} color="#7371FC" />
+            </View>
+          ) : (
+            <Text style={styles.hostName}>{event.hostMeta.name}</Text>
+          )}
         </View>
         <View style={styles.eventDetails}>
-          <Text>{event.datetime}</Text>
-          <Text>{event.title}</Text>
-          <Text>{`${event.location.city}, ${event.location.state}`}</Text>
+          <Text>{formattedDate}</Text>
+          <Text style={styles.eventTitle}>{event.title}</Text>
+          <Text style={styles.eventLocation}>
+            {`${event.location.city}, ${event.location.state}`}
+          </Text>
         </View>
       </TouchableOpacity>
       {modal && (
@@ -40,21 +62,29 @@ export default function AttendingTile({ event }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: '1%',
-    backgroundColor: 'blue',
-    height: 115,
-    // flexDirection: 'row',
+    marginTop: '2%',
+    backgroundColor: '#FFFFFF',
+  },
+  row: {
+    flexDirection: 'row',
   },
   hostContainer: {
-    backgroundColor: 'lightslategray',
+    flex: 1,
     alignItems: 'center',
+    paddingVertical: 10,
+    marginLeft: 10,
+  },
+  eventDetails: {
+    flex: 3,
     justifyContent: 'center',
+    paddingVertical: 10,
+    marginLeft: 10,
   },
   imageContainer: {
-    width: 50,
-    height: 50,
-    marginLeft: 'auto',
-    marginRight: 10,
+    width: 52,
+    height: 52,
+    justifyContent: 'center',
+    margin: '1%',
   },
   image: {
     flex: 1,
@@ -62,7 +92,35 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     width: '100%',
   },
-  // eventDetails: {
-  //   flex: 2,
-  // },
+  hostImage: {
+    flex: 1,
+    margin: '2%',
+    borderRadius: 25,
+    width: '100%',
+    borderWidth: 3,
+    borderColor: '#7371FC',
+  },
+  eventTitle: {
+    fontSize: 17,
+    fontWeight: 450,
+    marginTop: 4,
+    marginBottom: 4,
+  },
+  eventLocation: {
+    fontSize: 12,
+  },
+  hostName: {
+    fontSize: 12,
+  },
+  hostDesignation: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  userHost: {
+    fontSize: 12,
+    fontStyle: 'italic',
+    fontWeight: '700',
+    color: '#7371FC',
+    marginHorizontal: 2,
+  },
 });

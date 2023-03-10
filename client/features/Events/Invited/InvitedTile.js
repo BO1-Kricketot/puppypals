@@ -64,8 +64,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   hostContainer: {
-    // backgroundColor: 'lightslategray',
-    // backgroundColor: 'white',
     flex: 1,
     alignItems: 'center',
     paddingVertical: 10,
@@ -94,6 +92,7 @@ const styles = StyleSheet.create({
   eventTitle: {
     // backgroundColor: 'white',
     fontSize: 17,
+    fontWeight: 450,
     marginTop: 4,
     marginBottom: 4,
   },
