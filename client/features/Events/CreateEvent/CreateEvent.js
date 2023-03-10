@@ -16,7 +16,7 @@ import Constants from 'expo-constants';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 import { API_URL } from '@env';
-import { parseISO, format } from 'date-fns';
+import { parseISO, format, parse, formatISO } from 'date-fns';
 import { dummyDogFriends } from '../sampleData.js';
 
 export default function CreateEvent({ modal, toggleModal, dog }) {
@@ -29,7 +29,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
     hostMeta: {
       dogId: '640a4f8c3747a59c304539da',
       name: 'Kiwi', // to update to dog.name
-      mainImgPath: 'thiswillbeaURL', // to update to dog.mainImagePath
+      mainImgPath: "http://3.bp.blogspot.com/-GfiMn3VSfnc/VigKnxj9x5I/AAAAAAAA9zI/CXLjzRlI2yA/s1600/boo2.jpg", // to update to dog.mainImagePath
     },
     location: {
       address1: '',
@@ -93,18 +93,26 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
         datetime: `${form.datetime} ${formattedTime}`,
       });
     }
+    console.log('check date time', form.datetime);
   };
 
   const handleCreateEvent = () => {
-    console.log('data saved');
+    const formattedDate = formatISO(parse(form.datetime, 'M/d/yyyy h:mm a', new Date()), { representation: 'complete' });
+    console.log('check formattedDate', formattedDate);
+
+    const formData = {
+      ...form,
+      date: formattedDate,
+    };
+
     axios
-      .post(`${API_URL}/events`, form)
+      .post(`${API_URL}/events`, formData)
       .then((result) => {
-        const eventId = result._id;
-        axios
-          .post(`${API_URL}/einvites`, { ...form, eventId })
-          .then(() => console.info('Event posted'))
-          .catch((err) => console.error(err));
+        // const eventId = result._id;
+        // axios
+        //   .post(`${API_URL}/einvites`, { ...formData, eventId })
+        //   .then(() => console.info('Event posted'))
+        //   .catch((err) => console.error(err));
         toggleModal();
         resetForm();
       })
