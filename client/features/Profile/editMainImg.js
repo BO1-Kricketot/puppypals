@@ -2,8 +2,13 @@ import React from 'react';
 import { Button, Image, StyleSheet, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
-export default function MainImgEditor({ imgKey, mainPicCopy, setMainPicCopy }) {
-  // const ext = mainPicCopy[0].match(/\.(jpg|jpeg|png|gif|bmp)$/i)[1];
+export default function MainImgEditor({
+  imgKey,
+  mainPicCopy,
+  setMainPicCopy,
+  mainPicBase64,
+  setMainPicBase64,
+}) {
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -14,6 +19,7 @@ export default function MainImgEditor({ imgKey, mainPicCopy, setMainPicCopy }) {
     });
 
     if (!result.canceled) {
+      setMainPicBase64(result.assets[0].base64);
       setMainPicCopy([result.assets[0].uri]);
     }
   };
@@ -22,11 +28,7 @@ export default function MainImgEditor({ imgKey, mainPicCopy, setMainPicCopy }) {
     <View style={imageStyles.container}>
       <Button title="Edit Main Pic" onPress={pickImage} />
       {mainPicCopy && (
-        <Image
-          source={{ uri: mainPicCopy[0] }}
-          // uri: `data:image/${ext};base64, ${mainPicCopy[0].base64}`
-          style={imageStyles.pickImage}
-        />
+        <Image source={{ uri: mainPicCopy[0] }} style={imageStyles.pickImage} />
       )}
     </View>
   );

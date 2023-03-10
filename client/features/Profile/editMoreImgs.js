@@ -6,8 +6,9 @@ export default function MoreImgsEditor({
   imgKey,
   morePicsCopy,
   setMorePicsCopy,
+  morePicsBase64,
+  setMorePicsBase64,
 }) {
-  // const ext = morePicsCopy[imgKey].match(/\.(jpg|jpeg|png|gif|bmp)$/i)[1];
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -21,6 +22,10 @@ export default function MoreImgsEditor({
       const newPicList = morePicsCopy.slice();
       newPicList[imgKey] = result.assets[0].uri;
       setMorePicsCopy([...newPicList]);
+
+      const newBase64List = morePicsBase64.slice();
+      newBase64List[imgKey] = result.assets[0].base64;
+      setMorePicsBase64([...newBase64List]);
     }
   };
 
@@ -30,7 +35,6 @@ export default function MoreImgsEditor({
       {morePicsCopy && (
         <Image
           source={{ uri: morePicsCopy[imgKey] }}
-          // uri: `data:image/${ext};base64,${morePicsCopy[imgKey].base64}`
           style={imageStyles.pickImage}
         />
       )}

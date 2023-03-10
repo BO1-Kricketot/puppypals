@@ -30,7 +30,9 @@ export default function ModalContainer({
   setProfileChanged,
 }) {
   const [mainPicCopy, setMainPicCopy] = useState([...mainPic]);
+  const [mainPicBase64, setMainPicBase64] = useState('');
   const [morePicsCopy, setMorePicsCopy] = useState([...morePics]);
+  const [morePicsBase64, setMorePicsBase64] = useState([]);
   const [city, setCity] = useState(info.location.city);
   const [state, setState] = useState(info.location.state);
   const [dogBioCopy, setDogBioCopy] = useState(info.bio);
@@ -40,24 +42,41 @@ export default function ModalContainer({
     infoCopy.location.coordinates = { ...info.location.coordinates };
     infoCopy.location = { ...info.location };
 
+    mainPicBase64 === ''
+      ? (infoCopy.mainImageUrl = mainPicCopy[0])
+      : (infoCopy.mainImageUrl = mainPicBase64);
+
+    // morePicsBase64.length
+    //   ? (infoCopy.imageUrls = [...morePicsCopy, ...morePicsBase64])
+    //   : (infoCopy.imageUrls = [...morePicsCopy]);
+
+    const arrayCopy = [...morePicsCopy];
+    if (morePicsBase64.length) {
+      const regex = /file:/g;
+      for (let i = 0; i < arrayCopy.length; i += 1) {
+        if (regex.test(arrayCopy[i])) {
+          arrayCopy[i] = morePicsBase64[i];
+        }
+      }
+    }
+    infoCopy.imageUrls = [...arrayCopy];
+    setMorePicsBase64([]);
+
+    infoCopy.imageUrls = infoCopy.imageUrls.filter(
+      (imageUrl) => imageUrl !== '../assets/noPic1.png',
+    );
+
     infoCopy.location.city = city;
     infoCopy.location.state = state;
     infoCopy.bio = dogBioCopy;
 
-    // do a big old put (or patch) request in real life
     api
       .patchUserProfile(info._id, infoCopy)
       .then(() => {
-        // keep
         setModalVisible(!modalVisible);
         setProfileChanged(!profileChanged);
       })
       .catch((err) => console.error(err));
-
-    // get rid of for live data
-    // setInfo(infoCopy);
-    // setMainPic(mainPicCopy);
-    // setMorePics(morePicsCopy);
   };
 
   return (
@@ -79,7 +98,9 @@ export default function ModalContainer({
               key={111} // make it super obvious
               imgKey={111}
               mainPicCopy={mainPicCopy}
+              mainPicBase64={mainPicBase64}
               setMainPicCopy={setMainPicCopy}
+              setMainPicBase64={setMainPicBase64}
             />
             <View style={{ flex: 1, flexDirection: 'row' }}>
               {morePicsCopy.map((slot, i) => (
@@ -87,7 +108,9 @@ export default function ModalContainer({
                   key={i}
                   imgKey={i}
                   morePicsCopy={morePicsCopy}
+                  morePicsBase64={morePicsBase64}
                   setMorePicsCopy={setMorePicsCopy}
+                  setMorePicsBase64={setMorePicsBase64}
                 />
               ))}
             </View>
