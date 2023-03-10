@@ -10,12 +10,12 @@ module.exports = {
    *
    * TODO: Implement
    */
-  registerDog(req, res) {
+  async registerDog(req, res) {
     const dogInfo = JSON.parse(JSON.stringify(req.body));
     delete dogInfo.dogId;
     // console.log(dogInfo);
-    DogModel.findOneAndUpdate({ _id: req.body.dogId }, dogFormatter(dogInfo))
-      .then(() => res.status(200).send({ message: 'Dog has been created' }))
+    DogModel.findOneAndUpdate({ _id: req.body.dogId }, await dogFormatter(dogInfo))
+      .then((result) => res.status(200).send(result))
       .catch((e) => console.log(e));
   },
 

@@ -19,6 +19,7 @@ import axios from 'axios';
 import { API_URL } from '@env';
 import { useRouter } from 'expo-router';
 import { id } from './CreateAccount.js';
+import { useAuth } from '../../context/Provider.js';
 
 const CreateProfile = (props) => {
   const [dogName, setDogName] = useState();
@@ -42,6 +43,7 @@ const CreateProfile = (props) => {
   const [zip, setZip] = useState();
   const baseUrl = API_URL;
   const router = useRouter();
+  const { signIn } = useAuth();
   // console.log(id);
 
   const pickOwnerImage = async () => {
@@ -132,7 +134,13 @@ const CreateProfile = (props) => {
       };
       axios
         .post(`${baseUrl}/api/dogs`, dogInfo)
-        .then((res) => router.push('/home')) // console.log(res))
+        .then((res) => {
+          // console.log(res.data);
+          delete dogInfo.dogId;
+          const newDog = { ...dogInfo, _id: res.data._id };
+          signIn(newDog);
+          router.push('/home');
+        }) // console.log(res))
         .catch((e) => console.log(e));
     }
   };

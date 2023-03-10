@@ -73,7 +73,7 @@ export function Provider(props) {
   return (
     <AuthContext.Provider
       value={{
-        signIn: () => setUser({}),
+        signIn: (dog) => setUser(dog),
         signOut: () => setUser(null),
         setUser,
         user,
