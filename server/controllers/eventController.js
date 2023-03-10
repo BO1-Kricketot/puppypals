@@ -12,6 +12,7 @@ module.exports = {
       ...event.location,
       coordinates: await api.getCoordinates(event.location),
     };
+    console.log('check event', event);
     return EventModel.create(event)
       .then((result) => {
         console.log(result);
@@ -48,17 +49,29 @@ module.exports = {
    * req.params = { dogId: 123 }
    */
 
-  getEventsByDogId(req, res) {
+  getAttendingEventsByDogId(req, res) {
     const { dogId } = req.params;
 
-    return EventModel.find()
+    return EventModel.find({ attendees: dogId })
       .exec()
       .then((result) => {
-        const filtered = result.map((event) => event.attendees.includes(dogId));
-        res.status(200).send(filtered);
+        // const filtered = result.map((event) => event.attendees.includes(dogId));
+        res.status(200).send(result);
       })
       .catch((err) => res.status(500).send(err));
   },
+
+  getInvitedEventsByDogId(req, res) {
+    const { dogId } = req.params;
+
+    return EventModel.find({ invitees: dogId })
+      .exec()
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => res.status(500).send(err));
+  },
+
 
   /**
    * Updates one Event by (Event)_id with new information
