@@ -7,13 +7,14 @@ import {
   Platform,
   StatusBar,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 const { width, height } = Dimensions.get('window');
 //if you need to use the width and height for some reason
 
 //pass in a dog object
 
-export default function Profile() {
+export default function Profile({callback}) {
   const isAndroid = Platform.OS === 'android';
 
   const dummyPics = [
@@ -74,10 +75,12 @@ export default function Profile() {
         <View style={userInfoContainer}>
           <Text style={{ marginLeft: 10 }}>{dummyInfo.ownerName}</Text>
           <View style={{ width: 50, height: 50, marginLeft: 20 }}>
-            <Image
-              style={userPicContainer}
-              source={{ uri: dummyInfo.ownerPic }}
-            />
+            <TouchableOpacity onPress={callback}>
+              <Image
+                style={userPicContainer}
+                source={{ uri: dummyInfo.ownerPic }}
+              />
+            </TouchableOpacity>
           </View>
           <View style={{ width: 50, height: 50, marginLeft: 'auto', marginRight: 10 }}>
           <Image
