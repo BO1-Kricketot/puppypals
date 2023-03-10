@@ -1,5 +1,6 @@
 import CreateProfile from '../features/LogInSignUp/CreateProfile';
 
-export default function createprofile() {
-  return <CreateProfile />;
+export default function createprofile(...e) {
+  // console.log(e);
+  return <CreateProfile id={e} />;
 }

@@ -36,10 +36,7 @@ export default function Layout() {
           name="index"
           options={{
             href: null,
-            tabBarStyle:
-              process.env.NODE_ENV === 'development'
-                ? { display: 'flex' }
-                : { display: 'none' },
+            tabBarStyle: { display: 'none' },
           }}
         />
         <Tabs.Screen name="home" options={{ href: '/home' }} />
