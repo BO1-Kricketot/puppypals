@@ -15,7 +15,7 @@ module.exports = {
     delete dogInfo.dogId;
     console.log(dogInfo);
     const newDog = DogModel.findOneAndUpdate({_id: req.body.dogId}, dogFormatter(dogInfo))
-    console.log(newDog)
+    // console.log(newDog)
     // newDog.save()
   },
 
@@ -90,7 +90,7 @@ module.exports = {
           let modObj = {...dog, _doc: {...dog._doc, distanceFrom: calculatedDistance[index]}}
           return modObj._doc;
         })
-        
+
         res.status(200).send(resultDogs);
         })
     .catch(err => {
@@ -131,7 +131,14 @@ module.exports = {
    * TODO: Implement
    */
   updateDogById(req, res) {
-    throw new Error('updateDogById not implemented yet!');
+    const updateObj = {pendingDogs: req.body.pendingDogs};
+    DogModel.findByIdAndUpdate(req.params['_id'], updateObj)
+    .exec()
+    .then((result)=>{
+      res.status(200).send(result);
+    })
+    
+
   },
 
   /**

@@ -15,60 +15,15 @@ import {
   Switch,
 } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
-import Slider from 'react-native-sliders';
+import { Slider } from '@miblanchard/react-native-slider';
 import Profile from './ProfileView.jsx';
 import api from '../../api';
 import axios from 'axios';
 import { API_URL } from '@env';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const { width, height, fontScale } = Dimensions.get('window');
 
-const dummyPics = [
-  {
-    default: true,
-    url: 'http://3.bp.blogspot.com/-GfiMn3VSfnc/VigKnxj9x5I/AAAAAAAA9zI/CXLjzRlI2yA/s1600/boo2.jpg',
-  },
-  {
-    default: false,
-    url: 'https://i.ytimg.com/vi/xEDP5N5SNQM/maxresdefault.jpg',
-  },
-  {
-    default: false,
-    url: 'http://2.bp.blogspot.com/-o1Nlm1LBxD0/UKpxdFESiuI/AAAAAAAAKQg/6FynR1gMNqU/s1600/cute-puppy-pictures-901.jpg',
-  },
-  {
-    default: false,
-    url: 'http://3.bp.blogspot.com/-90Yj9zzFtn4/Tp-4Ai23riI/AAAAAAAAAhc/AvNYsJxGuuQ/s1600/Cute-Puppy-Dog.jpg',
-  },
-  {
-    default: false,
-    url: 'https://4.bp.blogspot.com/-f_ubVt0YDqs/VkyD1uolD5I/AAAAAAAAAiA/X2VaFT6cE0M/s1600/Q9.jpg',
-  },
-  {
-    default: false,
-    url: 'https://wallpapercave.com/wp/wp2480956.jpg',
-  },
-];
-
-const dummyInfo = {
-  dogName: 'Billie',
-  dogBreed: 'Poodle',
-  location: 'Chicago, IL',
-  photos: dummyPics,
-  peopleFriendly: true,
-  dogFriendly: true,
-  dogBio:
-    'Billie is a sweety little snookums that loves to sniff butts and stuff. Yay!',
-  ownerPic:
-    'https://cdn.vox-cdn.com/thumbor/Q73rxBmj9RGeTpqoaxIpBJX-yGo=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/24472321/1244630992.jpg',
-  ownerName: 'Peppy',
-};
-const dummyUsers = [
-  { ...dummyInfo, id: 1 },
-  { ...dummyInfo, id: 2 },
-  { ...dummyInfo, id: 3 },
-  { ...dummyInfo, id: 4 },
-];
 const applyFilter = (filterName, filterValue, usersArray) => {
   return usersArray.filter((dog) => {
     return dog.filterName === filterValue;
@@ -77,17 +32,31 @@ const applyFilter = (filterName, filterValue, usersArray) => {
 import { useAuth } from '../../context/Provider';
 
 const Home = ({ navigation }) => {
-
   const [picClicked, setPicClicked] = useState(false);
   const [filterVisible, setFilterVisible] = useState(false);
   const [userProfile, setUserProfile] = useState({});
   const [users, setUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
+  const [update, setUpdate] = useState(false);
+  const [startIndex, setStartIndex] = useState(0);
+  const [match, setMatch] = useState(false);
+  const [sliderValue, setSliderValue] = useState(0);
+  //Filter States
+  //* */
+  const [applyFilter, setApplyFilter] = useState({});
+  const [dogFriendlinessFilter, setDogFriendlinessFilter] = useState(false);
+  const [humanFriendlinessFilter, setHumanFriendlinessFilter] = useState(false);
+  const [energyFilter, setEnergyFilter] = useState(false);
+  const [distanceFilter, setDistanceFilter] = useState(false);
+  const [sizeFilter, setSizeFilter] = useState(false);
+  const [totalFilter, setTotalFilter] = useState(0);
+  //* */
+  const { doggo } = useAuth();
 
   useEffect(() => {
     Promise.all([
-      axios.get(`${API_URL}/api/dogs/6408d66fec97eb3b6680290f`),
-      axios.get(`${API_URL}/api/dogs/6408d66fec97eb3b6680290f/one`),
+      axios.get(`${API_URL}/api/dogs/6408d66fec97eb3b6680291a`),
+      axios.get(`${API_URL}/api/dogs/6408d66fec97eb3b6680291a/one`),
     ])
       .then((res) => {
         setUsers(res[0].data);
@@ -97,18 +66,67 @@ const Home = ({ navigation }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [update]);
 
   const { user } = useAuth();
-
-  useEffect(() => {
-    console.log(user);
-  }, []);
-
+  //maybe implement it later, since it doesn't matter for the moment
+  const onSwipeLeft = (users, currentSwipe) => {
+    if (users.rejectedDogs) {
+      users.rejectedDogs.push(currentSwipe._id.toString());
+    } else {
+      users.rejectedDogs = [currentSwipe._id.toString()];
+    }
+  };
+  const onSwipeRight = (user, currentSwipe) => {
+    if (currentSwipe.pendingDogs) {
+      if (currentSwipe.pendingDogs.includes(user._id.toString())) {
+        setMatch(true);
+        setCurrentUser(currentSwipe);
+        console.log('Its a match');
+      } else {
+        user.pendingDogs
+          ? user.pendingDogs.push(currentSwipe._id.toString())
+          : (user.pendingDogs = [currentSwipe._id.toString()]);
+      }
+    } else {
+      user.pendingDogs
+        ? user.pendingDogs.push(currentSwipe._id.toString())
+        : (user.pendingDogs = [currentSwipe._id.toString()]);
+    }
+    axios
+      .patch(`${API_URL}/api/dogs/${user._id.toString()}`, user, {
+        headers: {
+          'Content-type': 'application/json',
+        },
+      })
+      .then((res) => {
+        //updated Doggo if needed
+        console.log(res.data);
+        console.log('Updated Doggo');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  // 6408d66fec97eb3b6680290f has pendingDogs: [
+  //   '6408d66fec97eb3b6680290c',
+  //   '6408d66fec97eb3b66802919',
+  //   '6408d66fec97eb3b6680291a'
+  // ]
+  const checkMatch = (user, currentSwipe) => {
+    if (currentSwipe.friendsList) {
+    } else {
+      axios.post();
+    }
+  };
   return (
     <>
       {picClicked ? (
-        <Profile picClicked={picClicked} setPicClicked={setPicClicked} />
+        <Profile
+          picClicked={picClicked}
+          setPicClicked={setPicClicked}
+          currentUser={currentUser}
+        />
       ) : (
         <SafeAreaView style={styles.container}>
           <View style={styles.userInfoContainer}>
@@ -129,7 +147,8 @@ const Home = ({ navigation }) => {
                 title="..."
                 onPress={() => {
                   setFilterVisible(true);
-                }}></Button>
+                }}
+              />
             </View>
           </View>
           <Modal
@@ -141,60 +160,282 @@ const Home = ({ navigation }) => {
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: 'black',
-                opacity: 0.5,
+                backgroundColor: '#66666E',
+                opacity: 0.9,
               }}>
-              <View>
-                <View style={{ backgroundColor: 'white', opacity: 1 }}>
-                  <View>
-                    <Text>Distance</Text>
-                    <View>
-                      <Slider value={0} maximumValue={50}></Slider>
-                    </View>
-                  </View>
-                  <View>
-                    <Text>Size</Text>
-                    <Pressable>
-                      <Text>S</Text>
-                      <Text>M</Text>
-                      <Text>L</Text>
+              <View
+                style={{
+                  backgroundColor: '#F4F4F6',
+                  width: '80%',
+                  height: '80%',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  borderColor: '#E6E6E9',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  paddingLeft: 30,
+                  paddingRight: 20,
+                }}>
+                <View style={{ width: '100%' }}>
+                  <Slider
+                    value={sliderValue || 5}
+                    minimumValue={5}
+                    maximumValue={50}
+                    step={1}
+                    onValueChange={(value) => {
+                      setSliderValue(value);
+                    }}
+                    thumbTintColor={'#CDC1FF'}
+                    minimumTrackTintColor={'#7371FC'}
+                    containerStyle={{ width: '90%' }}
+                  />
+                  <Text style={{ fontSize: 18 }}>
+                    Distance: <Text>{`${sliderValue} miles`}</Text>
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    marginTop: 20,
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{ fontSize: 18 }}>Size:</Text>
+                  <View style={{ display: 'flex', flexDirection: 'row' }}>
+                    <Pressable
+                      style={{
+                        width: 50,
+                        height: 30,
+                        backgroundColor: '#7371FC',
+                        borderWidth: 2,
+                        borderColor: '#7371FC',
+                        borderRadius: 10,
+                        margin: 10,
+                      }}>
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          marginTop: 'auto',
+                          marginBottom: 'auto',
+                        }}>
+                        S
+                      </Text>
                     </Pressable>
+                    <Pressable
+                      style={{
+                        width: 50,
+                        height: 30,
+                        backgroundColor: '#7371FC',
+                        borderWidth: 2,
+                        borderColor: '#7371FC',
+                        borderRadius: 10,
+                        margin: 10,
+                      }}>
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          marginTop: 'auto',
+                          marginBottom: 'auto',
+                        }}>
+                        M
+                      </Text>
+                    </Pressable>
+                    <Pressable
+                      style={{
+                        width: 50,
+                        height: 30,
+                        backgroundColor: '#7371FC',
+                        borderWidth: 2,
+                        borderColor: '#7371FC',
+                        borderRadius: 10,
+                        margin: 10,
+                      }}>
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          marginTop: 'auto',
+                          marginBottom: 'auto',
+                        }}>
+                        L
+                      </Text>
+                    </Pressable>
+                    {/* <Pressable>
+                    <Text>S</Text> </Pressable>
+                    <Pressable><Text>M</Text></Pressable>
+                    <Pressable><Text>L</Text></Pressable> */}
                   </View>
-                  <View>
-                    <Text>Dog Friendliness</Text>
-                    <Switch
-                      trackColor={{ false: '#767577', true: '#81b0ff' }}
-                      thumbColor={true ? '#f5dd4b' : '#f4f3f4'}
-                      ios_backgroundColor="#3e3e3e"
-                      onValueChange={() => {
-                        console.log('witch');
+                </View>
+                <View
+                  style={{
+                    marginTop: 20,
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={styles.filterTitle}>Energy:</Text>
+                  <View style={{ display: 'flex', flexDirection: 'row' }}>
+                    <Pressable
+                      style={{
+                        width: 50,
+                        height: 30,
+                        backgroundColor: '#7371FC',
+                        borderWidth: 2,
+                        borderColor: '#7371FC',
+                        borderRadius: 10,
+                        margin: 10,
+                      }}>
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          marginTop: 'auto',
+                          marginBottom: 'auto',
+                        }}>
+                        Low
+                      </Text>
+                    </Pressable>
+                    <Pressable
+                      style={{
+                        width: 50,
+                        height: 30,
+                        backgroundColor: '#7371FC',
+                        borderWidth: 2,
+                        borderColor: '#7371FC',
+                        borderRadius: 10,
+                        margin: 10,
+                      }}>
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          marginTop: 'auto',
+                          marginBottom: 'auto',
+                        }}>
+                        Med
+                      </Text>
+                    </Pressable>
+                    <Pressable
+                      style={{
+                        width: 50,
+                        height: 30,
+                        backgroundColor: '#7371FC',
+                        borderWidth: 2,
+                        borderColor: '#7371FC',
+                        borderRadius: 10,
+                        margin: 10,
+                      }}>
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          marginTop: 'auto',
+                          marginBottom: 'auto',
+                        }}>
+                        High
+                      </Text>
+                    </Pressable>
+                    {/* <Pressable>
+                    <Text>S</Text> </Pressable>
+                    <Pressable><Text>M</Text></Pressable>
+                    <Pressable><Text>L</Text></Pressable> */}
+                  </View>
+                </View>
+                <View
+                  style={{
+                    marginTop: 20,
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={styles.filterTitle}>Dog Friendliness:</Text>
+                  <Switch
+                    trackColor={{ false: '#FAFAFA', true: '#7371FC' }}
+                    thumbColor={true ? '#CDC1FF' : '#f4f3f4'}
+                    ios_backgroundColor="#3e3e3e"
+                    onValueChange={() => {
+                      setDogFriendlinessFilter(!dogFriendlinessFilter);
+                    }}
+                    value={dogFriendlinessFilter}
+                  />
+                </View>
+                <View
+                  style={{
+                    marginTop: 20,
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={styles.filterTitle}>Human Friendliness:</Text>
+                  <Switch
+                    trackColor={{ false: '#FAFAFA', true: '#7371FC' }}
+                    thumbColor={true ? '#CDC1FF' : '#f4f3f4'}
+                    ios_backgroundColor="#3e3e3e"
+                    onValueChange={() => {
+                      setHumanFriendlinessFilter(!humanFriendlinessFilter);
+                    }}
+                    value={humanFriendlinessFilter}
+                  />
+                </View>
+                <View
+                  style={{
+                    marginTop: 20,
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Pressable
+                    style={{
+                      width: '40%',
+                      height: 60,
+                      backgroundColor: '#7371FC',
+                      borderWidth: 2,
+                      borderColor: '#7371FC',
+                      borderRadius: 10,
+                      margin: 10,
+                    }}>
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        marginTop: 'auto',
+                        marginBottom: 'auto',
+                        fontSize: 20,
+                        fontWeight: '400',
                       }}
-                      value={true}
-                    />
-                  </View>
-                  <View>
-                    <Text>Human Friendliness</Text>
-                    <Switch
-                      trackColor={{ false: '#767577', true: '#81b0ff' }}
-                      thumbColor={true ? '#f5dd4b' : '#f4f3f4'}
-                      ios_backgroundColor="#3e3e3e"
-                      onValueChange={() => {
-                        console.log('witch');
-                      }}
-                      value={true}
-                    />
-                  </View>
-                  <Button
-                    title="Apply Filter"
-                    onPress={() => {
-                      console.log('setting Filter');
-                      setFilterVisible(!filterVisible);
-                    }}></Button>
-                  <Button
-                    title="X"
+                      onPress={() => {
+                        setFilterVisible(!filterVisible);
+                      }}>
+                      Apply Filter
+                    </Text>
+                  </Pressable>
+                  <Pressable
+                    style={{
+                      width: '38%',
+                      height: 60,
+                      backgroundColor: '#7371FC',
+                      borderWidth: 2,
+                      borderColor: '#7371FC',
+                      borderRadius: 10,
+                      margin: 10,
+                    }}
+                    android_ripple={{ color: '#7371FC' }}
                     onPress={() => {
                       setFilterVisible(!filterVisible);
-                    }}></Button>
+                    }}>
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        marginTop: 'auto',
+                        marginBottom: 'auto',
+                        fontSize: 20,
+                        fontWeight: '400',
+                      }}>
+                      Cancel
+                    </Text>
+                  </Pressable>
                 </View>
               </View>
             </View>
@@ -205,22 +446,26 @@ const Home = ({ navigation }) => {
               height: '100%',
               flex: 1,
               position: 'absolute',
-              top: 0.06 * height,
+              top: 0.065 * height,
             }}>
             <Swiper
               cards={users.length ? users : []}
               containerStyle={{ backgroundColor: 'transparent' }}
               stackSize={5}
-              cardIndex={0}
+              cardIndex={startIndex}
               animateCardOpacity
               verticalSwipe={false}
               onSwipedRight={() => {
                 console.log('right swipe');
+                onSwipeRight(userProfile, users[startIndex]);
+                setStartIndex(startIndex + 1);
               }}
               onSwipedLeft={() => {
                 console.log('left swipe');
+                setStartIndex(startIndex + 1);
               }}
               onTapCard={(r) => {
+                setCurrentUser(users[startIndex]);
                 setPicClicked(!picClicked);
               }}
               overlayLabels={{
@@ -241,15 +486,14 @@ const Home = ({ navigation }) => {
                   },
                 },
               }}
-              renderCard={(card) => (
+              renderCard={(card, index) => (
                 <View
-                  key={card?._id}
+                  key={card?._id.toString()}
                   style={{
                     backgroundColor: 'white',
                     height: '90%',
                     position: 'relative',
                     display: 'flex',
-                    
                   }}>
                   <Image
                     style={{
@@ -257,10 +501,11 @@ const Home = ({ navigation }) => {
                       width: '100%',
                       // position: 'absolute',
                       // top: 0,
-                    borderWidth: 1,
-                    borderRadius: 10,
+                      borderWidth: 1,
+                      borderRadius: 10,
                     }}
-                    source={{ uri: card?.mainImageUrl }}></Image>
+                    source={{ uri: card?.mainImageUrl }}
+                  />
                   <View
                     style={{
                       position: 'absolute',
@@ -281,13 +526,108 @@ const Home = ({ navigation }) => {
                       borderBottomRightRadius: 10,
                       borderBottomLeftRadius: 10,
                     }}>
-                    <Text style={{fontSize: 30, color: '#A594F9', fontWeight: 'bold' }}>{card?.name}</Text>
-                    <Text style={{fontSize: 20, color: '#66666E', fontWeight: '400'}}>{card?.distanceFrom} miles away</Text>
+                    <Text
+                      style={{
+                        fontSize: 30,
+                        color: '#A594F9',
+                        fontWeight: 'bold',
+                      }}>
+                      {card?.name}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        color: '#66666E',
+                        fontWeight: '400',
+                      }}>
+                      {card?.distanceFrom} miles away
+                    </Text>
                   </View>
                 </View>
               )}
             />
           </View>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={match}
+            onRequestClose={() => {
+              setMatch(!match);
+            }}>
+            <View
+              style={{
+                backgroundColor: '#A594F9',
+                width: width,
+                height: height,
+                opacity: 0.9,
+              }}>
+              {/* Modal Close for Match screen */}
+              <Pressable
+                style={{
+                  position: 'absolute',
+                  right: 20,
+                  top: 20,
+                  width: '20%',
+                  width: width,
+                  backgroundColor: '#A594F9',
+                  opacity: 0.1,
+                  height: height,
+                }}
+                onPress={() => {
+                  setMatch(!match);
+                }}></Pressable>
+              <View style={{ marginTop: 80 }}>
+                <Text
+                  style={{
+                    fontWeight: 500,
+                    fontSize: 50,
+                    fontStyle: 'italic',
+                    textAlign: 'center',
+                    color: '#F4F4F6',
+                  }}>
+                  Pawsome 🐾
+                </Text>
+                <Text
+                  style={{
+                    fontWeight: 400,
+                    fontSize: 30,
+                    textAlign: 'center',
+                    color: '#E6E6E9',
+                  }}>
+                  You and {currentUser.name} are a pawfect match
+                </Text>
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    height: '50%',
+                    width: '80%',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginLeft: 40,
+                  }}>
+                  <Image
+                    style={{
+                      width: '40%',
+                      height: '60%',
+                      borderWidth: 1,
+                      borderRadius: 80,
+                    }}
+                    source={{ uri: userProfile.mainImageUrl }}
+                  />
+                  <Image
+                    style={{
+                      width: '40%',
+                      height: '60%',
+                      borderWidth: 1,
+                      borderRadius: 80,
+                    }}
+                    source={{ uri: currentUser.mainImageUrl }}
+                  />
+                </View>
+              </View>
+            </View>
+          </Modal>
         </SafeAreaView>
       )}
     </>
@@ -303,12 +643,15 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   userInfoContainer: {
-    backgroundColor: '#F4F4F6',
+    backgroundColor: 'white',
     display: 'flex',
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     height: '10%',
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#E6E6E9',
   },
   userPicContainer: {
     width: '100%',
@@ -316,6 +659,9 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 2,
     borderRadius: 75,
+  },
+  filterTitle: {
+    fontSize: 18,
   },
 });
 export default Home;
