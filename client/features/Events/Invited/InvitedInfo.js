@@ -14,7 +14,7 @@ import Constants from 'expo-constants';
 import axios from 'axios';
 import { API_URL } from '@env';
 import { parseISO, format } from 'date-fns';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+// import { Ionicons, Fontiso } from 'react-native-vector-icons/Ionicons';
 // TO DELETE: dummy data
 // import { dummyDogFriends } from '../sampleData.js';
 
@@ -51,6 +51,7 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
           <View style={styles.eventDetails}>
             <Text style={styles.eventTitle}>{event.title}</Text>
             <Text style={styles.dateText}>{formattedDate}</Text>
+            {/* <Fontiso name="map-marker-alt" /> */}
             <View style={styles.locationDetails}>
               {/* <Text>{event.location.address1}</Text> */}
               <Text>{`${event.location.address1}, ${event.location.city}, ${event.location.state}`}</Text>
