@@ -9,12 +9,14 @@ import {
   Platform,
   StatusBar,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useContext, createContext } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 const { width, height } = Dimensions.get('window');
 import { API_URL } from '@env';
 import { useRouter } from 'expo-router';
+
+export let id = null;
 
 const CreateAccount = () => {
   const [email, setEmail] = useState('');
@@ -44,7 +46,8 @@ const CreateAccount = () => {
       axios
         .post(`${baseUrl}/api/user/signup`, userInfo)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
+          id = res.data.id;
           router.push({
             pathname: '/createprofile',
             params: { id: res.data.id },

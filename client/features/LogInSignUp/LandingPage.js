@@ -26,7 +26,7 @@ const LandingPage = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    console.log(user);
+    // console.log(user);
   }, []);
 
   return (

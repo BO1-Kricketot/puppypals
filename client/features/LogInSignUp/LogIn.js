@@ -17,6 +17,7 @@ import api from '../../api';
 const { width, height } = Dimensions.get('window');
 import { API_URL } from '@env';
 import { useRouter } from 'expo-router';
+import { useAuth } from '../../context/Provider.js';
 
 const LogIn = () => {
   const [email, setEmail] = useState('');
@@ -25,7 +26,7 @@ const LogIn = () => {
   const router = useRouter();
 
   const signInPress = () => {
-    console.log('send login info');
+    // console.log('send login info');
     let logInData = {
       email: email,
       password: password,

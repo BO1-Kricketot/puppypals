@@ -19,11 +19,14 @@ module.exports = {
     newDog.save()
       .then((resultDog) => {
         dogId = resultDog._id;
+        newUser.save()
+          .then((resultUser) => res.status(200).send({ id: dogId }))
+          .catch((eUser) => console.log(eUser))
       }) //console.log('dog save', resultDog))
       .catch((eDog) => console.log(eDog))
-    newUser.save()
-      .then((resultUser) => res.status(200).send({ id: dogId }))
-      .catch((eUser) => console.log(eUser))
+    // newUser.save()
+    //   .then((resultUser) => res.status(200).send({ id: dogId }))
+    //   .catch((eUser) => console.log(eUser))
     // throw new Error('registerUser not implemented yet!');
   },
 

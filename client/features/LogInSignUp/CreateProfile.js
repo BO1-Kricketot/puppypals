@@ -18,18 +18,19 @@ const { width, height } = Dimensions.get('window');
 import axios from 'axios';
 import { API_URL } from '@env';
 import { useRouter } from 'expo-router';
+import { id } from './CreateAccount.js';
 
-const CreateProfile = () => {
+const CreateProfile = (props) => {
   const [dogName, setDogName] = useState();
   const [dogBreed, setDogBreed] = useState();
   const [dogProfPic, setDogProfPic] = useState();
   const [dogProfPic64, setDogProfPic64] = useState();
   const [dogPics, setDogPics] = useState([]);
   const [dogPics64, setDogPics64] = useState([]);
-  const [energyLvl, setEnergyLvl] = useState();
-  const [size, setSize] = useState();
-  const [dogFriendliness, setDogFriendliness] = useState();
-  const [humanFriendliness, setHumanFriendliness] = useState();
+  const [energyLvl, setEnergyLvl] = useState('low');
+  const [size, setSize] = useState('small');
+  const [dogFriendliness, setDogFriendliness] = useState(true);
+  const [humanFriendliness, setHumanFriendliness] = useState(true);
   const [bio, setBio] = useState();
   const [ownerName, setOwnerName] = useState();
   const [ownerPic, setOwnerPic] = useState();
@@ -41,6 +42,7 @@ const CreateProfile = () => {
   const [zip, setZip] = useState();
   const baseUrl = API_URL;
   const router = useRouter();
+  // console.log(id);
 
   const pickOwnerImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -90,7 +92,7 @@ const CreateProfile = () => {
     }
   };
   const pressCreateProfile = () => {
-    console.log('hit');
+    // console.log('hit');
     if (
       !dogName ||
       !dogBreed ||
@@ -106,7 +108,7 @@ const CreateProfile = () => {
       Alert.alert('Please fill all fields');
     } else {
       let dogInfo = {
-        dogId: 'bababababa',
+        dogId: id,
         name: dogName,
         breed: dogBreed,
         mainImage: dogProfPic64,

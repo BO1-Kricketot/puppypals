@@ -15,10 +15,10 @@ module.exports = {
   registerDog(req, res) {
     const dogInfo = JSON.parse(JSON.stringify(req.body));
     delete dogInfo.dogId;
-    console.log(dogInfo);
-    const newDog = DogModel.findOneAndUpdate({_id: req.body.dogId}, dogFormatter(dogInfo))
-    console.log(newDog)
-    // newDog.save()
+    // console.log(dogInfo);
+    DogModel.findOneAndUpdate({_id: req.body.dogId}, dogFormatter(dogInfo))
+      .then((result) => res.status(200).send({message: 'Dog has been created'}))
+      .catch((e) => console.log(e));
   },
 
   /**
