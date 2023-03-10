@@ -94,7 +94,12 @@ export default function Events() {
         </View>
       </View>
       {modal && (
-        <CreateEvent modal={modal} toggleModal={toggleModal} dog={dog} />
+        <CreateEvent
+          modal={modal}
+          toggleModal={toggleModal}
+          dog={dog}
+          updateAttendingList={updateAttendingList}
+        />
       )}
       {invited ? (
         <InvitedList invitedEvents={invitedEvents} dog={dog} />

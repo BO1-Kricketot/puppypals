@@ -65,6 +65,11 @@ async function main(numEvents) {
       getRandomItem(dogs)._id,
       getRandomItem(dogs)._id,
     ];
+    const attendees = [
+      getRandomItem(dogs)._id,
+      getRandomItem(dogs)._id,
+      getRandomItem(dogs)._id,
+    ];
     // eslint-disable-next-line no-await-in-loop
     let event = await generateRandomEvent();
     event = {
@@ -75,6 +80,7 @@ async function main(numEvents) {
         mainImgPath,
       },
       invitees,
+      attendees,
     };
     promises.push(EventModel.create(event));
   }
