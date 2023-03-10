@@ -181,12 +181,14 @@ module.exports = {
       });
   },
 
-  /**
-   * Deletes a single Dog by _id
-   *
-   * TODO: Implement
-   */
-  deleteDogById(req, res) {
-    throw new Error('deleteDogById not implemented yet!');
+  async deleteDogById(req, res) {
+    try {
+      const dogId = req.params._id;
+      await DogModel.deleteOne({ _id: dogId });
+      res.status(204).send();
+    } catch (err) {
+      console.log(err);
+      res.status(500).send(err);
+    }
   },
 };
