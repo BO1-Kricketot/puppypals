@@ -22,7 +22,10 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
   // TO DELETE: dummy data
   // let friends = dummyDogFriends; // dog.friends
 
-  const formattedDate = format(parseISO(event.datetime), 'EEEE, MMMM dd, yyyy, ha');
+  const formattedDate = format(
+    parseISO(event.datetime),
+    'EEEE, MMMM dd, yyyy, ha',
+  );
 
   const handleAttendanceYes = async () => {
     const eventId = event._id;
@@ -50,8 +53,14 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
               <Text>{`${event.location.city}, ${event.location.state}`}</Text>
             </View>
             <View style={styles.attendanceText}>
-              <Text>{`${event.invitees.length} Invited  · `} </Text>
-              <Text>{`${event.attendees.length} Attending`}</Text>
+              {event.invitees !== undefined && (
+                <Text>{`${event.invitees.length} Invited`} </Text>
+              )}
+              {event.attendees === undefined ? (
+                <Text>{'· 0 Attending'}</Text>
+              ) : (
+                <Text>{`· ${event.attendees.length} Attending`}</Text>
+              )}
             </View>
             <Text style={styles.descriptionText}>{event.description}</Text>
           </View>
@@ -59,10 +68,14 @@ export default function InvitedInfo({ modal, toggleModal, event, dog }) {
           <View>
             <Text style={styles.rsvpHeader}>Paw-lease RSVP!</Text>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button} onPress={handleAttendanceYes} >
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleAttendanceYes}>
                 <Text style={styles.buttonText}>YES</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={handleAttendanceNo} >
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleAttendanceNo}>
                 <Text style={styles.buttonText}>NO</Text>
               </TouchableOpacity>
             </View>
