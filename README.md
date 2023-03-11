@@ -39,7 +39,8 @@ No matter the environment, first run `npm install` for all 3 packages (root, cli
 <br>
 
 ## 🐾 The App
-<img width="247.5" alt="landing page" src="https://user-images.githubusercontent.com/112882051/224507562-ec29106a-3909-4de8-93ea-bb5ea5bfc8ac.png">
+<img width="247.5" alt="landing page" src="https://user-images.githubusercontent.com/112882051/224513607-b23c1c25-df1e-42ad-b301-b814d95141f9.png">
+
 <br>
 
 ### 🐕 Landing Page
@@ -81,7 +82,7 @@ No matter the environment, first run `npm install` for all 3 packages (root, cli
   <ul>
     <li>Swipe right to send a friend invite</li>
     <li>Swipe left to pass</li>
-    <li>Use the "..." button to filter dogs</li>
+    <li>Use the <code>...</code> button to filter dogs</li>
   </ul>
   <div style="display: flex; flex-direction: row; align-items: space-evenly;">
     <img width="247.5" alt="home page" src="https://user-images.githubusercontent.com/112882051/224508184-f5ddff9f-0e18-44f9-9e78-2db4d6a63389.png">
@@ -108,7 +109,7 @@ No matter the environment, first run `npm install` for all 3 packages (root, cli
   <br>
   <ul>
     <li>Shows "invites", i.e. other users who have swiped right on your dog</li>
-    <li>Similar to home page, swipe right to accept invite, swipe left to reject<li>
+    <li>Similar to home page, swipe right to accept invite, swipe left to reject</li>
     <li><em>Future Enhancement: </em>tap invite to see associated profile</li>
   </ul>
   <img width="247.5" alt="accept invite" src="https://user-images.githubusercontent.com/112882051/224509002-5d1d29cf-c09d-4a62-805f-cad1945d6227.png">
