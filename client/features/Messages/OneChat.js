@@ -7,7 +7,7 @@ const OneChat = ({
   timestamp,
   dogName,
   dogImage,
-  pending,
+  status,
   onAccept,
   onReject,
   styles,
@@ -24,7 +24,7 @@ const OneChat = ({
 
   const renderLeftActions = () => {
     return (
-      <View style={styles.leftActions}>
+      <View style={styles.rightActions}>
         <Text style={styles.actionText}>Reject</Text>
       </View>
     );
@@ -32,7 +32,7 @@ const OneChat = ({
 
   const renderRightActions = () => {
     return (
-      <View style={styles.rightActions}>
+      <View style={styles.leftActions}>
         <Text style={styles.actionText}>Accept</Text>
       </View>
     );
@@ -48,13 +48,13 @@ const OneChat = ({
 
   return (
     <Swipeable
-      renderLeftActions={renderLeftActions}
-      renderRightActions={renderRightActions}
-      onSwipeableLeftOpen={onSwipeLeft}
-      onSwipeableRightOpen={onSwipeRight}
+      renderLeftActions={status === 'pending' ? renderRightActions : null }
+      renderRightActions={status === 'pending' ? renderLeftActions : null }
+      onSwipeableLeftOpen={onSwipeRight}
+      onSwipeableRightOpen={onSwipeLeft}
       onSwipeableOpen={onOpen}>
       <TouchableOpacity onPress={onSeen}>
-        <View style={styles.container}>
+        <View style={styles.oneChatContainer}>
           <View style={styles.dotContainer}>
             <View
               style={[
@@ -70,11 +70,11 @@ const OneChat = ({
           <View style={styles.dogContainer}>
             <Image style={styles.dogImage} source={{ uri: dogImage }} />
             <Text style={styles.dogName}>{dogName}</Text>
-            {pending && <Text style={styles.pending}>Pending</Text>}
+            {status === 'pending' && <Text style={styles.status}>Pending</Text>}
           </View>
           <View style={styles.messageContainer}>
             <Text style={styles.message}>
-              Woof! I would love to be your playmate
+              Woof! I would love to bork @ u
             </Text>
           </View>
         </View>

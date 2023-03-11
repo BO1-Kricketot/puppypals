@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Modal,
   Image,
+  ScrollView,
 } from 'react-native';
 import React, { useState } from 'react';
 import api from '../../../api';
@@ -15,19 +16,27 @@ import Constants from 'expo-constants';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 import { API_URL } from '@env';
+import { parseISO, format, parse, formatISO } from 'date-fns';
 import { dummyDogFriends } from '../sampleData.js';
+import { useAuth } from '../../../context/Provider';
 
-export default function CreateEvent({ modal, toggleModal, dog }) {
+export default function CreateEvent({
+  modal,
+  toggleModal,
+  dog,
+  updateAttendingList,
+}) {
+  const { user } = useAuth();
   const initial = {
     title: '',
     datetime: '',
     description: '',
     invitees: [],
-    attendees: [],
+    attendees: [user?._id],
     hostMeta: {
-      _id: "1",
-      name: 'Kiwi', // to update to dog.name
-      mainImgPath: 'thiswillbeaURL', // to update to dog.mainImagePath
+      dogId: user?._id,
+      name: user.name, // to update to dog.name
+      mainImgPath: user.mainImageUrl, // to update to dog.mainImagePath
     },
     location: {
       address1: '',
@@ -40,7 +49,9 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
 
   const [form, setForm] = useState(initial);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [time, setTime] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [selectedTime, setSelectedTime] = useState(new Date());
+  const [showTimePicker, setShowTimePicker] = useState(false);
 
   const resetForm = () => {
     setForm(initial);
@@ -67,6 +78,7 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
 
   const handleDateChange = (event, newDate) => {
     const currentDate = newDate || selectedDate;
+    setShowDatePicker(false);
     setSelectedDate(currentDate);
     const formattedDate = currentDate.toLocaleDateString();
     setForm({
@@ -75,10 +87,11 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
     });
   };
 
-  const handleTimeChange = (event, selectedTime) => {
-    if (selectedTime) {
-      setTime(selectedTime);
-      const formattedTime = selectedTime.toLocaleTimeString([], {
+  const handleTimeChange = (event, newTime) => {
+    setShowTimePicker(false);
+    if (newTime) {
+      setSelectedTime(newTime);
+      const formattedTime = newTime.toLocaleTimeString([], {
         hour: '2-digit',
         minute: '2-digit',
       });
@@ -87,19 +100,31 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
         datetime: `${form.datetime} ${formattedTime}`,
       });
     }
+    console.log('check date time', form.datetime);
   };
 
   const handleCreateEvent = () => {
-    console.log('data saved');
+    const formattedDate = formatISO(
+      parse(form.datetime, 'M/d/yyyy h:mm a', new Date()),
+      { representation: 'complete' },
+    );
+    console.log('check formattedDate', formattedDate);
+
+    const formData = {
+      ...form,
+      datetime: formattedDate,
+    };
+
     axios
-      .post(`${API_URL}/events`, form)
+      .post(`${API_URL}/api/events`, formData)
       .then((result) => {
-        const eventId = result._id;
-        axios
-          .post(`${API_URL}/einvites`, { ...form, eventId })
-          .then(() => console.info('Event posted'))
-          .catch((err) => console.error(err));
+        // const eventId = result._id;
+        // axios
+        //   .post(`${API_URL}/einvites`, { ...formData, eventId })
+        //   .then(() => console.info('Event posted'))
+        //   .catch((err) => console.error(err));
         toggleModal();
+        // updateAttendingList();
         resetForm();
       })
       .catch((err) => console.error(err));
@@ -108,71 +133,108 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
   return (
     <Modal animationType="slide">
       <SafeAreaView style={styles.modalContainer}>
-        <Text style={styles.formTitle}>Create Event</Text>
-        <Text>Event name</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Event name"
-          onChange={(text) => handleChange('title', text)}
-          value={form.title}
-        />
+        <Text style={styles.formHeader}>Create Event</Text>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.scrollContent}>
+          <View style={styles.formContainer}>
+            <Text style={styles.formText}>Event name</Text>
+            <TextInput
+              style={styles.inputs}
+              selectionColor="#7371FC"
+              placeholder="Event name"
+              onChange={(text) => handleChange('title', text)}
+              value={form.title}
+            />
 
-        <Text>Event date</Text>
-        <DateTimePicker
-          value={selectedDate}
-          mode="date"
-          display="default"
-          onChange={handleDateChange}
-        />
+            <Text style={styles.formText}>Event date</Text>
+            <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+              <TextInput
+                style={styles.inputs}
+                selectionColor="#7371FC"
+                placeholder="Event date"
+                value={form.datetime}
+                editable={false}
+                onTouchStart={() => setShowDatePicker(true)}
+              />
+            </TouchableOpacity>
+            {showDatePicker && (
+              <DateTimePicker
+                value={selectedDate}
+                mode="date"
+                display="default"
+                onChange={handleDateChange}
+              />
+            )}
 
-        <Text>Event start time</Text>
-        <DateTimePicker
-          value={time}
-          mode="time"
-          display="default"
-          onChange={handleTimeChange}
-        />
-        <Text>Event location</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Address 1"
-          onChange={(text) => handleLocationChange('address1', text)}
-          value={form.location.address1}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Address 2"
-          onChange={(text) => handleLocationChange('address2', text)}
-          value={form.location.address2}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="City"
-          onChange={(text) => handleLocationChange('city', text)}
-          value={form.location.city}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="State"
-          onChange={(text) => handleLocationChange('state', text)}
-          value={form.location.state}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Zip Code"
-          onChange={(text) => handleLocationChange('postalCode', text)}
-          value={form.location.postalCode}
-        />
+            <Text style={styles.formText}>Event start time</Text>
+            <TouchableOpacity onPress={() => setShowTimePicker(true)}>
+              <TextInput
+                style={styles.inputs}
+                selectionColor="#7371FC"
+                placeholder="Event start time"
+                value={form.datetime}
+                editable={false}
+                onTouchStart={() => setShowTimePicker(true)}
+              />
+            </TouchableOpacity>
 
-        <Text>Event description</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Event description"
-          onChange={(text) => handleChange('description', text)}
-          value={form.description}
-        />
-        <Text>Add Friends: </Text>
-        <TouchableOpacity style={styles.imageContainer}>
+            {showTimePicker && (
+              <DateTimePicker
+                value={selectedTime}
+                mode="time"
+                display="default"
+                onChange={handleTimeChange}
+              />
+            )}
+
+            <Text style={styles.formText}>Event location</Text>
+            <TextInput
+              style={styles.inputs}
+              selectionColor="#7371FC"
+              placeholder="Address 1"
+              onChange={(text) => handleLocationChange('address1', text)}
+              value={form.location.address1}
+            />
+            <TextInput
+              style={styles.inputs}
+              selectionColor="#7371FC"
+              placeholder="Address 2"
+              onChange={(text) => handleLocationChange('address2', text)}
+              value={form.location.address2}
+            />
+            <TextInput
+              style={styles.inputs}
+              selectionColor="#7371FC"
+              placeholder="City"
+              onChange={(text) => handleLocationChange('city', text)}
+              value={form.location.city}
+            />
+            <TextInput
+              style={styles.inputs}
+              selectionColor="#7371FC"
+              placeholder="State"
+              onChange={(text) => handleLocationChange('state', text)}
+              value={form.location.state}
+            />
+            <TextInput
+              style={styles.inputs}
+              selectionColor="#7371FC"
+              placeholder="Zip Code"
+              onChange={(text) => handleLocationChange('postalCode', text)}
+              value={form.location.postalCode}
+            />
+
+            <Text style={styles.formText}>Event description</Text>
+            <TextInput
+              style={[styles.inputs, styles.descriptionInput]}
+              selectionColor="#7371FC"
+              placeholder="Event description"
+              onChange={(text) => handleChange('description', text)}
+              value={form.description}
+            />
+            <Text style={styles.formText}>Add Furrr-ends +</Text>
+            {/* <TouchableOpacity style={styles.imageContainer}>
           <Image
             style={styles.image}
             source={{ uri: dummyDogFriends[0].mainImageUrl }}
@@ -189,30 +251,102 @@ export default function CreateEvent({ modal, toggleModal, dog }) {
             style={styles.image}
             source={{ uri: dummyDogFriends[2].mainImageUrl }}
           />
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={handleCreateEvent}>
-          <Text>Create event</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={toggleModal}>
-          <Text>Close</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleCreateEvent}>
+                <Text style={styles.buttonText}>Create event</Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity onPress={toggleModal}>
+              <Text style={styles.closeButton}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+  },
   modalContainer: {
-    backgroundColor: 'purple',
+    backgroundColor: 'white',
     flex: 1,
   },
-  formTitle: {
+  formContainer: {
+    flex: 1,
+    paddingLeft: 40,
+    paddingRight: 40,
+  },
+  formHeader: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     width: '100%',
-    height: 50,
-    backgroundColor: '#FFFFFF',
+    height: 60,
+    justifyContent: 'space-between',
+    padding: 15,
+    backgroundColor: 'white',
+    fontSize: 20,
+    fontWeight: 600,
+    color: '#474747',
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+  },
+  formText: {
+    marginBottom: 2,
+    marginLeft: 5,
+    color: '#474747',
+    marginTop: 12,
+  },
+  inputs: {
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: '#E6E6E9',
+    backgroundColor: '#E6E6E9',
+    padding: 3,
+    margin: 3,
+    alignItems: 'center',
+    paddingLeft: 10,
+  },
+  descriptionInput: {
+    height: 150,
+    paddingTop: 10,
+    textAlignVertical: 'top',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+    marginTop: 25,
+  },
+  button: {
+    width: '80%',
+    borderRadius: 20,
+    backgroundColor: '#7371FC',
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    margin: 5,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  closeButton: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#7371FC',
+    marginBottom: 20,
   },
   imageContainer: {
     width: 50,

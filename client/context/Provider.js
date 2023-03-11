@@ -32,11 +32,11 @@ function useProtectedRoute(user) {
 }
 
 const dummyDog = {
-  _id: '6408c5ed2d155686c068d6e0',
+  _id: '6408d66fec97eb3b6680290f',
   name: 'Kiwi',
   breed: 'Golden Retriever',
-  mainImage: 'https://i.ibb.co/gSq3C1N/kiwi2.jpg',
-  images: [
+  mainImageUrl: 'https://i.ibb.co/gSq3C1N/kiwi2.jpg',
+  imageUrls: [
     'https://i.ibb.co/9cf7Fwc/kiwi.jpg',
     'https://i.ibb.co/fdrv6wX/kiwi3.jpg',
     'https://i.ibb.co/FxzLxGH/kiwi4.jpg',
@@ -54,14 +54,19 @@ const dummyDog = {
     city: 'San Francisco',
     state: 'CA',
     postalCode: '94109',
+    coordinates: {
+      lat: 37.7917,
+      lng: -122.4186,
+    },
   },
   owner: {
     name: 'Heyme',
-    image: 'https://i.ibb.co/QcRqhYs/4f2f570afa15.jpg',
+    imageUrl: 'https://i.ibb.co/QcRqhYs/4f2f570afa15.jpg',
   },
 };
 
 export function Provider(props) {
+  // const [user, setUser] = React.useState(null);
   const [user, setUser] = React.useState(dummyDog);
 
   // useProtectedRoute(user);
@@ -69,7 +74,7 @@ export function Provider(props) {
   return (
     <AuthContext.Provider
       value={{
-        signIn: () => setUser({}),
+        signIn: (dog) => setUser(dog),
         signOut: () => setUser(null),
         setUser,
         user,

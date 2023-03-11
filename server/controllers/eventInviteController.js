@@ -15,9 +15,15 @@ module.exports = {
     const sender = req.body.host_meta._id; // sender dog
     const { eventId } = req.body;
     const promises = [];
-    for (let i = 0; i < invitedDogs.length; i += 1 ) {
+    for (let i = 0; i < invitedDogs.length; i += 1) {
       const dogId = invitedDogs[i];
-      promises.push(EventInviteModel.create({ senderId: sender , recipientId: dogId, eventId }))
+      promises.push(
+        EventInviteModel.create({
+          senderId: sender,
+          recipientId: dogId,
+          eventId,
+        }),
+      );
     }
     Promise.all(promises)
       .then((result) => res.status(200).send(result))
@@ -33,14 +39,15 @@ module.exports = {
    */
   getEventInvitesById(req, res) {
     // (a,b) => b.creationDate - a.creationDate
-    EventInviteModel.find({recipientId: req.params['recipientId']}).sort({creationDate: -1})
-    .exec()
-    .then((result) => {
-      res.status(200).send(result)
-    })
-    .catch(err => {
-      console.log(err)
-    })
+    EventInviteModel.find({ recipientId: req.params['recipientId'] })
+      .sort({ creationDate: -1 })
+      .exec()
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 
   /**
@@ -51,7 +58,7 @@ module.exports = {
    */
   deleteEventInviteById(req, res) {
     const { eventId } = req.params;
-    return EventInviteModel.findOneAndDelete({ _id: eventId })
+    return EventInviteModel.findOneAndDelete({ eventId })
       .exec()
       .then(() => res.status(204).send('Event Invite deleted'))
       .catch((err) => res.status(500).send(err));
