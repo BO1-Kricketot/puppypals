@@ -26,6 +26,7 @@ export default function CreateEvent({
   dog,
   updateAttendingList,
 }) {
+  const { user } = useAuth();
   const initial = {
     title: '',
     datetime: '',
