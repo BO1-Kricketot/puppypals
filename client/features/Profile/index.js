@@ -249,11 +249,6 @@ const profileStyles = StyleSheet.create({
     backgroundColor: themeViolet,
     borderRadius: 8,
   },
-  phNavContainer: {
-    backgroundColor: 'violet',
-    flex: 1,
-    flexDirection: 'row',
-  },
 });
 
 const { width, height } = Dimensions.get('window');
@@ -267,7 +262,7 @@ const renderPics = (picList, isDefault) => {
         key={i}
         style={isDefault ? mainPic : morePics}
         default={isDefault}
-        src={url}
+        source={{ uri: url }}
       />
     );
   });
